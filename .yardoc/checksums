@@ -3,7 +3,7 @@ lib/gemmy/cli.rb 431d456b4c73bd2fd37d27ce0135e7b904b8d772
 lib/gemmy/tests.rb 470f45c84347d25e3a05186d6554c04364784faf
 lib/gemmy/tasks.rb 7b45cbe958643e8ccca0467ff59422c05e1be365
 lib/gemmy/patches.rb 810c2e6e30bad72e08a2dd98854d1e177507f51b
-lib/gemmy/version.rb 9472e18dfa5f162e3a68d081f21babcf3641769c
+lib/gemmy/version.rb 9910b22988fbd53255330469780cc64b8694239b
 lib/gemmy/components.rb 0fe775556bc84714d0a150a42d5b6561c7fc69a9
 lib/gemmy/tasks/make_gem.rb 7e48302e6151c4143c0d5c9b92c5601527c1e7dc
 lib/gemmy/tests/patch_test.rb 510cf64b50640ac49bb3d0b2b74b729475b7fd4e
