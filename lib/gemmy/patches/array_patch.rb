@@ -1,4 +1,4 @@
-# Global patches. Could be applied to Object or Kernel
+# Array patches
 #
 module Gemmy::Patches::ArrayPatch
   # checks if any of the results of an array do not respond truthily

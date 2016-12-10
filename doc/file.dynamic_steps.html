@@ -60,8 +60,9 @@
       <iframe id="search_frame" src="file_list.html"></iframe>
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># Mimics the Cucumber API:
-</span><span class='comment'>#   {DynamicSteps#step} runs a step
-</span><span class='comment'>#   {DynamicSteps#define_step} defines a step
+</span><span class='comment'>#
+</span><span class='comment'>#   {#step} runs a step
+</span><span class='comment'>#   {#define_step} defines a step
 </span><span class='comment'>#
 </span><span class='comment'># The usage is the same as Cucumber:
 </span><span class='comment'>#
@@ -73,17 +74,13 @@
 </span><span class='comment'>#   =&gt; &#39;hellohello&#39;
 </span><span class='comment'>#
 </span><span class='comment'># Like Cucumber, it will raise an error if there is &gt; 1 matching step
-</span><span class='comment'># {DynamicSteps::AmbiguousMatchError} can be rescued if desired.
+</span><span class='comment'># AmbiguousMatchError can be rescued if desired.
 </span><span class='comment'>#
 </span><span class='comment'># It also raises an error if no matcher was found
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>DynamicSteps</span>
 
   <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
-
-  <span class='comment'># A hash mapping regex to proc
-</span>  <span class='comment'>#
-</span>  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:steps</span>
 
   <span class='comment'># Error raised when a string matches multiple step regexes.
 </span>  <span class='comment'># It&#39;s frequently accidental to come into this situation,
@@ -136,10 +133,11 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Searches the keys in @steps for a regex the matches the string.
-</span>  <span class='comment'># If one is found, it adds the regex as a key in the results hash.
-</span>  <span class='comment'># The value is a hash with two keys: :matches (an array) and :proc
-</span>  <span class='comment'>#
+  <span class='comment'># Searches the keys in @steps for regexes that match the string.
+</span>  <span class='comment'># @param string [String]
+</span>  <span class='comment'># @return [Hash] where keys are regexes and vals are hashes with signature:
+</span>  <span class='comment'>#   matches: [Array&lt;String&gt;] the String#match results
+</span>  <span class='comment'>#   proc: [Proc] the block mapped to the regex
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_find_matching_steps'>find_matching_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_matching_steps'>matching_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_steps'>steps</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span><span class='op'>|</span>
       <span class='id identifier rubyid_match_results'>match_results</span> <span class='op'>=</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;</span><span class='symbol'>:shift</span>
@@ -153,7 +151,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 10:56:56 2016 by
+  Generated on Sat Dec 10 13:05:06 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  File: README
+  File: 0_usage
   
     &mdash; Documentation by YARD 0.9.5
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "README";
+  pathId = "0_usage";
   relpath = '';
 </script>
 
@@ -37,7 +37,7 @@
         <div id="menu">
   
     <a href="_index.html">Index</a> &raquo; 
-    <span class="title">File: README</span>
+    <span class="title">File: 0_usage</span>
   
 </div>
 
@@ -59,43 +59,12 @@
 
       <iframe id="search_frame" src="file_list.html"></iframe>
 
-      <div id="content"><div id='filecontents'>
-<h3 id="label-Gemmy+gem">Gemmy gem</h3>
+      <div id="content"><div id='filecontents'><pre class="code ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gemmy</span><span class='tstring_end'>&#39;</span></span>
 
-<p>This is a general purpose gem which adds functionality to the ruby language
-and defines some system tasks, such as generating a gem.</p>
-
-<p>It is on RubyGems. Because there is an existing gem named
-<code>gemmy</code>, the name passed to <code>gem install</code> is
-<code>gemmyrb</code>. But <code>require &#39;gemmy&#39;</code> is still
-used.</p>
-
-<p>RubyGems hosts the YARD documentation at <a
-href="http://www.rubydoc.info/gems/gemmyrb">www.rubydoc.info/gems/gemmyrb</a>,
-but it&#39;s only updated when I push a new gem version. So the version
-here on Github&#39;s master branch might contain undocumented
-functionality. I&#39;ll try to keep the RubyGems version up-to-date though.</p>
-
-<p>YARD is not the best for a birds-eye overview. For that, see the following
-documents:</p>
-<ul><li>
-<p><em>Loading the gem&#39;s code in different scopes</em></p>
-</li><li>
-<p><a
-href="./examples/01_using_as_refinement.rb">examples/01_using_as_refinement.rb</a></p>
-</li><li>
-<p><a href="./examples/02_using_globally.rb">examples/02_using_globally.rb</a></p>
-</li><li>
-<p><em>List of methods intended for general Ruby use</em></p>
-</li><li>
-<p><a
-href="./examples/03_ruby_extensions_list.rb">examples/03_ruby_extensions_list.rb</a></p>
-</li><li>
-<p><em>Shell commands and other one-off processes</em></p>
-</li><li>
-<p><a href="./04_shell_commands.rb">examples/04_shell_commands.rb</a></p>
-</li></ul>
-</div></div>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./01_using_as_refinement.rb</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./02_using_globally.rb</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./03_full_api.rb</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require_relative'>require_relative</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./04_shell_commands.rb</span><span class='tstring_end'>&#39;</span></span></pre></div></div>
 
       <div id="footer">
   Generated on Sat Dec 10 13:05:06 2016 by

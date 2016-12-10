@@ -61,14 +61,24 @@
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># Gemmy provides patches for a few of the core classes.
 </span><span class='comment'>#
-</span><span class='comment'># For example:
-</span><span class='comment'>#   Gemmy::Patches.load(only: [:string])
-</span><span class='comment'>#   Gemmy::Patches.load(except: [:symbol, :global])
+</span><span class='comment'># See {Gemmy#load_globally} for how to load these on the root namespace
+</span><span class='comment'># For a refinements-based approach, use this in a class/module definition:
+</span><span class='comment'>#
+</span><span class='comment'># Gemmy::Patches.refinements.each { |klass| using klass }
+</span><span class='comment'>#
+</span><span class='comment'># Note that there are nuances for how refinements are used. You can&#39;t refer to
+</span><span class='comment'># the patches using define_method, for example.
+</span><span class='comment'>#
+</span><span class='comment'># See examples/01_using_as_refinement.rb for more info
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span>
 
-  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span>
-    <span class='id identifier rubyid_core_patches'>core_patches</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>except:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_core_patches'>core_patches</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_core_klass'>core_klass</span><span class='comma'>,</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
+      <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_only'>only</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_only'>only</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_core_klass'>core_klass</span><span class='rparen'>)</span>
+      <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_except'>except</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_except'>except</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_core_klass'>core_klass</span><span class='rparen'>)</span>
+      <span class='kw'>true</span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
   <span class='kw'>end</span>
 
   <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_core_patches'>core_patches</span>
@@ -80,13 +90,13 @@
       <span class='label'>Method:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>MethodPatch</span><span class='comma'>,</span>
       <span class='label'>Hash:</span>     <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>HashPatch</span><span class='comma'>,</span>
       <span class='label'>Thread:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ThreadPatch</span><span class='comma'>,</span>
-    <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_with_indifferent_access'>with_indifferent_access</span>
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 10:56:56 2016 by
+  Generated on Sat Dec 10 13:05:06 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -35,7 +35,7 @@ module Gemmy::Patches::ObjectPatch
   # @param text [String] text to write
   #
   def write(file:, text:)
-    File.open(file, 'w', &:write.with(text))
+    File.open(file, 'w') { |f| f.write text }
   end
 
   # if args[0] (object) is blank, raises args[1] (message)

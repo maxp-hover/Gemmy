@@ -90,8 +90,8 @@
     
 <p>Mimics the Cucumber API:</p>
 
-<pre class="code ruby"><code class="ruby">{DynamicSteps#step} runs a step
-{DynamicSteps#define_step} defines a step</code></pre>
+<pre class="code ruby"><code class="ruby">{#step} runs a step
+{#define_step} defines a step</code></pre>
 
 <p>The usage is the same as Cucumber:</p>
 
@@ -103,7 +103,7 @@ step &quot;I print hello 2 times&quot;
 =&gt; &#39;hellohello&#39;</code></pre>
 
 <p>Like Cucumber, it will raise an error if there is &gt; 1 matching step
-<span class='object_link'><a href="DynamicSteps/AmbiguousMatchError.html" title="Gemmy::Components::DynamicSteps::AmbiguousMatchError (class)">AmbiguousMatchError</a></span> can be rescued if desired.</p>
+AmbiguousMatchError can be rescued if desired.</p>
 
 <p>It also raises an error if no matcher was found</p>
 
@@ -126,40 +126,6 @@ step &quot;I print hello 2 times&quot;
 
 
 
-
-  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
-  <ul class="summary">
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#steps-instance_method" title="#steps (instance method)">#<strong>steps</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>A hash mapping regex to proc.</p>
-</div></span>
-  
-</li>
-
-    
-  </ul>
 
 
 
@@ -201,7 +167,7 @@ block.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_matching_steps-instance_method" title="#find_matching_steps (instance method)">#<strong>find_matching_steps</strong>(string)  &#x21d2; Object </a>
+      <a href="#find_matching_steps-instance_method" title="#find_matching_steps (instance method)">#<strong>find_matching_steps</strong>(string)  &#x21d2; Hash </a>
     
 
     
@@ -216,7 +182,7 @@ block.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Searches the keys in @steps for a regex the matches the string.</p>
+<p>Searches the keys in @steps for regexes that match the string.</p>
 </div></span>
   
 </li>
@@ -246,57 +212,31 @@ block.</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#steps-instance_method" title="#steps (instance method)">#<strong>steps</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
-
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id=""></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="steps-instance_method">
-  
-    #<strong>steps</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>A hash mapping regex to proc</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-25
-26
-27</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 25</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_steps'>steps</span>
-  <span class='ivar'>@steps</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -337,12 +277,12 @@ block.</p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_define_step'>define_step</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_steps'>steps</span><span class='lbracket'>[</span><span class='id identifier rubyid_regex'>regex</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_blk'>blk</span>
@@ -355,7 +295,7 @@ block.</p>
       <div class="method_details ">
   <h3 class="signature " id="find_matching_steps-instance_method">
   
-    #<strong>find_matching_steps</strong>(string)  &#x21d2; <tt>Object</tt> 
+    #<strong>find_matching_steps</strong>(string)  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -364,15 +304,48 @@ block.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Searches the keys in @steps for a regex the matches the string. If one is
-found, it adds the regex as a key in the results hash. The value is a hash
-with two keys: :matches (an array) and :proc</p>
+<p>Searches the keys in @steps for regexes that match the string.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>string</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>where keys are regexes and vals are hashes with signature: matches:
+[Array&lt;String&gt;] the String#match results proc: [Proc] the block
+mapped to the regex</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -380,18 +353,18 @@ with two keys: :matches (an array) and :proc</p>
       <pre class="lines">
 
 
+80
+81
 82
 83
 84
 85
 86
 87
-88
-89
-90</pre>
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_matching_steps'>find_matching_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matching_steps'>matching_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_steps'>steps</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span><span class='op'>|</span>
@@ -434,6 +407,9 @@ runs the associated proc, passing the regex match results</p>
       <pre class="lines">
 
 
+54
+55
+56
 57
 58
 59
@@ -450,13 +426,10 @@ runs the associated proc, passing the regex match results</p>
 70
 71
 72
-73
-74
-75
-76</pre>
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_step'>step</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matching_steps'>matching_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_find_matching_steps'>find_matching_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
@@ -483,12 +456,42 @@ runs the associated proc, passing the regex match results</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="steps-instance_method">
+  
+    #<strong>steps</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_steps'>steps</span>
+  <span class='ivar'>@steps</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sat Dec 10 10:56:56 2016 by
+  Generated on Sat Dec 10 13:05:06 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

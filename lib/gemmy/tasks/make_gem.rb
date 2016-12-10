@@ -1,6 +1,6 @@
 # A task to create skeleton structure for a ruby gem
 #
-# Only one method is intended for public use, {Tasks::MakeGem#run}.
+# Only one method is intended for public use, {run}.
 #
 # It takes one argument - the name of the ruby gem.
 #
@@ -10,6 +10,9 @@
 #
 # ├── <name>.gemspec
 # ├── Gemfile
+# ├── reinstall
+# ├── bin
+#   └── <name>
 # └── lib
 #   ├── <name>.rb
 #   └── version.rb
@@ -42,6 +45,8 @@ class Gemmy::Tasks::MakeGem
     create_gemspec_file
     create_gemfile
     create_reinstall_file
+    create_executable
+    puts "directory #{name} has been created".yellow
   end
 
   attr_reader :name, :root_dir, :lib, :version_file, :main_file, :summary,
@@ -50,32 +55,17 @@ class Gemmy::Tasks::MakeGem
 
   private
 
-  # A reinstall file is very helpful for development
-  def create_reinstall_file
-    file_txt = <<-TXT.unindent
-      #!/usr/bin/env ruby
-      puts `gem uninstall -x #{name}`
-      puts `gem build #{name}.gemspec`
-      Dir.glob("./*.gem").each { |path| puts `gem install #{path}` }
-    TXT
-    file_path = "#{root_dir}/reinstall"
-    File.open(file_path, 'w') do |file|
-      file.write file_txt
-    end
-    `chmod a+x #{file_path}`
-  end
-
   # prints usage instructions unless the gem name was specified
   #
   def usage_io
-    usage = <<-TXT.unindent
-      \nUsage: make_gem <name>
-    TXT
-    raise usage if @name.blank?
+    if @name.blank?
+      puts "\nUsage: make_gem <name>"
+      exit
+    end
     self
   end
 
-  # creates a root directory for the gem
+  # Creates a root directory for the gem
   #
   def create_root_dir
     @root_dir = name
@@ -183,6 +173,46 @@ class Gemmy::Tasks::MakeGem
     write file: gemfile, text: gemfile_text
     puts "wrote gemfile".green
     self
+  end
+
+  # A reinstall file is very helpful for development
+  def create_reinstall_file
+    file_txt = <<-TXT.unindent
+      #!/usr/bin/env ruby
+      Dir.glob("./*.gem").each { |path| `rm \#{path}` }
+      puts `gem uninstall -x #{name}`
+      puts `gem build #{name}.gemspec`
+      Dir.glob("./*.gem").each { |path| puts `gem install -f \#{path}` }
+    TXT
+    file_path = "#{root_dir}/reinstall"
+    File.open(file_path, 'w') do |file|
+      file.write file_txt
+    end
+    `chmod a+x #{file_path}`
+    puts "wrote reinstall file".green
+  end
+
+  # Creates an empty gem executable which requires the gem.
+  # This makes it easy to call functions from the ruby codebase.
+  # The Thor CLI library is used, see whatisthor.com
+  def create_executable
+    file_txt = <<-TXT.unindent
+      #!/usr/bin/env ruby
+      require '#{name}'
+      class #{class_name}::CLI < Thor
+        desc "test", "run tests"
+        def test
+          puts "No tests have been wrritten"
+          exit
+        end
+      end
+      #{class_name}::CLI.start ARGV
+    TXT
+    `mkdir #{root_dir}/bin`
+    file_path = "#{root_dir}/bin/#{name}"
+    write(file: "#{file_path}", text: file_txt)
+    `chmod a+x #{file_path}`
+    puts "wrote executable".green
   end
 
 end

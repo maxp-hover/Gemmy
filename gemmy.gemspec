@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name        = 'gemmyrb'
   s.version     = Gemmy::VERSION
   s.date        = '2016-12-04'
-  s.summary     = "general utils"
+  s.summary     = "Some general ruby language utils, including a gem generator. See http://github.com/maxpleaner/gemmy for more detail"
   s.description = ""
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["max pleaner"]

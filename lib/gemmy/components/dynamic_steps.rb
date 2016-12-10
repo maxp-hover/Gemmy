@@ -1,6 +1,7 @@
 # Mimics the Cucumber API:
-#   {DynamicSteps#step} runs a step
-#   {DynamicSteps#define_step} defines a step
+#
+#   {#step} runs a step
+#   {#define_step} defines a step
 #
 # The usage is the same as Cucumber:
 #
@@ -12,17 +13,13 @@
 #   => 'hellohello'
 #
 # Like Cucumber, it will raise an error if there is > 1 matching step
-# {DynamicSteps::AmbiguousMatchError} can be rescued if desired.
+# AmbiguousMatchError can be rescued if desired.
 #
 # It also raises an error if no matcher was found
 #
 module Gemmy::Components::DynamicSteps
 
   Gemmy::Patches.refinements.each { |r| using r }
-
-  # A hash mapping regex to proc
-  #
-  attr_reader :steps
 
   # Error raised when a string matches multiple step regexes.
   # It's frequently accidental to come into this situation,
@@ -75,10 +72,11 @@ module Gemmy::Components::DynamicSteps
     end
   end
 
-  # Searches the keys in @steps for a regex the matches the string.
-  # If one is found, it adds the regex as a key in the results hash.
-  # The value is a hash with two keys: :matches (an array) and :proc
-  #
+  # Searches the keys in @steps for regexes that match the string.
+  # @param string [String]
+  # @return [Hash] where keys are regexes and vals are hashes with signature:
+  #   matches: [Array<String>] the String#match results
+  #   proc: [Proc] the block mapped to the regex
   def find_matching_steps(string)
     matching_steps = steps.reduce({}) do |matching_steps, (regex, proc)|
       match_results = string.match(regex).to_a.tap &:shift
