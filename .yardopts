@@ -1,0 +1,11 @@
+--private
+-
+./bin/*
+./**/*.md
+./Gemfile
+./gemmy.gemspec
+./lib/**/*.rb
+./scripts/*
+./rebuild_and_test
+./examples/*.rb
+

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./scripts/rebuild
+
+./scripts/run_tests

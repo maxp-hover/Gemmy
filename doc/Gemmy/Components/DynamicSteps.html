@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Gemmy::Components::DynamicSteps
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Gemmy::Components::DynamicSteps";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Gemmy.html" title="Gemmy (class)">Gemmy</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Components.html" title="Gemmy::Components (module)">Components</a></span></span>
+     &raquo; 
+    <span class="title">DynamicSteps</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
+
+      <div id="content"><h1>Module: Gemmy::Components::DynamicSteps
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/gemmy/components/dynamic_steps.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Mimics the Cucumber API:</p>
+
+<pre class="code ruby"><code class="ruby">{DynamicSteps#step} runs a step
+{DynamicSteps#define_step} defines a step</code></pre>
+
+<p>The usage is the same as Cucumber:</p>
+
+<pre class="code ruby"><code class="ruby">define_step /I print (.+) (.+) times/ do |string, n|
+  n.times { print string }
+end
+
+step &quot;I print hello 2 times&quot;
+=&gt; &#39;hellohello&#39;</code></pre>
+
+<p>Like Cucumber, it will raise an error if there is &gt; 1 matching step
+<span class='object_link'><a href="DynamicSteps/AmbiguousMatchError.html" title="Gemmy::Components::DynamicSteps::AmbiguousMatchError (class)">AmbiguousMatchError</a></span> can be rescued if desired.</p>
+
+<p>It also raises an error if no matcher was found</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DynamicSteps/AmbiguousMatchError.html" title="Gemmy::Components::DynamicSteps::AmbiguousMatchError (class)">AmbiguousMatchError</a></span>, <span class='object_link'><a href="DynamicSteps/NoMatchFoundError.html" title="Gemmy::Components::DynamicSteps::NoMatchFoundError (class)">NoMatchFoundError</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#steps-instance_method" title="#steps (instance method)">#<strong>steps</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A hash mapping regex to proc.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#define_step-instance_method" title="#define_step (instance method)">#<strong>define_step</strong>(regex, &amp;blk)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Defines a regex =&gt; proc mapping A good pattern for regex is to use (.+)
+as match groups, and mirror those as sequential named parameters in the
+block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_matching_steps-instance_method" title="#find_matching_steps (instance method)">#<strong>find_matching_steps</strong>(string)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Searches the keys in @steps for a regex the matches the string.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#step-instance_method" title="#step (instance method)">#<strong>step</strong>(string)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>run a step.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="steps-instance_method">
+  
+    #<strong>steps</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>A hash mapping regex to proc</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_steps'>steps</span>
+  <span class='ivar'>@steps</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="define_step-instance_method">
+  
+    #<strong>define_step</strong>(regex, &amp;blk)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Defines a regex =&gt; proc mapping A good pattern for regex is to use (.+)
+as match groups, and mirror those as sequential named parameters in the
+block.</p>
+
+<p>Match groups are left-greedy, for example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1 2 3 4 5</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.+) (.+)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;</span><span class='symbol'>:shift</span>
+<span class='comment'># =&gt; [&#39;1 2 3 4&#39;, &#39;5&#39;]
+</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_define_step'>define_step</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_steps'>steps</span><span class='lbracket'>[</span><span class='id identifier rubyid_regex'>regex</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_blk'>blk</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_matching_steps-instance_method">
+  
+    #<strong>find_matching_steps</strong>(string)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Searches the keys in @steps for a regex the matches the string. If one is
+found, it adds the regex as a key in the results hash. The value is a hash
+with two keys: :matches (an array) and :proc</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 82</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_matching_steps'>find_matching_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_matching_steps'>matching_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_steps'>steps</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span><span class='op'>|</span>
+    <span class='id identifier rubyid_match_results'>match_results</span> <span class='op'>=</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;</span><span class='symbol'>:shift</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_match_results'>match_results</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='op'>&amp;</span><span class='symbol'>:blank?</span>
+      <span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='lbracket'>[</span><span class='id identifier rubyid_regex'>regex</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>matches:</span> <span class='id identifier rubyid_match_results'>match_results</span><span class='comma'>,</span> <span class='label'>proc:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_matching_steps'>matching_steps</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="step-instance_method">
+  
+    #<strong>step</strong>(string)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>run a step. searches @step keys for regex which matches the string then
+runs the associated proc, passing the regex match results</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/dynamic_steps.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_step'>step</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_matching_steps'>matching_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_find_matching_steps'>find_matching_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span>
+    <span class='comment'># Failure, multiple matching steps
+</span>    <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span>
+      <span class='const'>AmbiguousMatchError</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>step </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_string'>string</span><span class='embexpr_end'>}</span><span class='tstring_content'> matched: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='comment'># Failure, no matching step
+</span>    <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span>
+      <span class='const'>NoMatchFoundError</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>step </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_string'>string</span><span class='embexpr_end'>}</span><span class='tstring_content'> had no match</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Success, run the proc
+</span>    <span class='id identifier rubyid_matching_step'>matching_step</span> <span class='op'>=</span> <span class='id identifier rubyid_matching_steps'>matching_steps</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_matching_step'>matching_step</span><span class='lbracket'>[</span><span class='symbol'>:proc</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_matching_step'>matching_step</span><span class='lbracket'>[</span><span class='symbol'>:matches</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sat Dec 10 10:56:56 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.3.0).
+</div>
+
+    </div>
+  </body>
+</html>

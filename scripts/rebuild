@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+puts `gem uninstall -x gemmy`
+puts `gem build gemmy.gemspec`
+Dir.glob("./*.gem").each { |path| puts `gem install -f #{path}` }
