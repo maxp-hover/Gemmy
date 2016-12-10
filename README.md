@@ -22,4 +22,4 @@ documents:
 - _List of methods intended for general Ruby use_
   - [examples/03_ruby_extensions_list.rb](./examples/03_ruby_extensions_list.rb)
 - _Shell commands and other one-off processes_
-  - [examples/04_shell_commands.rb](./04_shell_commands.rb)
+  - [examples/04_shell_commands.rb](./examples/04_shell_commands.rb)
