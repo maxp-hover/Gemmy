@@ -1,6 +1,6 @@
 # Gemmy provides patches for a few of the core classes.
 #
-# See {Gemmy#load_globally} for how to load these on the root namespace
+# Use Gemmy#load_globally to load these on the root namespace
 # For a refinements-based approach, use this in a class/module definition:
 #
 # Gemmy::Patches.refinements.each { |klass| using klass }
@@ -9,6 +9,7 @@
 # the patches using define_method, for example.
 #
 # See examples/01_using_as_refinement.rb for more info
+# (linked from the README at github.com/maxpleaner/gemmy
 #
 module Gemmy::Patches
 

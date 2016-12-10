@@ -14,7 +14,7 @@ class Gemmy::CLI < Thor
   def self.run(arguments: nil)
     # Store a copy of the arguments.
     # The originals are shifted so they don't intefere with gets
-    arguments = ARGV.clone
+    arguments ||= ARGV.clone
     ARGV.clear
 
     # Can't make this conditional on "__FILE__ == $0"
