@@ -1,6 +1,6 @@
 module Gemmy::Tests::ComponentTests::DynamicStepsTests
 
-  Gemmy::Patches.refinements.each { |r| using r }
+  Gemmy::Patches.class_refinements.each { |r| using r }
 
   def self.run
     runner_class = Class.new
@@ -18,4 +18,5 @@ module Gemmy::Tests::ComponentTests::DynamicStepsTests
       puts "  step".blue
     end
   end
+
 end

@@ -75,7 +75,7 @@
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='label'>arguments:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='comment'># Store a copy of the arguments.
 </span>    <span class='comment'># The originals are shifted so they don&#39;t intefere with gets
-</span>    <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
+</span>    <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>||=</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
     <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
 
     <span class='comment'># Can&#39;t make this conditional on &quot;__FILE__ == $0&quot;
@@ -102,7 +102,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

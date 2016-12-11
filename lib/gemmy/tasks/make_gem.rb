@@ -21,7 +21,7 @@
 #
 class Gemmy::Tasks::MakeGem
 
-  Gemmy::Patches.refinements.each { |r| using r }
+  Gemmy::Patches.class_refinements.each { |r| using r }
 
   # Builds a skeleton ruby gem.
   # Prompts for some input using gets.chomp

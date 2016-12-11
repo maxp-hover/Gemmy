@@ -5,14 +5,17 @@
 #
 module Gemmy::Patches::ThreadPatch
 
-  # Ensure that threads bubble up their errors
-  #
-  def self.included(base)
-    Thread.abort_on_exception = true
+  module ClassMethods
+    module Included
+      # Ensure that threads bubble up their errors
+      #
+      def self.included(base)
+        Thread.abort_on_exception = true
+      end
+    end
   end
 
-  refine Thread do
-    include Gemmy::Patches::ThreadPatch
+  module InstanceMethods
   end
 
 end

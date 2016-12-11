@@ -63,7 +63,7 @@
 </span><span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_load_globally'>load_globally</span>
 
 <span class='comment'># ==========================================================================
-</span><span class='comment'># C O M P O N E N T S
+</span><span class='comment'># COMPONENTS
 </span><span class='comment'># ==========================================================================
 </span>
 <span class='comment'># -------------
@@ -71,14 +71,14 @@
 </span><span class='comment'># -------------
 </span>
 <span class='comment'># define a step
-</span><span class='id identifier rubyid_define_step'>define_step</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>is this a palindrome? (.+)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_string'>string</span><span class='op'>|</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>==</span> <span class='id identifier rubyid_string'>string</span> <span class='rbrace'>}</span>
+</span><span class='id identifier rubyid_define_step'>define_step</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>is this a palindrome\? (.+)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_str'>str</span><span class='op'>|</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>==</span> <span class='id identifier rubyid_str'>str</span> <span class='rbrace'>}</span>
 
 <span class='comment'># call a step
 </span><span class='id identifier rubyid_step'>step</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>is this a palindrome? tacocat</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; true
 </span>
 
 <span class='comment'># ==========================================================================
-</span><span class='comment'># P A T C H E S
+</span><span class='comment'># PATCHES
 </span><span class='comment'># ==========================================================================
 </span>
 <span class='comment'># -------------
@@ -103,12 +103,16 @@
 </span><span class='comment'># ARGV before using it unless it&#39;s your intention
 </span><span class='comment'># for gets to read from ARGV.
 </span><span class='comment'># In this case I want to pass it a val from ARGV
-</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>max</span><span class='tstring_end'>&quot;</span></span>
+</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my_name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>w</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my_name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my_name</span><span class='tstring_end'>&quot;</span></span>
 <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid__prompt'>_prompt</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>what&#39;s your name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># =&gt; max
-</span>
+</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+
 <span class='comment'># shift from ARGV and raise an error if its nil
-</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>something</span><span class='tstring_end'>&quot;</span></span>
+</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my_name</span><span class='tstring_end'>&quot;</span></span>
 <span class='id identifier rubyid_get_arg_or_error'>get_arg_or_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error message</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+<span class='backtick'>`</span><span class='tstring_content'>rm my_name</span><span class='tstring_end'>`</span></span>
 
 <span class='comment'># write a string to a file
 </span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='label'>file:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/tmp/file.txt</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello file</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -142,7 +146,15 @@
 <span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span><span class='int'>2</span><span class='comma'>,</span><span class='int'>3</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='symbol'>:*</span><span class='period'>.</span><span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span>
 <span class='comment'># =&gt; [2,4,6]
 </span>
-
+<span class='comment'># -------------
+</span><span class='comment'># Method
+</span><span class='comment'># -------------
+</span>
+<span class='comment'># Bind arguments to method, i.e. curry
+</span><span class='kw'>def</span> <span class='id identifier rubyid_join_all'>join_all</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_strings'>strings</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='id identifier rubyid_strings'>strings</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='semicolon'>;</span><span class='kw'>end</span>
+<span class='id identifier rubyid_joined'>joined</span> <span class='op'>=</span>  <span class='qwords_beg'>%w{</span><span class='tstring_content'>1</span><span class='words_sep'> </span><span class='tstring_content'>2</span><span class='words_sep'> </span><span class='tstring_content'>3</span><span class='words_sep'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:join_all</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>and </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; &quot;1 and 2 and 3&quot;
+</span>
 <span class='comment'># -------------
 </span><span class='comment'># Thread
 </span><span class='comment'># -------------
@@ -152,7 +164,7 @@
 </span><span class='comment'># is loaded, Threads will now abort on exception</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

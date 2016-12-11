@@ -63,27 +63,32 @@
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>MethodPatch</span>
 
-  <span class='comment'># Bind an argument to a method.
-</span>  <span class='comment'># Very useful for the proc shorthand.
-</span>  <span class='comment'># For example say there&#39;s a method &quot;def add(a,b); print a + b; end&quot;
-</span>  <span class='comment'># You can run it for each number in a list:
-</span>  <span class='comment'>#    [1,2,3].each &amp;method(:add).bind(1)
-</span>  <span class='comment'>#    =&gt; 234
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_bind'>bind</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-    <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_more'>more</span><span class='op'>|</span>
-      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span> <span class='op'>+</span> <span class='id identifier rubyid_more'>more</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
+  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_refine'>refine</span> <span class='const'>Method</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_include'>include</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>MethodPatch</span>
+  <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='comment'># Bind an argument to a method.
+</span>    <span class='comment'># Very useful for the proc shorthand.
+</span>    <span class='comment'># For example say there&#39;s a method &quot;def add(a,b); print a + b; end&quot;
+</span>    <span class='comment'># You can run it for each number in a list:
+</span>    <span class='comment'>#    [1,2,3].each &amp;method(:add).bind(1)
+</span>    <span class='comment'>#    =&gt; 234
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Bind</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_bind'>bind</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+        <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_more'>more</span><span class='op'>|</span>
+          <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span> <span class='op'>+</span> <span class='id identifier rubyid_more'>more</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

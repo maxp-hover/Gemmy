@@ -71,14 +71,21 @@
 </span><span class='comment'># It must be called from the top-level scope in a module/class,
 </span><span class='comment'># and it cannot be invoked dynamically.
 </span>
-<span class='comment'># Despite this, it accepts a variable for it&#39;s classname argument
-</span><span class='comment'># and can be invoked in a loop as well. With that in mind, this is the best
-</span><span class='comment'># I could do:
+<span class='comment'># Despite this, &#39;using&#39; is not all that bad. It makes the patch methods
+</span><span class='comment'># available to both class and instance scopes without any further code.
+</span><span class='comment'># It accepts a variable for it&#39;s classname argument and can be invoked in a 
+</span><span class='comment'># loop as well. With that in mind, this is the best I could do:
 </span>
 <span class='kw'>class</span> <span class='const'>Tester</span>
-  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
+  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_nothing'>nothing</span><span class='period'>.</span><span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='comment'># Object#nothing patch
-</span><span class='kw'>end</span>
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_refined?'>refined?</span>
+    <span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_refined?'>refined?</span>
+  <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_refined?'>refined?</span>
+    <span class='id identifier rubyid_nothing'>nothing</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># does a bear shit in the woods?
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span>
 
 <span class='comment'># Secondly, the patched matcheds can&#39;t be used outside of their original method
 </span><span class='comment'># definitions. That is to say, they can&#39;t be used with define_method or
@@ -96,7 +103,7 @@
 <span class='comment'># Passed blocks also can&#39;t access the refined methods:
 </span>
 <span class='kw'>class</span> <span class='const'>Tester</span>
-  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
+  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
   <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call_block'>call_block</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_blk'>blk</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
   <span class='kw'>end</span>
@@ -107,7 +114,7 @@
 <span class='comment'># Eval does work if it&#39;s not invoked with &#39;send&#39;:
 </span>
 <span class='kw'>class</span> <span class='const'>Tester</span>
-  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_refinements'>refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
+  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
   <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call_eval'>call_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_eval'>eval</span> <span class='id identifier rubyid_string'>string</span>
   <span class='kw'>end</span>
@@ -131,10 +138,37 @@
 
 <span class='comment'># The reason all this is mentioned is that it&#39;s not necessary when Gemmy&#39;s
 </span><span class='comment'># patches are applied globally. In that case, the components include/extend
-</span><span class='comment'># happens automatically.</span></pre></div></div>
+</span><span class='comment'># happens automatically.
+</span>
+<span class='comment'># Patches can also be cherrypicked for use with refinements.
+</span><span class='comment'># In the application&#39;s internal structure, this required wrapping all
+</span><span class='comment'># patch methods in their own modules.
+</span>
+<span class='comment'># There&#39;s a method &quot;Gemmy::Patches.method_refinements&quot; that will replace
+</span><span class='comment'># &quot;Gemmy::Patches.class_refinements&quot; in this case. It&#39;s argument is a
+</span><span class='comment'># hash with special syntax:
+</span>
+<span class='kw'>class</span> <span class='const'>Tester</span>
+  <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_method_refinements'>method_refinements</span><span class='lparen'>(</span>
+    <span class='label'>String:</span> <span class='lbrace'>{</span> <span class='label'>InstanceMethods:</span> <span class='lbracket'>[</span><span class='symbol'>:Unindent</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>Array:</span> <span class='lbrace'>{</span> <span class='label'>InstanceMethods:</span> <span class='lbracket'>[</span><span class='symbol'>:Recurse</span><span class='comma'>,</span> <span class='symbol'>:AnyNot</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_klass'>klass</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_klass'>klass</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_refined?'>refined?</span>
+    <span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_refined?'>refined?</span>
+  <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_refined?'>refined?</span>
+    <span class='comment'># showing a few methods being used
+</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  hello\n   world</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_unindent'>unindent</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello\nworld</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># true
+</span>    <span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_recurse'>recurse</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:compact</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_x'>x</span> <span class='rbrace'>}</span> <span class='comment'># false
+</span>
+    <span class='comment'># other patches aren&#39;t defined
+</span>    <span class='kw'>defined?</span> <span class='id identifier rubyid_nothing'>nothing</span> <span class='comment'># false
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

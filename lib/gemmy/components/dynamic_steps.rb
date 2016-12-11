@@ -19,7 +19,7 @@
 #
 module Gemmy::Components::DynamicSteps
 
-  Gemmy::Patches.refinements.each { |r| using r }
+  Gemmy::Patches.class_refinements.each { |r| using r }
 
   # Error raised when a string matches multiple step regexes.
   # It's frequently accidental to come into this situation,

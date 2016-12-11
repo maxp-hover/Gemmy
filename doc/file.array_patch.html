@@ -62,25 +62,197 @@
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># Array patches
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ArrayPatch</span>
-  <span class='comment'># checks if any of the results of an array do not respond truthily
-</span>  <span class='comment'># to a block
-</span>  <span class='comment'>#
-</span>  <span class='comment'># For example, to check if any items of an array are truthy:
-</span>  <span class='comment'>#   [false, nil, &#39;&#39;].any_not? &amp;:blank?
-</span>  <span class='comment'>#   =&gt; false
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_any_not?'>any_not?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_item'>item</span><span class='op'>|</span> <span class='op'>!</span> <span class='id identifier rubyid_blk'>blk</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>Zip</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arrays'>arrays</span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_arrays'>arrays</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_arrays'>arrays</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arrays'>arrays</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_refine'>refine</span> <span class='const'>Array</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_include'>include</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ArrayPatch</span>
+  <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>KeyBy</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_key_by'>key_by</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_to_enum'>to_enum</span><span class='lparen'>(</span><span class='symbol'>:key_by</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+        <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+          <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
+        <span class='kw'>end</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_h'>h</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>After</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_after'>after</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_value'>value</span>
+        <span class='kw'>self</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>%</span> <span class='id identifier rubyid_length'>length</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Before</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_before'>before</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_value'>value</span>
+        <span class='kw'>self</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>%</span> <span class='id identifier rubyid_length'>length</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Duplicates</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_duplicates'>duplicates</span><span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='op'>=</span><span class='int'>2</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span> <span class='int'>0</span> <span class='rparen'>)</span>
+        <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+          <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
+        <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_min'>min</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>ExtractOptions</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_extract_options!'>extract_options!</span>
+        <span class='kw'>if</span> <span class='const'>Hash</span> <span class='op'>===</span> <span class='id identifier rubyid_last'>last</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_extractable_options?'>extractable_options?</span>
+          <span class='id identifier rubyid_pop'>pop</span>
+        <span class='kw'>else</span>
+          <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>RejectValues</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_reject_values'>reject_values</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Recurse</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_recurse'>recurse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+        <span class='id identifier rubyid_a'>a</span> <span class='op'>=</span> <span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_array'>array</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>when</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
+            <span class='id identifier rubyid_array'>array</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_recurse'>recurse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_array'>array</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_array'>array</span>
+        <span class='kw'>end</span>
+        <span class='kw'>yield</span> <span class='id identifier rubyid_a'>a</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Probability</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_probability'>probability</span>
+        <span class='id identifier rubyid_probs'>probs</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='float'>0.0</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='float'>0.0</span>
+        <span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+          <span class='id identifier rubyid_probs'>probs</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='float'>1.0</span>
+          <span class='id identifier rubyid_size'>size</span> <span class='op'>+=</span> <span class='float'>1.0</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_probs'>probs</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_probs'>probs</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='rbracket'>]</span> <span class='op'>/=</span> <span class='id identifier rubyid_size'>size</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_probs'>probs</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>NotEmpty</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_not_empty?'>not_empty?</span>
+        <span class='op'>!</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Median</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_median'>median</span><span class='lparen'>(</span><span class='id identifier rubyid_offset'>offset</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>0</span>
+
+        <span class='id identifier rubyid_tmp'>tmp</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+        <span class='id identifier rubyid_mid'>mid</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_tmp'>tmp</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>/</span> <span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='id identifier rubyid_offset'>offset</span>
+
+        <span class='id identifier rubyid_tmp'>tmp</span><span class='lbracket'>[</span><span class='id identifier rubyid_mid'>mid</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Mode</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
+        <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='int'>0</span>
+        <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='int'>0</span>
+        <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_cc'>cc</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='id identifier rubyid_cc'>cc</span> <span class='kw'>if</span> <span class='id identifier rubyid_cc'>cc</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_max'>max</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>==</span> <span class='id identifier rubyid_max'>max</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>NonUniq</span>
+
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_nonuniq'>nonuniq</span>
+        <span class='id identifier rubyid_h1'>h1</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h2'>h2</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+          <span class='id identifier rubyid_h2'>h2</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_h1'>h1</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_h1'>h1</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
+        <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h2'>h2</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Arrange</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># creates ranges from array
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_arrange'>arrange</span>
+        <span class='id identifier rubyid_array'>array</span> <span class='op'>=</span> <span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_e'>e</span> <span class='op'>?</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>:</span> <span class='id identifier rubyid_e'>e</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='kw'>unless</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+            <span class='id identifier rubyid_last'>last</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+            <span class='id identifier rubyid_last_value'>last_value</span>    <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_last'>last</span>  <span class='op'>?</span> <span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>   <span class='op'>:</span> <span class='id identifier rubyid_last'>last</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_current_value'>current_value</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>:</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+            <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_last_value'>last_value</span><span class='period'>.</span><span class='id identifier rubyid_succ'>succ</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_current_value'>current_value</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='op'>-</span><span class='int'>1</span>
+              <span class='id identifier rubyid_c'>c</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span>
+            <span class='kw'>else</span>
+              <span class='id identifier rubyid_first'>first</span>  <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_last'>last</span> <span class='op'>?</span> <span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>:</span> <span class='id identifier rubyid_last'>last</span><span class='rparen'>)</span>
+              <span class='id identifier rubyid_second'>second</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_last'>last</span> <span class='op'>?</span> <span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>:</span> <span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='const'>Range</span> <span class='op'>===</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>:</span> <span class='id identifier rubyid_value'>value</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+              <span class='id identifier rubyid_c'>c</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_first'>first</span><span class='op'>..</span><span class='id identifier rubyid_second'>second</span><span class='rbracket'>]</span>
+              <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_flatten!'>flatten!</span>
+            <span class='kw'>end</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_c'>c</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+      <span class='kw'>alias</span> <span class='id identifier rubyid_rangify'>rangify</span> <span class='id identifier rubyid_arrange'>arrange</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>AnyNot</span>
+      <span class='comment'># checks if any of the results of an array do not respond truthily
+</span>      <span class='comment'># to a block
+</span>      <span class='comment'>#
+</span>      <span class='comment'># For example, to check if any items of an array are truthy:
+</span>      <span class='comment'>#   [false, nil, &#39;&#39;].any_not? &amp;:blank?
+</span>      <span class='comment'>#   =&gt; false
+</span>      <span class='comment'>#
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_any_not?'>any_not?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_item'>item</span><span class='op'>|</span> <span class='op'>!</span> <span class='id identifier rubyid_blk'>blk</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

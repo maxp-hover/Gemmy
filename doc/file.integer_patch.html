@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: integer_patch
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "integer_patch";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: integer_patch</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="file_list.html"></iframe>
+
+      <div id="content"><div id='filecontents'><pre class="code ruby"><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>IntegerPatch</span>
+
+  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
+
+  <span class='kw'>end</span>
+
+  <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>Factorial</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_factorial'>factorial</span>
+        <span class='kw'>return</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='id identifier rubyid_zero?'>zero?</span>
+        <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='int'>1</span>
+        <span class='int'>2</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span> <span class='op'>*=</span> <span class='id identifier rubyid_n'>n</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_f'>f</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>MultipleOf</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_multiple_of?'>multiple_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+          <span class='id identifier rubyid_zero?'>zero?</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>false</span>
+        <span class='kw'>else</span>
+          <span class='kw'>self</span> <span class='op'>%</span> <span class='id identifier rubyid_number'>number</span> <span class='op'>==</span> <span class='int'>0</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Odd</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_odd?'>odd?</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_even?'>even?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Of</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_of'>of</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='kw'>alias</span> <span class='id identifier rubyid_times_map'>times_map</span> <span class='id identifier rubyid_of'>of</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Collapse</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_collapse'>collapse</span>
+        <span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span></pre></div></div>
+
+      <div id="footer">
+  Generated on Sun Dec 11 14:51:52 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.3.0).
+</div>
+
+    </div>
+  </body>
+</html>

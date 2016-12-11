@@ -26,7 +26,7 @@ module Gemmy::Tests
 
     class PatchedClass
 
-      Gemmy::Patches.refinements.each { |r| using r }
+      Gemmy::Patches.class_refinements.each { |r| using r }
 
       extend Gemmy::Tests::PatchTests::Error
 

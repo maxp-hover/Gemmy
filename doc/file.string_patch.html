@@ -63,26 +63,31 @@
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>StringPatch</span>
 
-  <span class='comment'># reference &#39;strip_heredoc&#39; (provided by active support) by &#39;unindent&#39;
-</span>  <span class='comment'>#
-</span>  <span class='comment'># this takes an indented heredoc and treats it as if the first line is not
-</span>  <span class='comment'># indented.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># Instead of using alias, a method is defined here to enable modular
-</span>  <span class='comment'># patches
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_unindent'>unindent</span>
-    <span class='id identifier rubyid_strip_heredoc'>strip_heredoc</span>
+  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_refine'>refine</span> <span class='const'>String</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_include'>include</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>StringPatch</span>
+  <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='comment'># reference &#39;strip_heredoc&#39; (provided by active support) by &#39;unindent&#39;
+</span>    <span class='comment'>#
+</span>    <span class='comment'># this takes an indented heredoc and treats it as if the first line is not
+</span>    <span class='comment'># indented.
+</span>    <span class='comment'>#
+</span>    <span class='comment'># Instead of using alias, a method is defined here to enable modular
+</span>    <span class='comment'># patches
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Unindent</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_unindent'>unindent</span>
+        <span class='id identifier rubyid_strip_heredoc'>strip_heredoc</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

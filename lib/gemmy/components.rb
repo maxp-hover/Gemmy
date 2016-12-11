@@ -9,7 +9,7 @@
     end
 
     def self.list
-      [
+      @@list ||= [
         Gemmy::Components::DynamicSteps
       ]
     end

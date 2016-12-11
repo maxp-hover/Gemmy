@@ -76,13 +76,28 @@
 </span>  <span class='comment'># This is the method handling the global case
 </span>  <span class='comment'>#
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load_globally'>load_globally</span>
-    <span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_core_patches'>core_patches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_core_klass_name'>core_klass_name</span><span class='comma'>,</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
-      <span class='id identifier rubyid_core_klass_name'>core_klass_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span>
+    <span class='id identifier rubyid_core_patches'>core_patches</span> <span class='op'>=</span> <span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_core_patches'>core_patches</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_core_klass_name'>core_klass_name</span><span class='comma'>,</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
+      <span class='id identifier rubyid_core_klass'>core_klass</span> <span class='op'>=</span> <span class='id identifier rubyid_core_klass_name'>core_klass_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
+      <span class='id identifier rubyid_instance_method_class'>instance_method_class</span> <span class='op'>=</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>InstanceMethods</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_class_method_class'>class_method_class</span> <span class='op'>=</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ClassMethods</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_instance_classes'>instance_classes</span> <span class='op'>=</span> <span class='id identifier rubyid_instance_method_class'>instance_method_class</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_klass_sym'>klass_sym</span><span class='op'>|</span>
+        <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='id identifier rubyid_instance_method_class'>instance_method_class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span> <span class='id identifier rubyid_klass_sym'>klass_sym</span>
+        <span class='id identifier rubyid_core_klass'>core_klass</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_klass'>klass</span>
+        <span class='id identifier rubyid_klass'>klass</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_class_classes'>class_classes</span> <span class='op'>=</span> <span class='id identifier rubyid_class_method_class'>class_method_class</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_klass_sym'>klass_sym</span><span class='op'>|</span>
+        <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='id identifier rubyid_class_method_class'>class_method_class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span> <span class='id identifier rubyid_klass_sym'>klass_sym</span>
+        <span class='id identifier rubyid_core_klass'>core_klass</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='id identifier rubyid_klass'>klass</span>
+        <span class='id identifier rubyid_klass'>klass</span>
+      <span class='kw'>end</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_instance_classes'>instance_classes</span><span class='comma'>,</span> <span class='id identifier rubyid_class_classes'>class_classes</span><span class='rbracket'>]</span>
     <span class='kw'>end</span>
-    <span class='const'>Components</span><span class='period'>.</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
+    <span class='id identifier rubyid_components'>components</span> <span class='op'>=</span> <span class='const'>Components</span><span class='period'>.</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
       <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span>
       <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span>
+      <span class='id identifier rubyid_patch_klass'>patch_klass</span>
     <span class='kw'>end</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_components'>components</span><span class='comma'>,</span> <span class='id identifier rubyid_core_patches'>core_patches</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
 
@@ -94,7 +109,7 @@
 <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:require</span><span class='rparen'>)</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

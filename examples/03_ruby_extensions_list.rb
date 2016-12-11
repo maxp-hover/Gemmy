@@ -10,7 +10,7 @@ Gemmy.load_globally
 # -------------
 
 # define a step
-define_step(/is this a palindrome? (.+)/) { |string| string.reverse == string }
+define_step(/is this a palindrome\? (.+)/) { |str| str.reverse == str }
 
 # call a step
 step "is this a palindrome? tacocat" # => true
@@ -42,12 +42,16 @@ error("rescue me") rescue nil
 # ARGV before using it unless it's your intention
 # for gets to read from ARGV.
 # In this case I want to pass it a val from ARGV
-ARGV.unshift "max"
+File.open("my_name", 'w') { |f| f.write("my_name") }
+ARGV.unshift "my_name"
 puts _prompt("what's your name") # => max
+ARGV.clear
 
 # shift from ARGV and raise an error if its nil
-ARGV.unshift "something"
+ARGV.unshift "my_name"
 get_arg_or_error("error message")
+ARGV.clear
+`rm my_name`
 
 # write a string to a file
 write(file: "/tmp/file.txt", text: "hello file")
@@ -86,8 +90,9 @@ TXT
 # -------------
 
 # Bind arguments to method, i.e. curry
-[1,2,3].each &method(:add).bind(1)
-# => [2,3,4]
+def join_all(*strings); strings.join ;end
+joined =  %w{1 2 3}.map(&method(:join_all).bind("and "))
+# => "1 and 2 and 3"
 
 # -------------
 # Thread

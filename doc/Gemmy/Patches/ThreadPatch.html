@@ -98,101 +98,29 @@ any of these methods</p>
 <div class="tags">
   
 
-</div>
-
-
-
-
-
-
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
   
-    <h2>
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
     
-      <a href="#included-class_method" title="included (class method)">.<strong>included</strong>(base)  &#x21d2; Object </a>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="ThreadPatch/ClassMethods.html" title="Gemmy::Patches::ThreadPatch::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="ThreadPatch/InstanceMethods.html" title="Gemmy::Patches::ThreadPatch::InstanceMethods (module)">InstanceMethods</a></span>
     
-
+  
     
-  </span>
   
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Ensure that threads bubble up their errors.</p>
-</div></span>
-  
-</li>
-
-      
-    </ul>
-  
+</p>
 
 
 
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="included-class_method">
-  
-    .<strong>included</strong>(base)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Ensure that threads bubble up their errors</p>
 
 
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
 
 
-10
-11
-12</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/thread_patch.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
-  <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_abort_on_exception'>abort_on_exception</span> <span class='op'>=</span> <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:05 2016 by
+  Generated on Sun Dec 11 14:51:53 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

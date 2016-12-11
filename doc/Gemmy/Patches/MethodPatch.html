@@ -96,110 +96,29 @@
 <div class="tags">
   
 
-</div>
-
-
-
-
-
-
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
   
-    <h2>
-      Instance Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
     
-      <a href="#bind-instance_method" title="#bind (instance method)">#<strong>bind</strong>(*args)  &#x21d2; Object </a>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="MethodPatch/ClassMethods.html" title="Gemmy::Patches::MethodPatch::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="MethodPatch/InstanceMethods.html" title="Gemmy::Patches::MethodPatch::InstanceMethods (module)">InstanceMethods</a></span>
     
-
+  
     
-  </span>
   
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Bind an argument to a method.</p>
-</div></span>
-  
-</li>
-
-      
-    </ul>
-  
+</p>
 
 
 
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="bind-instance_method">
-  
-    #<strong>bind</strong>(*args)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Bind an argument to a method. Very useful for the proc shorthand. For
-example say there&#39;s a method “def add(a,b); print a + b; end” You can
-run it for each number in a list:</p>
-
-<pre class="code ruby"><code class="ruby">[1,2,3].each &amp;method(:add).bind(1)
-=&gt; 234</code></pre>
 
 
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
 
 
-12
-13
-14
-15
-16</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/method_patch.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_bind'>bind</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_more'>more</span><span class='op'>|</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span> <span class='op'>+</span> <span class='id identifier rubyid_more'>more</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:05 2016 by
+  Generated on Sun Dec 11 14:51:53 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

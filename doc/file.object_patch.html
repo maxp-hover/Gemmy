@@ -63,67 +63,87 @@
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ObjectPatch</span>
 
-  <span class='comment'># Turns on verbose mode, showing warnings
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_verbose_mode'>verbose_mode</span>
-    <span class='gvar'>$VERBOSE</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Generic error. Raises RuntimeError
-</span>  <span class='comment'># @param msg [String] optional
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span>
-  <span class='kw'>end</span>
+  <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
 
-  <span class='comment'># Prints a string then gets input
-</span>  <span class='comment'># @param txt [String]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid__prompt'>_prompt</span><span class='lparen'>(</span><span class='id identifier rubyid_txt'>txt</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_txt'>txt</span>
-    <span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
-  <span class='kw'>end</span>
+    <span class='comment'># Turns on verbose mode, showing warnings
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>VerboseMode</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_verbose_mode'>verbose_mode</span>
+        <span class='gvar'>$VERBOSE</span> <span class='op'>=</span> <span class='kw'>true</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='comment'># Shifts one ARGV and raises a message if it&#39;s undefined.
-</span>  <span class='comment'># @param msg [String]
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_get_arg_or_error'>get_arg_or_error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
-    <span class='lparen'>(</span><span class='lbracket'>[</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:error_if_blank</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
-  <span class='kw'>end</span>
+    <span class='comment'># Generic error. Raises RuntimeError
+</span>    <span class='comment'># @param msg [String] optional
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Error</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='comment'># Writes a string to a file
-</span>  <span class='comment'># @param file [String] path to write to
-</span>  <span class='comment'># @param text [String] text to write
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>text:</span><span class='rparen'>)</span>
-    <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>w</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_text'>text</span> <span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+    <span class='comment'># Prints a string then gets input
+</span>    <span class='comment'># @param txt [String]
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Prompt</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid__prompt'>_prompt</span><span class='lparen'>(</span><span class='id identifier rubyid_txt'>txt</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_txt'>txt</span>
+        <span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='comment'># if args[0] (object) is blank, raises args[1] (message)
-</span>  <span class='comment'># @param args [Array] - value 1 is obj, value 2 is msg
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_error_if_blank'>error_if_blank</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span>
-    <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+    <span class='comment'># Shifts one ARGV and raises a message if it&#39;s undefined.
+</span>    <span class='comment'># @param msg [String]
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>GetArgOrError</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_get_arg_or_error'>get_arg_or_error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+        <span class='lparen'>(</span><span class='lbracket'>[</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:error_if_blank</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='comment'># shorter proc shorthands
-</span>  <span class='comment'>#
-</span>  <span class='kw'>alias</span> <span class='id identifier rubyid_m'>m</span> <span class='id identifier rubyid_method'>method</span>
+    <span class='comment'># Writes a string to a file
+</span>    <span class='comment'># @param file [String] path to write to
+</span>    <span class='comment'># @param text [String] text to write
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Write</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>text:</span><span class='rparen'>)</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>w</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_text'>text</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='comment'># method which does absolutely nothing, ignoring all arguments
-</span>  <span class='comment'>#
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_nothing'>nothing</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+    <span class='comment'># if args[0] (object) is blank, raises args[1] (message)
+</span>    <span class='comment'># @param args [Array] - value 1 is obj, value 2 is msg
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>ErrorIfBlank</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_error_if_blank'>error_if_blank</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span>
+        <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_refine'>refine</span> <span class='const'>Object</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_include'>include</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ObjectPatch</span>
+    <span class='kw'>module</span> <span class='const'>M</span>
+      <span class='comment'># shorter proc shorthands
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># method which does absolutely nothing, ignoring all arguments
+</span>    <span class='comment'>#
+</span>    <span class='kw'>module</span> <span class='const'>Nothing</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_nothing'>nothing</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sat Dec 10 13:11:04 2016 by
+  Generated on Sun Dec 11 14:51:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>
