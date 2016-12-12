@@ -19,7 +19,12 @@ documents:
 - _Loading the gem's code in different scopes_
   - [examples/01_using_as_refinement.rb](./examples/01_using_as_refinement.rb)
   - [examples/02_using_globally.rb](./examples/02_using_globally.rb)
-- _List of methods intended for general Ruby use_
-  - [examples/03_ruby_extensions_list.rb](./examples/03_ruby_extensions_list.rb)
 - _Shell commands and other one-off processes_
-  - [examples/04_shell_commands.rb](./examples/04_shell_commands.rb)
+  - [examples/03_shell_commands.rb](./examples/03_shell_commands.rb)
+
+**To see a full list of the patched methods (there are a lot since I've
+included many from facets), see the [rubydoc](http://www.rubydoc.info/gems/gemmyrb)**
+
+Specifically, look at the constants defined on Gemmy::Patches. There is one
+module for each of the core classes being patched. Each individual method
+is also contained in its own module (to make modular inclusion possible)

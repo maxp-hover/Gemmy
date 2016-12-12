@@ -61,12 +61,203 @@
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='comment'># Object patches. Can be called with implicit receiver
 </span><span class='comment'>#
+</span><span class='comment'># Patches which are originally specified as being for Kernel (by facets,
+</span><span class='comment'># for examples), are implemented here as patches on Object because Kernel is
+</span><span class='comment'># a module and Ruby doesn&#39;t support refinements on Modules. Object includes
+</span><span class='comment'># and extends Kernel so it&#39;s the same effect.
+</span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ObjectPatch</span>
 
-  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
+  <span class='comment'># This class is redundant here, since Object&#39;s instance methods
+</span>  <span class='comment'># are available at the class scope anyway.
+</span>  <span class='kw'>module</span> <span class='const'>ClassMethods</span>
   <span class='kw'>end</span>
 
   <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>Iteself</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_itself'>itself</span>
+        <span class='kw'>def</span> <span class='id identifier rubyid_itself'>itself</span>
+          <span class='kw'>self</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Try</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># nicer than the builtin
+</span>      <span class='comment'># @example.try.name    #=&gt; &quot;bob&quot;
+</span>      <span class='comment'># @people.try(:collect){ |p| p.name }
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_method'>method</span>
+          <span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='kw'>self</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Not</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># true.nil?.not? == !true.nil?
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_not?'>not?</span>
+        <span class='op'>!</span><span class='kw'>self</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Truthy</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_truthy'>truthy</span>
+        <span class='op'>!</span><span class='op'>!</span> <span class='kw'>self</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Falsy</span>
+      <span class='kw'>def</span> <span class='const'>Falsy</span>
+        <span class='op'>!</span> <span class='kw'>self</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>NotNil</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_not_nil?'>not_nil?</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Maybe</span>
+      <span class='comment'># Random generator that returns true or false. Can also take a block that has a 50/50 chance to being executed…
+</span>      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_maybe'>maybe</span><span class='lparen'>(</span><span class='id identifier rubyid_chance'>chance</span> <span class='op'>=</span> <span class='float'>0.5</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+          <span class='kw'>yield</span> <span class='kw'>if</span> <span class='id identifier rubyid_rand'>rand</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_chance'>chance</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_rand'>rand</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_chance'>chance</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>InstanceAssign</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># assign instance variables with a hash
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_instance_assign'>instance_assign</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+          <span class='id identifier rubyid_k'>k</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>!~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^@</span><span class='regexp_end'>/</span></span>
+          <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+        <span class='kw'>self</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>HierarchicalSend</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># Send a message to each ancestor in an object&#39;s class hierarchy. The method will only be called if the method is defined for the ancestor.
+</span>      <span class='comment'># This can be very useful for setting up a `preinitialize` system.
+</span>      <span class='comment'>#
+</span>      <span class='comment'># Example:
+</span>      <span class='comment'># m = Module.new do
+</span>      <span class='comment'>#       attr :a
+</span>      <span class='comment'>#       def preinitialize
+</span>      <span class='comment'>#         @a = 1
+</span>      <span class='comment'>#       end
+</span>      <span class='comment'>#     end
+</span>      <span class='comment'>#
+</span>      <span class='comment'># c = Class.new do
+</span>      <span class='comment'>#       include m
+</span>      <span class='comment'>#       def initialize
+</span>      <span class='comment'>#         hierarchical_send(:preinitialize)
+</span>      <span class='comment'>#       end
+</span>      <span class='comment'>#     end
+</span>
+      <span class='comment'># c.new.a  #=&gt; 1
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_hierarchical_send'>hierarchical_send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>=</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='const'>RUBY_VERSION</span> <span class='op'>&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.9</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_this'>this</span> <span class='op'>=</span> <span class='kw'>self</span>
+        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_hierarchically'>hierarchically</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_anc'>anc</span><span class='op'>|</span>
+          <span class='comment'>## is there really no better way to check for the method?
+</span>          <span class='kw'>if</span> <span class='id identifier rubyid_anc'>anc</span><span class='period'>.</span><span class='id identifier rubyid_instance_methods'>instance_methods</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='kw'>or</span>
+               <span class='id identifier rubyid_anc'>anc</span><span class='period'>.</span><span class='id identifier rubyid_public_instance_methods'>public_instance_methods</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='kw'>or</span>
+               <span class='id identifier rubyid_anc'>anc</span><span class='period'>.</span><span class='id identifier rubyid_private_instance_methods'>private_instance_methods</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='kw'>or</span>
+               <span class='id identifier rubyid_anc'>anc</span><span class='period'>.</span><span class='id identifier rubyid_protected_instance_methods'>protected_instance_methods</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_im'>im</span> <span class='op'>=</span> <span class='id identifier rubyid_anc'>anc</span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+            <span class='comment'>##im.arity == 0 ? im.bind(this).call(&amp;block) : im.bind(this).call(*args, &amp;block)
+</span>            <span class='id identifier rubyid_im'>im</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_this'>this</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Ergo</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># This is like #tap, but #tap yields self and returns self,
+</span>      <span class='comment'># where as #ergo yields self but returns the result.
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_ergo'>ergo</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+          <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>?</span> <span class='kw'>yield</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='kw'>self</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>DeepCopy</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_deep_copy'>deep_copy</span>
+        <span class='const'>Marshal</span><span class='op'>::</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='const'>Marshal</span><span class='op'>::</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Constant</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># like Module#const_get accessible at all levels
+</span>      <span class='comment'># and handles module hierarchy.
+</span>      <span class='comment'># constant(&quot;Process::Sys&quot;)
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_constant'>constant</span><span class='lparen'>(</span><span class='id identifier rubyid_const'>const</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_const'>const</span> <span class='op'>=</span> <span class='id identifier rubyid_const'>const</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+        <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='id identifier rubyid_const'>const</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>Object</span> <span class='op'>:</span> <span class='lparen'>(</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Module</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='kw'>self</span> <span class='op'>:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='rparen'>)</span>
+        <span class='id identifier rubyid_const'>const</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>::</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_mod'>mod</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Bool</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_bool?'>bool?</span>
+        <span class='lparen'>(</span><span class='kw'>true</span> <span class='op'>==</span> <span class='kw'>self</span> <span class='kw'>or</span> <span class='kw'>false</span> <span class='op'>==</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>AttrSingletonAccessor</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># obj = Object.new
+</span>      <span class='comment'># obj.attr_singleton_accessor :x, :y
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_attr_singleton_accessor'>attr_singleton_accessor</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='comment'>#h, a = *args.partition{|a| Hash===a}
+</span>        <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span> <span class='symbol'>:attr_accessor</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rparen'>)</span>
+        <span class='comment'>#(class &lt;&lt; self ; self ; end).send( :attr_accessor, *h.keys )
+</span>        <span class='comment'>#h.each { |k,v| instance_variable_set(&quot;@#{k}&quot;, v) }
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>AttrSingletonReader</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_attr_singleton_reader'>attr_singleton_reader</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='comment'>#h, a = *args.partition{|a| Hash===a}
+</span>        <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span> <span class='symbol'>:attr_reader</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rparen'>)</span>
+        <span class='comment'>#(class &lt;&lt; self ; self ; end).send( :attr_reader, *h.keys )
+</span>        <span class='comment'>#h.each { |k,v| instance_variable_set(&quot;@#{k}&quot;, v) }
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>AttrSingletonWriter</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_attr_singleton_writer'>attr_singleton_writer</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='comment'>#h, a = *args.partition{|a| Hash===a}
+</span>        <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>self</span> <span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span> <span class='symbol'>:attr_writer</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rparen'>)</span>
+        <span class='comment'>#(class &lt;&lt; self ; self ; end).send( :attr_writer, *h.keys )
+</span>        <span class='comment'>#h.each { |k,v| instance_variable_set(&quot;@#{k}&quot;, v) }
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
 
     <span class='comment'># Turns on verbose mode, showing warnings
 </span>    <span class='comment'>#
@@ -82,6 +273,15 @@
 </span>    <span class='kw'>module</span> <span class='const'>Error</span>
       <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Ask</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_ask'>ask</span><span class='lparen'>(</span><span class='id identifier rubyid_prompt'>prompt</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+        <span class='gvar'>$stdout</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prompt'>prompt</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_flush'>flush</span>
+        <span class='gvar'>$stdin</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp!'>chomp!</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
 
@@ -143,7 +343,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Dec 11 14:51:52 2016 by
+  Generated on Sun Dec 11 18:41:36 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

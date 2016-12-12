@@ -95,7 +95,11 @@ module Gemmy::Patches
       Method: Gemmy::Patches::MethodPatch,
       Hash: Gemmy::Patches::HashPatch,
       Thread: Gemmy::Patches::ThreadPatch,
-      Integer: Gemmy::Patches::IntegerPatch
+      Integer: Gemmy::Patches::IntegerPatch,
+      Class: Gemmy::Patches::ClassPatch,
+      Exception: Gemmy::Patches::ExceptionPatch,
+      Float: Gemmy::Patches::FloatPatch,
+      Proc: Gemmy::Patches::ProcPatch
     }.with_indifferent_access
   end
 

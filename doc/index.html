@@ -93,19 +93,22 @@ href="./examples/01_using_as_refinement.rb">examples/01_using_as_refinement.rb</
 </li><li>
 <p><a href="./examples/02_using_globally.rb">examples/02_using_globally.rb</a></p>
 </li><li>
-<p><em>List of methods intended for general Ruby use</em></p>
-</li><li>
-<p><a
-href="./examples/03_ruby_extensions_list.rb">examples/03_ruby_extensions_list.rb</a></p>
-</li><li>
 <p><em>Shell commands and other one-off processes</em></p>
 </li><li>
-<p><a href="./examples/04_shell_commands.rb">examples/04_shell_commands.rb</a></p>
+<p><a href="./examples/03_shell_commands.rb">examples/03_shell_commands.rb</a></p>
 </li></ul>
+
+<p><strong>To see a full list of the patched methods (there are a lot since
+I&#39;ve included many from facets), see the <a
+href="http://www.rubydoc.info/gems/gemmyrb">rubydoc</a></strong></p>
+
+<p>Specifically, look at the constants defined on Gemmy::Patches. There is one
+module for each of the core classes being patched. Each individual method
+is also contained in its own module (to make modular inclusion possible)</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Dec 11 14:51:52 2016 by
+  Generated on Sun Dec 11 18:41:35 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -64,9 +64,193 @@
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>HashPatch</span>
 
   <span class='kw'>module</span> <span class='const'>ClassMethods</span>
+    <span class='comment'># facets
+</span>    <span class='comment'># Hash.zip([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;], [1,2,3])
+</span>    <span class='comment'># =&gt; { &quot;a&quot;=&gt;1, &quot;b&quot;=&gt;2, &quot;c&quot;=&gt;3 }
+</span>    <span class='kw'>module</span> <span class='const'>Zip</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span> <span class='comment'># or some better name
+</span>        <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span> <span class='id identifier rubyid_keys'>keys</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h'>h</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>UpdateKeys</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># in place
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_update_keys'>update_keys</span> <span class='comment'>#:yield:
+</span>        <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+          <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_old_key'>old_key</span><span class='op'>|</span> <span class='id identifier rubyid_store'>store</span><span class='lparen'>(</span><span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_old_key'>old_key</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_old_key'>old_key</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_to_enum'>to_enum</span><span class='lparen'>(</span><span class='symbol'>:update_keys</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>UpdateValues</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># in place
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_update_values'>update_values</span> <span class='comment'>#:yield:
+</span>        <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+          <span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_store'>store</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_to_enum'>to_enum</span><span class='lparen'>(</span><span class='symbol'>:update_values</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>ToOpenStruct</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_to_ostruct'>to_ostruct</span>
+        <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_recursive_to_ostruct'>recursive_to_ostruct</span><span class='lparen'>(</span><span class='id identifier rubyid_exclude'>exclude</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='kw'>self</span> <span class='rparen'>)</span>
+        <span class='id identifier rubyid_o'>o</span> <span class='op'>=</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+        <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+        <span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+          <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_ostruct_recurse'>to_ostruct_recurse</span><span class='lparen'>(</span> <span class='id identifier rubyid_exclude'>exclude</span> <span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_ostruct_recurse</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Rekey</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># rekey according to a block, i.e. {a: 1}.rekey &amp;:to_s
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_rekey'>rekey</span><span class='lparen'>(</span><span class='id identifier rubyid_key_map'>key_map</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>argument or block</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_key_map'>key_map</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span>
+
+        <span class='kw'>if</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_key_map'>key_map</span> <span class='kw'>or</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_block'>block</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+          <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span><span class='period'>.</span><span class='id identifier rubyid_abs'>abs</span> <span class='op'>==</span> <span class='int'>1</span>
+            <span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+              <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>     <span class='comment'>#hash[block[k] || k] = v
+</span>            <span class='kw'>end</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+              <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>   <span class='comment'>#hash[block[k,v] || k] = v
+</span>            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+        <span class='kw'>else</span>
+          <span class='comment'>#hash = dup.clear  # to keep default_proc
+</span>          <span class='comment'>#(keys - key_map.keys).each do |key|
+</span>          <span class='comment'>#  hash[key] = self[key]
+</span>          <span class='comment'>#end
+</span>          <span class='comment'>#key_map.each do |from, to|
+</span>          <span class='comment'>#  hash[to] = self[from] if key?(from)
+</span>          <span class='comment'>#end
+</span>          <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_dup'>dup</span>  <span class='comment'># to keep default_proc
+</span>          <span class='id identifier rubyid_key_map'>key_map</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='op'>|</span>
+            <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_to'>to</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+
+        <span class='id identifier rubyid_hash'>hash</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Recurse</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># h = {:a=&gt;1, :b=&gt;{:b1=&gt;1, :b2=&gt;2}}
+</span>      <span class='comment'># g = h.recurse{|h| h.inject({}){|h,(k,v)| h[k.to_s] = v; h} }
+</span>      <span class='comment'># g  #=&gt; {&quot;a&quot;=&gt;1, &quot;b&quot;=&gt;{&quot;b1&quot;=&gt;1, &quot;b2&quot;=&gt;2}}
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_recurse'>recurse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+        <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='op'>|</span>
+          <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>when</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
+            <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_recurse'>recurse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_hash'>hash</span>
+        <span class='kw'>end</span>
+        <span class='kw'>yield</span> <span class='id identifier rubyid_h'>h</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>HasKeys</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># checks if a list of keys are all present
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_keys?'>keys?</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_check_keys'>check_keys</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_unknown_keys'>unknown_keys</span> <span class='op'>=</span> <span class='id identifier rubyid_check_keys'>check_keys</span> <span class='op'>-</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_unknown_keys'>unknown_keys</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>OnlyKeys</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># checks if these are the only keys
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_only_keys?'>only_keys?</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_check_keys'>check_keys</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_unknown_keys'>unknown_keys</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_check_keys'>check_keys</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_unknown_keys'>unknown_keys</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Join</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># returns a string
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_pair_divider'>pair_divider</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_elem_divider'>elem_divider</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_elem_divider'>elem_divider</span> <span class='op'>||=</span> <span class='id identifier rubyid_pair_divider'>pair_divider</span>
+        <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pair_divider'>pair_divider</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_v'>v</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_elem_divider'>elem_divider</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Inverse</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># h = {&quot;a&quot;=&gt;3, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3, &quot;d&quot;=&gt;2, &quot;e&quot;=&gt;9, &quot;f&quot;=&gt;3, &quot;g&quot;=&gt;9}
+</span>      <span class='comment'># h.invert           #=&gt; {2=&gt;&quot;d&quot;, 3=&gt;&quot;f&quot;, 9=&gt;&quot;g&quot;}
+</span>      <span class='comment'># h.inverse          #=&gt; {2=&gt;&quot;d&quot;, 3=&gt;[&quot;f&quot;, &quot;c&quot;, &quot;b&quot;, &quot;a&quot;], 9=&gt;[&quot;g&quot;, &quot;e&quot;]}
+</span>      <span class='comment'># h.inverse.inverse  #=&gt; {&quot;a&quot;=&gt;3, &quot;b&quot;=&gt;3, &quot;c&quot;=&gt;3, &quot;d&quot;=&gt;2, &quot;e&quot;=&gt;9, &quot;f&quot;=&gt;3, &quot;g&quot;=&gt;9}
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_inverse'>inverse</span>
+        <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each_pair'>each_pair</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+          <span class='kw'>if</span> <span class='lparen'>(</span><span class='const'>Array</span> <span class='op'>===</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_i'>i</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_i'>i</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span> <span class='op'>:</span> <span class='id identifier rubyid_k'>k</span> <span class='rparen'>)</span> <span class='rbrace'>}</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_i'>i</span><span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_i'>i</span><span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span> <span class='op'>:</span> <span class='id identifier rubyid_k'>k</span> <span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='rbrace'>}</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_i'>i</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Diff</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># returns the key-vals from &lt;self&gt; that are not the same in &lt;hash&gt;
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_diff'>diff</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_h1'>h1</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_v'>v</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h2'>h2</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_h1'>h1</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_h2'>h2</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Except</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># excludes vertain keys
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_except'>except</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_less_keys'>less_keys</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_dup'>dup</span>
+        <span class='id identifier rubyid_less_keys'>less_keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_hash'>hash</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>DeleteUnless</span>
+      <span class='comment'># facets
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_delete_unless'>delete_unless</span> <span class='comment'>#:yield:
+</span>        <span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='op'>!</span> <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
     <span class='comment'># The opposite of Hash#dig
 </span>    <span class='comment'># Takes a list of keys followed by a value to set
@@ -177,7 +361,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Dec 11 14:51:52 2016 by
+  Generated on Sun Dec 11 18:41:36 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

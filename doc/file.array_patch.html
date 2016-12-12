@@ -67,7 +67,7 @@
 
     <span class='kw'>module</span> <span class='const'>Zip</span>
       <span class='comment'># facets
-</span>      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arrays'>arrays</span><span class='rparen'>)</span>
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arrays'>arrays</span><span class='rparen'>)</span>
         <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_arrays'>arrays</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
         <span class='kw'>return</span> <span class='id identifier rubyid_arrays'>arrays</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arrays'>arrays</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
@@ -76,6 +76,14 @@
   <span class='kw'>end</span>
 
   <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
+
+    <span class='kw'>module</span> <span class='const'>Exclude</span>
+      <span class='comment'># facets
+</span>      <span class='comment'># the opposite of include
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_exclude?'>exclude?</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span>
+        <span class='op'>!</span> <span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_x'>x</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
     <span class='kw'>module</span> <span class='const'>KeyBy</span>
       <span class='comment'># facets
@@ -252,7 +260,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Dec 11 14:51:52 2016 by
+  Generated on Sun Dec 11 18:41:36 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -6,7 +6,7 @@ module Gemmy::Patches::ArrayPatch
 
     module Zip
       # facets
-      def self.zip(*arrays)
+      def zip(*arrays)
         return [] if arrays.empty?
         return arrays[0].zip(*arrays[1..-1])
       end
@@ -15,6 +15,14 @@ module Gemmy::Patches::ArrayPatch
   end
 
   module InstanceMethods
+
+    module Exclude
+      # facets
+      # the opposite of include
+      def exclude?(x)
+        ! include? x
+      end
+    end
 
     module KeyBy
       # facets
