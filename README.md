@@ -22,9 +22,8 @@ documents:
 - _Shell commands and other one-off processes_
   - [examples/03_shell_commands.rb](./examples/03_shell_commands.rb)
 
-**To see a full list of the patched methods (there are a lot since I've
-included many from facets), see the [rubydoc](http://www.rubydoc.info/gems/gemmyrb)**
+**To see a full list of the patched methods, see the [rubydoc](http://www.rubydoc.info/gems/gemmyrb)**
 
 Specifically, look at the constants defined on Gemmy::Patches. There is one
 module for each of the core classes being patched. Each individual method
-is also contained in its own module (to make modular inclusion possible)
+is also contained in its own module (for the sake of, well, modularity)

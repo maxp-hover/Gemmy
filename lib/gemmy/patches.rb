@@ -13,6 +13,17 @@
 #
 module Gemmy::Patches
 
+  # searches for the 'autotest' method on any patch modules
+  # and runs it, checking that the return value is true
+  # raises an error if it's not
+  def self.autotest
+    class_refinements.each do |patch_klass|
+      if patch_klass.respond_to?(:autotest)
+        patch_klass.autotest || raise(RuntimeError, "#{patch_klass} failed")
+      end
+    end
+  end
+
   # The usage of this method is to load all the patches for some core classes.
   # With no arguments it will include all patches
   # There are two optional params (keyword arguments).
@@ -81,9 +92,7 @@ module Gemmy::Patches
   end
 
   def self.patch_as_instance_method(core_klass, patch_klass)
-    patch_klass.send(:refine, core_klass) do
-      include patch_klass
-    end
+    patch_klass.send(:refine, core_klass) { include patch_klass }
   end
 
   def self.core_patches
@@ -99,7 +108,8 @@ module Gemmy::Patches
       Class: Gemmy::Patches::ClassPatch,
       Exception: Gemmy::Patches::ExceptionPatch,
       Float: Gemmy::Patches::FloatPatch,
-      Proc: Gemmy::Patches::ProcPatch
+      Proc: Gemmy::Patches::ProcPatch,
+      Enumerator: Gemmy::Patches::EnumeratorPatch
     }.with_indifferent_access
   end
 

@@ -5,7 +5,17 @@ module Gemmy::Patches::SymbolPatch
   module ClassMethods
   end
 
-module InstanceMethods
+  module InstanceMethods
+
+    module Call
+      using CF::Symbol[:call]
+      def call(*args, &blk)
+        Gemmy.patch("symbol/i/call")._call self, *args, &blk
+      end
+      def self._call(sym, *args, &blk)
+        sym.call *args, &blk
+      end
+    end
 
     module Variablize
       # facets
@@ -29,6 +39,5 @@ module InstanceMethods
     end
 
   end
-
 
 end

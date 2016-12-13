@@ -74,6 +74,17 @@
 </span><span class='comment'>#
 </span><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span>
 
+  <span class='comment'># searches for the &#39;autotest&#39; method on any patch modules
+</span>  <span class='comment'># and runs it, checking that the return value is true
+</span>  <span class='comment'># raises an error if it&#39;s not
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_autotest'>autotest</span>
+    <span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='op'>|</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:autotest</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_autotest'>autotest</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='embexpr_end'>}</span><span class='tstring_content'> failed</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
   <span class='comment'># The usage of this method is to load all the patches for some core classes.
 </span>  <span class='comment'># With no arguments it will include all patches
 </span>  <span class='comment'># There are two optional params (keyword arguments).
@@ -142,9 +153,7 @@
   <span class='kw'>end</span>
 
   <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_patch_as_instance_method'>patch_as_instance_method</span><span class='lparen'>(</span><span class='id identifier rubyid_core_klass'>core_klass</span><span class='comma'>,</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:refine</span><span class='comma'>,</span> <span class='id identifier rubyid_core_klass'>core_klass</span><span class='rparen'>)</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span>
-    <span class='kw'>end</span>
+    <span class='id identifier rubyid_patch_klass'>patch_klass</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:refine</span><span class='comma'>,</span> <span class='id identifier rubyid_core_klass'>core_klass</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_patch_klass'>patch_klass</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
   <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_core_patches'>core_patches</span>
@@ -160,14 +169,15 @@
       <span class='label'>Class:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ClassPatch</span><span class='comma'>,</span>
       <span class='label'>Exception:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ExceptionPatch</span><span class='comma'>,</span>
       <span class='label'>Float:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>FloatPatch</span><span class='comma'>,</span>
-      <span class='label'>Proc:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ProcPatch</span>
+      <span class='label'>Proc:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>ProcPatch</span><span class='comma'>,</span>
+      <span class='label'>Enumerator:</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='op'>::</span><span class='const'>EnumeratorPatch</span>
     <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_with_indifferent_access'>with_indifferent_access</span>
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Dec 11 18:41:36 2016 by
+  Generated on Mon Dec 12 22:53:26 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

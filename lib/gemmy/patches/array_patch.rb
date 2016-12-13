@@ -4,11 +4,23 @@ module Gemmy::Patches::ArrayPatch
 
   module ClassMethods
 
+    module Wrap
+      using CF::Array[:wrap]
+      def self.autotest
+        Array.wrap(nil).eql?([]) &&\
+        Array.wrap([]).eql?([]) &&\
+        Array.wrap(1).eql?([1])
+      end
+    end
+
     module Zip
       # facets
       def zip(*arrays)
         return [] if arrays.empty?
         return arrays[0].zip(*arrays[1..-1])
+      end
+      def self.autotest
+        Array.zip([1], [2]) == [[1,2]]
       end
     end
 
@@ -22,17 +34,23 @@ module Gemmy::Patches::ArrayPatch
       def exclude?(x)
         ! include? x
       end
+      def self.autotest
+        [1].exclude?(2) && ![2].exclude?(2)
+      end
     end
 
     module KeyBy
       # facets
       def key_by
         return to_enum(:key_by) unless block_given?
-        h = {}
+        h = Hash.new { |h,k| h[k] = [] }
         each do |v|
-          h[yield(v)] = v
+          h[yield(v)] << v
         end
         return h
+      end
+      def self.autotest
+        [1,2,3].key_by { |v| v % 2 } == { 1 => [1, 3], 0 => [2] }
       end
     end
 
@@ -42,6 +60,9 @@ module Gemmy::Patches::ArrayPatch
         return nil unless include? value
         self[(index(value).to_i + 1) % length]
       end
+      def self.autotest
+        [1,2].after(1).eql?(2)
+      end
     end
 
     module Before
@@ -49,6 +70,9 @@ module Gemmy::Patches::ArrayPatch
       def before(value)
         return nil unless include? value
         self[(index(value).to_i - 1) % length]
+      end
+      def self.autotest
+        [1,2].before(2) == 1
       end
     end
 
@@ -61,16 +85,8 @@ module Gemmy::Patches::ArrayPatch
         }
         h.delete_if{|_,v| v < min}.keys
       end
-    end
-
-    module ExtractOptions
-      # facets
-      def extract_options!
-        if Hash === last && last.extractable_options?
-          pop
-        else
-          {}
-        end
+      def self.autotest
+        [1,1,2,2,3].duplicates == [1,2]
       end
     end
 

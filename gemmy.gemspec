@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'pry', '~> 0.10.4'
   s.add_dependency 'byebug', '~> 9.0.6'
   s.add_dependency 'thor', '~> 0.19.4'
+  s.add_dependency 'corefines', '~> 1.9.0'
 end

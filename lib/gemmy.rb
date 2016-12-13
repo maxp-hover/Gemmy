@@ -3,10 +3,42 @@ require 'colored'
 require 'active_support/all'
 require 'pry'
 require 'colored'
+require 'corefines'
 
 # Container class for all the functionality.
 #
 class Gemmy
+
+  # Used by patches to get a reference to static patch classes
+  # Without this there would be long, unqualified constant names such as
+  # Gemmy::Patches::SymbolPatch::InstanceMethods::Call
+  #
+  # Usage is to pass a string like so: "<CoreClass>/<Context>/<MethodName>"
+  # Core class could be "symbol" for example
+  # Context is either "i" for instance or "c" for class
+  # Method name is underscored, i.e. "call" in this example:
+  #
+  # klass = Gemmy.patch "symbol/i/call"
+  #
+  # Now I can call any class methods on the klass.
+  #
+  # The utility of this might not be obvious, but it is useful
+  # when using another library's refinements in Gemmy's own
+  def self.patch(string)
+    parts = string.split("/")
+    raise ArgumentError unless parts.length == 3
+    core_class, context, method_name = parts
+    context_classname = if context.eql?("i")
+      "InstanceMethods"
+    elsif context.eql?("c")
+      "ClassMethods"
+    else
+      raise ArgumentError
+    end
+    Gemmy::Patches.const_get("#{core_class.capitalize}Patch")
+                  .const_get(context_classname)
+                  .const_get method_name.camelcase
+  end
 
   # There are two main usages:
   #   - namespaced (using refinements and explicit include/extend calls)
