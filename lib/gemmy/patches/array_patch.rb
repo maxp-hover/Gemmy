@@ -28,6 +28,17 @@ module Gemmy::Patches::ArrayPatch
 
   module InstanceMethods
 
+    module RunCommands
+      def run_commands
+        _eval_noun = Gemmy.patch("string/i/eval_noun").method(:_eval_noun)
+        return self.map do |cmd|
+          eval(VerbLexicon[cmd[:verb].to_sym]).call(*(
+            cmd[:nouns].map { |noun| _eval_noun.call(noun, self) }
+          ))
+        end.join("\n")
+      end
+    end
+
     module Exclude
       # facets
       # the opposite of include
@@ -196,6 +207,8 @@ module Gemmy::Patches::ArrayPatch
       end
       alias rangify arrange
     end
+
+
 
     module AnyNot
       # checks if any of the results of an array do not respond truthily

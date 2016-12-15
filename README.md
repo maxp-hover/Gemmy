@@ -26,4 +26,4 @@ documents:
 
 Specifically, look at the constants defined on Gemmy::Patches. There is one
 module for each of the core classes being patched. Each individual method
-is also contained in its own module (for the sake of, well, modularity)
+is also contained in its own module (for the sake of, well, modularity).

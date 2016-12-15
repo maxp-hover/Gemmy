@@ -1,0 +1,8 @@
+---
+:data:
+  :eat: '->(*nouns){ "eat-verb" }
+
+'
+  :sit: '->(*nouns){ "sit-verb" }
+
+'

@@ -24,4 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'byebug', '~> 9.0.6'
   s.add_dependency 'thor', '~> 0.19.4'
   s.add_dependency 'corefines', '~> 1.9.0'
+  s.add_dependency 'sentence_interpreter', '~> 0.0.7'
+  s.add_dependency 'awesome_print', '~> 1.7.0'
 end

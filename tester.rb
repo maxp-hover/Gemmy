@@ -3,7 +3,7 @@ require 'byebug'
 
 # Patches can be loaded globally:
 
-    # Gemmy.load_globally
+    Gemmy.load_globally
 
     # [].to_enum.method(:map_by)
     # [[]].map(&:push.(1))
@@ -41,14 +41,60 @@ require 'byebug'
 # However this doesn't seem to work when refine is applied dynamically.
 
 # Including another library's refinements in my own proved to be a little
-# complex. Here's some tests of that functionality, to make sure it works
+# tricky. Here's some tests of that functionality, to make sure it works
 # when Gemmy is loaded in a refinements-based approach. Make sure to comment
 # out Gemmy.load_globally if testing this.
 
     # module A
-    #   using Gemmy::Patches::EnumeratorPatch::InstanceMethods::MapBy
+    #   using Gemmy.patch "enumerator/i/map_by"
     #   puts [1].to_enum.map_by { |x| [x,x] } == {1 => [1]}
 
-    #   using Gemmy::Patches::SymbolPatch::InstanceMethods::Call
+    #   using Gemmy.patch "symbol/i/call"
     #   puts [[]].map(&:push.(1)) == [[1]]
     # end
+
+# Verb-Noun phrases can be detected using a separate gem I made called
+# sentence_interpreter.
+# The entire lexicon needs to be added, which is where
+# the Node lib 'wordpos' comes in.
+
+
+    # sentence = "the cat went in the hat, sat, and was fat"
+    # tagged = EngTagger.new.add_tags(sentence)
+    # byebug
+    # words = {}.persisted("dictionary.yml")
+    # words.set(:nouns, {}.autovivified)
+    # words.set(:verbs, {}.autovivified)
+
+    # NounLexicon[:hello] = ->(vn_phrases) { "hello" }
+    # NounLexicon[:potato] = ->(vn_phrases) { "potato" }
+    # VerbLexicon[:print] = ->(*noun_results) { puts noun_results.join }
+    # SentenceInterpreter.interpret("print hello potato").run_commands
+
+# Part of speech tagger
+# This is an external system dependency.
+# The command line executable 'wordpos' must be in the PATH.
+# Note that the package's installation was a little buggy for me and I had to
+# add ~/local/lib/node_modules/wordpos/bin to the PATH manually
+
+include Gemmy::Components::Nlp
+
+sentences = [
+    "eat google and sit on the phone with a candied apple",
+    "eat a parent and noodle a pillow"
+]
+
+res = sentences.map &m(:parse_sentence)
+
+byebug
+false
+
+
+
+
+
+
+
+
+
+

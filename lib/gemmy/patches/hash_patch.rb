@@ -266,12 +266,13 @@ module Gemmy::Patches::HashPatch
     module Persisted
       def persisted(path)
         require 'yaml/store'
-        autovivified = Gemmy::Patches::HashPatch::InstanceMethods::Autovivified.method(:_autovivified)
+        autovivified = Gemmy.patch("hash/i/autovivified")\
+                            .method(:_autovivified)
         autovivified.call(self).tap do |hash|
           hash.instance_exec do
             @db = YAML::Store.new path
             @db.transaction do
-              @db[:data] = autovivified.call({})
+              @db[:data] ||= autovivified.call({})
             end
           end
           hash.extend Gemmy::Patches::HashPatch::PersistedHash

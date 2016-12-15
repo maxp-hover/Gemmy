@@ -7,6 +7,16 @@ module Gemmy::Patches::StringPatch
 
   module InstanceMethods
 
+    module EvalNoun
+      def eval_noun(commands=[])
+        Gemmy.patches("string/i/eval_noun")._eval_noun self, commands
+      end
+      def self._eval_noun(noun, commands=[])
+        eval(NounLexicon.fetch(noun.to_sym)).call(commands)
+      end
+    end
+
+
     module Words
       # facets
       def words

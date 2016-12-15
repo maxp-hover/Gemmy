@@ -27,6 +27,43 @@ module Gemmy::Patches::IntegerPatch
 
   module InstanceMethods
 
+    module Hundred
+      # from powerpack
+      def hundred
+        self * Gemmy.const("HUNDRED")
+      end
+    end
+    module Thousand
+      # from powerpack
+      def thousand
+        self * Gemmy.const("THOUSAND")
+      end
+    end
+    module Million
+      # from powerpack
+      def million
+        self * Gemmy.const("MILLION")
+      end
+    end
+    module Billion
+      # from powerpack
+      def billion
+        self * Gemmy.const("BILLION")
+      end
+    end
+    module Trillion
+      # from powerpack
+      def trillion
+        self * Gemmy.const("TRILLION")
+      end
+    end
+    module Quadrillion
+      # from powerpack
+      def quadrillion
+        self * Gemmy.const("QUADRILLION")
+      end
+    end
+
     module Factorial
       # facets
       def factorial

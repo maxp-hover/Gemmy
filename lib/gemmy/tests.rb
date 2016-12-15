@@ -10,6 +10,7 @@ module Gemmy::Tests
 
   def self.run_test_class(klass)
     klass.run
+    # Unless a test raises an error, it's been run
     puts "#{klass} passed".green
   end
 
