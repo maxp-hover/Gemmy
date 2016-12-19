@@ -159,12 +159,12 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/string_patch.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/string_patch.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tempfile_path'>tempfile_path</span>
   <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
@@ -179,7 +179,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Dec 18 19:43:04 2016 by
+  Generated on Mon Dec 19 08:00:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -60,15 +60,60 @@
       <iframe id="search_frame" src="file_list.html"></iframe>
 
       <div id="content"><div id='filecontents'><pre class="code ruby"><span class='kw'>module</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>WordSpeaker</span>
+  <span class='id identifier rubyid_include'>include</span> <span class='const'>ESpeak</span>
+
   <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patches'>patches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_x'>x</span> <span class='rbrace'>}</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_speak_sentence'>speak_sentence</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_byebug'>byebug</span>
-    <span class='kw'>false</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_speak_sentence'>speak_sentence</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='comma'>,</span> <span class='id identifier rubyid_container_length'>container_length</span><span class='op'>=</span><span class='int'>8</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+    <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>WordSpeaker</span><span class='op'>::</span><span class='const'>Sentence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_sentence'>sentence</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_container_length'>container_length</span><span class='comma'>,</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_speak'>speak</span><span class='lparen'>(</span><span class='label'>path:</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+
+  <span class='kw'>class</span> <span class='const'>Sentence</span>
+
+    <span class='const'>DefaultPitch</span> <span class='op'>=</span> <span class='int'>1</span>
+    <span class='const'>DefaultSpeed</span> <span class='op'>=</span> <span class='int'>250</span>
+    <span class='const'>DefaultGap</span> <span class='op'>=</span> <span class='int'>10</span>
+
+    <span class='qsymbols_beg'>%i{
+</span><span class='tstring_content'>      sentence</span><span class='words_sep'>
+</span><span class='tstring_content'>      sentence_syllables</span><span class='words_sep'>
+</span><span class='tstring_content'>      container_length</span><span class='words_sep'>
+</span><span class='tstring_end'>    }</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='op'>&amp;</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:attr_reader</span><span class='rparen'>)</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='comma'>,</span> <span class='id identifier rubyid_container_length'>container_length</span><span class='rparen'>)</span>
+      <span class='ivar'>@sentence</span> <span class='op'>=</span> <span class='id identifier rubyid_sentence'>sentence</span>
+      <span class='ivar'>@sentence_syllables</span> <span class='op'>=</span> <span class='ivar'>@sentence</span><span class='period'>.</span><span class='id identifier rubyid_syllable_count'>syllable_count</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+      <span class='ivar'>@container_length</span> <span class='op'>=</span> <span class='id identifier rubyid_container_length'>container_length</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_speak'>speak</span><span class='lparen'>(</span><span class='label'>path:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_pitch'>pitch</span> <span class='op'>=</span> <span class='const'>DefaultPitch</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
+      <span class='id identifier rubyid_speed'>speed</span> <span class='op'>=</span> <span class='const'>DefaultSpeed</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
+      <span class='id identifier rubyid_gap'>gap</span> <span class='op'>=</span> <span class='const'>DefaultGap</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
+      <span class='id identifier rubyid_espeak_opts'>espeak_opts</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-v english-us -p </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pitch'>pitch</span><span class='embexpr_end'>}</span><span class='tstring_content'> -s </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_speed'>speed</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span>
+        <span class='id identifier rubyid_espeak_opts'>espeak_opts</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> -w </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='backtick'>`</span><span class='tstring_content'>espeak </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_espeak_opts'>espeak_opts</span><span class='embexpr_end'>}</span><span class='tstring_content'> &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sentence'>sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>`</span></span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
+      <span class='id identifier rubyid_sentence_syllables'>sentence_syllables</span> <span class='op'>/</span> <span class='id identifier rubyid_container_length'>container_length</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
+      <span class='float'>1.0</span> <span class='op'>/</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
+    <span class='kw'>end</span>
+
+  <span class='kw'>end</span>
+
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Sun Dec 18 19:43:02 2016 by
+  Generated on Mon Dec 19 08:00:51 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>
