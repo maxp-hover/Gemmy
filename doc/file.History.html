@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: History
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "History";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: History</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="file_list.html"></iframe>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-2.9.0+-2F+2015-10-13">2.9.0 / 2015-10-13</h1>
+<ul><li>
+<p>Add option <code>isDefault</code> to set default subcommand #415 @Qix-</p>
+</li><li>
+<p>Add callback to allow filtering or post-processing of help text #434
+@djulien</p>
+</li><li>
+<p>Fix <code>undefined</code> text in help information close #414 #416
+@zhiyelee</p>
+</li></ul>
+
+<h1 id="label-2.8.1+-2F+2015-04-22">2.8.1 / 2015-04-22</h1>
+<ul><li>
+<p>Back out <code>support multiline description</code> Close #396 #397</p>
+</li></ul>
+
+<h1 id="label-2.8.0+-2F+2015-04-07">2.8.0 / 2015-04-07</h1>
+<ul><li>
+<p>Add <code>process.execArg</code> support, execution args like
+<code>--harmony</code> will be passed to sub-commands #387 @DigitalIO
+@zhiyelee</p>
+</li><li>
+<p>Fix bug in Git-style sub-commands #372 @zhiyelee</p>
+</li><li>
+<p>Allow commands to be hidden from help #383 @tonylukasavage</p>
+</li><li>
+<p>When git-style sub-commands are in use, yet none are called, display help
+#382 @claylo</p>
+</li><li>
+<p>Add ability to specify arguments syntax for top-level command #258
+@rrthomas</p>
+</li><li>
+<p>Support multiline descriptions #208 @zxqfox</p>
+</li></ul>
+
+<h1 id="label-2.7.1+-2F+2015-03-11">2.7.1 / 2015-03-11</h1>
+<ul><li>
+<p>Revert #347 (fix collisions when option and first arg have same name) which
+causes a bug in #367.</p>
+</li></ul>
+
+<h1 id="label-2.7.0+-2F+2015-03-09">2.7.0 / 2015-03-09</h1>
+<ul><li>
+<p>Fix git-style bug when installed globally. Close #335 #349 @zhiyelee</p>
+</li><li>
+<p>Fix collisions when option and first arg have same name. Close #346 #347
+@tonylukasavage</p>
+</li><li>
+<p>Add support for camelCase on <code>opts()</code>. Close #353 @nkzawa</p>
+</li><li>
+<p>Add node.js 0.12 and io.js to travis.yml</p>
+</li><li>
+<p>Allow RegEx options. #337 @palanik</p>
+</li><li>
+<p>Fixes exit code when sub-command failing. Close #260 #332 @pirelenito</p>
+</li><li>
+<p>git-style <code>bin</code> files in $PATH make sense. Close #196 #327
+@zhiyelee</p>
+</li></ul>
+
+<h1 id="label-2.6.0+-2F+2014-12-30">2.6.0 / 2014-12-30</h1>
+<ul><li>
+<p>added <code>Command#allowUnknownOption</code> method. Close #138 #318
+@doozr @zhiyelee</p>
+</li><li>
+<p>Add application description to the help msg. Close #112 @dalssoft</p>
+</li></ul>
+
+<h1 id="label-2.5.1+-2F+2014-12-15">2.5.1 / 2014-12-15</h1>
+<ul><li>
+<p>fixed two bugs incurred by variadic arguments. Close #291 @Quentin01 #302
+@zhiyelee</p>
+</li></ul>
+
+<h1 id="label-2.5.0+-2F+2014-10-24">2.5.0 / 2014-10-24</h1>
+<ul><li>
+<p>add support for variadic arguments. Closes #277 @whitlockjc</p>
+</li></ul>
+
+<h1 id="label-2.4.0+-2F+2014-10-17">2.4.0 / 2014-10-17</h1>
+<ul><li>
+<p>fixed a bug on executing the coercion function of subcommands option.
+Closes #270</p>
+</li><li>
+<p>added <code>Command.prototype.name</code> to retrieve command name. Closes
+#264 #266 @tonylukasavage</p>
+</li><li>
+<p>added <code>Command.prototype.opts</code> to retrieve all the options as a
+simple object of key-value pairs. Closes #262 @tonylukasavage</p>
+</li><li>
+<p>fixed a bug on subcommand name. Closes #248 @jonathandelgado</p>
+</li><li>
+<p>fixed function normalize doesn’t honor option terminator. Closes #216 @abbr</p>
+</li></ul>
+
+<h1 id="label-2.3.0+-2F+2014-07-16">2.3.0 / 2014-07-16</h1>
+<ul><li>
+<p>add command alias&#39;. Closes PR #210</p>
+</li><li>
+<p>fix: Typos. Closes #99</p>
+</li><li>
+<p>fix: Unused fs module. Closes #217</p>
+</li></ul>
+
+<h1 id="label-2.2.0+-2F+2014-03-29">2.2.0 / 2014-03-29</h1>
+<ul><li>
+<p>add passing of previous option value</p>
+</li><li>
+<p>fix: support subcommands on windows. Closes #142</p>
+</li><li>
+<p>Now the defaultValue passed as the second argument of the coercion
+function.</p>
+</li></ul>
+
+<h1 id="label-2.1.0+-2F+2013-11-21">2.1.0 / 2013-11-21</h1>
+<ul><li>
+<p>add: allow cflag style option params, unit test, fixes #174</p>
+</li></ul>
+
+<h1 id="label-2.0.0+-2F+2013-07-18">2.0.0 / 2013-07-18</h1>
+<ul><li>
+<p>remove input methods (.prompt, .confirm, etc)</p>
+</li></ul>
+
+<h1 id="label-1.3.2+-2F+2013-07-18">1.3.2 / 2013-07-18</h1>
+<ul><li>
+<p>add support for sub-commands to co-exist with the original command</p>
+</li></ul>
+
+<h1 id="label-1.3.1+-2F+2013-07-18">1.3.1 / 2013-07-18</h1>
+<ul><li>
+<p>add quick .runningCommand hack so you can opt-out of other logic when
+running a sub command</p>
+</li></ul>
+
+<h1 id="label-1.3.0+-2F+2013-07-09">1.3.0 / 2013-07-09</h1>
+<ul><li>
+<p>add EACCES error handling</p>
+</li><li>
+<p>fix sub-command –help</p>
+</li></ul>
+
+<h1 id="label-1.2.0+-2F+2013-06-13">1.2.0 / 2013-06-13</h1>
+<ul><li>
+<p>allow “-” hyphen as an option argument</p>
+</li><li>
+<p>support for RegExp coercion</p>
+</li></ul>
+
+<h1 id="label-1.1.1+-2F+2012-11-20">1.1.1 / 2012-11-20</h1>
+<ul><li>
+<p>add more sub-command padding</p>
+</li><li>
+<p>fix .usage() when args are present. Closes #106</p>
+</li></ul>
+
+<h1 id="label-1.1.0+-2F+2012-11-16">1.1.0 / 2012-11-16</h1>
+<ul><li>
+<p>add git-style executable subcommand support. Closes #94</p>
+</li></ul>
+
+<h1 id="label-1.0.5+-2F+2012-10-09">1.0.5 / 2012-10-09</h1>
+<ul><li>
+<p>fix <code>--name</code> clobbering. Closes #92</p>
+</li><li>
+<p>fix examples/help. Closes #89</p>
+</li></ul>
+
+<h1 id="label-1.0.4+-2F+2012-09-03">1.0.4 / 2012-09-03</h1>
+<ul><li>
+<p>add <code>outputHelp()</code> method.</p>
+</li></ul>
+
+<h1 id="label-1.0.3+-2F+2012-08-30">1.0.3 / 2012-08-30</h1>
+<ul><li>
+<p>remove invalid .version() defaulting</p>
+</li></ul>
+
+<h1 id="label-1.0.2+-2F+2012-08-24">1.0.2 / 2012-08-24</h1>
+<ul><li>
+<p>add <code>--foo=bar</code> support [arv]</p>
+</li><li>
+<p>fix password on node 0.8.8. Make backward compatible with 0.6 [focusaurus]</p>
+</li></ul>
+
+<h1 id="label-1.0.1+-2F+2012-08-03">1.0.1 / 2012-08-03</h1>
+<ul><li>
+<p>fix issue #56</p>
+</li><li>
+<p>fix tty.setRawMode(mode) was moved to tty.ReadStream#setRawMode() (i.e.
+process.stdin.setRawMode())</p>
+</li></ul>
+
+<h1 id="label-1.0.0+-2F+2012-07-05">1.0.0 / 2012-07-05</h1>
+<ul><li>
+<p>add support for optional option descriptions</p>
+</li><li>
+<p>add defaulting of <code>.version()</code> to package.json&#39;s version</p>
+</li></ul>
+
+<h1 id="label-0.6.1+-2F+2012-06-01">0.6.1 / 2012-06-01</h1>
+<ul><li>
+<p>Added: append (yes or no) on confirmation</p>
+</li><li>
+<p>Added: allow node.js v0.7.x</p>
+</li></ul>
+
+<h1 id="label-0.6.0+-2F+2012-04-10">0.6.0 / 2012-04-10</h1>
+<ul><li>
+<p>Added <code>.prompt(obj, callback)</code> support. Closes #49</p>
+</li><li>
+<p>Added default support to .choose(). Closes #41</p>
+</li><li>
+<p>Fixed the choice example</p>
+</li></ul>
+
+<h1 id="label-0.5.1+-2F+2011-12-20">0.5.1 / 2011-12-20</h1>
+<ul><li>
+<p>Fixed <code>password()</code> for recent nodes. Closes #36</p>
+</li></ul>
+
+<h1 id="label-0.5.0+-2F+2011-12-04">0.5.0 / 2011-12-04</h1>
+<ul><li>
+<p>Added sub-command option support [itay]</p>
+</li></ul>
+
+<h1 id="label-0.4.3+-2F+2011-12-04">0.4.3 / 2011-12-04</h1>
+<ul><li>
+<p>Fixed custom help ordering. Closes #32</p>
+</li></ul>
+
+<h1 id="label-0.4.2+-2F+2011-11-24">0.4.2 / 2011-11-24</h1>
+<ul><li>
+<p>Added travis support</p>
+</li><li>
+<p>Fixed: line-buffered input automatically trimmed. Closes #31</p>
+</li></ul>
+
+<h1 id="label-0.4.1+-2F+2011-11-18">0.4.1 / 2011-11-18</h1>
+<ul><li>
+<p>Removed listening for “close” on –help</p>
+</li></ul>
+
+<h1 id="label-0.4.0+-2F+2011-11-15">0.4.0 / 2011-11-15</h1>
+<ul><li>
+<p>Added support for <code>--</code>. Closes #24</p>
+</li></ul>
+
+<h1 id="label-0.3.3+-2F+2011-11-14">0.3.3 / 2011-11-14</h1>
+<ul><li>
+<p>Fixed: wait for close event when writing help info [Jerry Hamlet]</p>
+</li></ul>
+
+<h1 id="label-0.3.2+-2F+2011-11-01">0.3.2 / 2011-11-01</h1>
+<ul><li>
+<p>Fixed long flag definitions with values [felixge]</p>
+</li></ul>
+
+<h1 id="label-0.3.1+-2F+2011-10-31">0.3.1 / 2011-10-31</h1>
+<ul><li>
+<p>Changed <code>--version</code> short flag to <code>-V</code> from
+<code>-v</code></p>
+</li><li>
+<p>Changed <code>.version()</code> so it&#39;s configurable [felixge]</p>
+</li></ul>
+
+<h1 id="label-0.3.0+-2F+2011-10-31">0.3.0 / 2011-10-31</h1>
+<ul><li>
+<p>Added support for long flags only. Closes #18</p>
+</li></ul>
+
+<h1 id="label-0.2.1+-2F+2011-10-24">0.2.1 / 2011-10-24</h1>
+<ul><li>
+<p>“node”: “&gt;= 0.4.x &lt; 0.7.0”. Closes #20</p>
+</li></ul>
+
+<h1 id="label-0.2.0+-2F+2011-09-26">0.2.0 / 2011-09-26</h1>
+<ul><li>
+<p>Allow for defaults that are not just boolean. Default peassignment only
+occurs for –no-*, optional, and required arguments. [Jim Isaacs]</p>
+</li></ul>
+
+<h1 id="label-0.1.0+-2F+2011-08-24">0.1.0 / 2011-08-24</h1>
+<ul><li>
+<p>Added support for custom <code>--help</code> output</p>
+</li></ul>
+
+<h1 id="label-0.0.5+-2F+2011-08-18">0.0.5 / 2011-08-18</h1>
+<ul><li>
+<p>Changed: when the user enters nothing prompt for password again</p>
+</li><li>
+<p>Fixed issue with passwords beginning with numbers [NuckChorris]</p>
+</li></ul>
+
+<h1 id="label-0.0.4+-2F+2011-08-15">0.0.4 / 2011-08-15</h1>
+<ul><li>
+<p>Fixed <code>Commander#args</code></p>
+</li></ul>
+
+<h1 id="label-0.0.3+-2F+2011-08-15">0.0.3 / 2011-08-15</h1>
+<ul><li>
+<p>Added default option value support</p>
+</li></ul>
+
+<h1 id="label-0.0.2+-2F+2011-08-15">0.0.2 / 2011-08-15</h1>
+<ul><li>
+<p>Added mask support to <code>Command#password(str[, mask], fn)</code></p>
+</li><li>
+<p>Added <code>Command#password(str, fn)</code></p>
+</li></ul>
+
+<h1 id="label-0.0.1+-2F+2010-01-03">0.0.1 / 2010-01-03</h1>
+<ul><li>
+<p>Initial release</p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Sun Dec 18 19:43:00 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.3.0).
+</div>
+
+    </div>
+  </body>
+</html>

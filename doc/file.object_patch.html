@@ -75,7 +75,48 @@
 
   <span class='kw'>module</span> <span class='const'>InstanceMethods</span>
 
-    <span class='kw'>module</span> <span class='const'>Iteself</span>
+    <span class='kw'>module</span> <span class='const'>Home</span>
+      <span class='comment'># the $HOME dir, aka ~
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_home'>home</span>
+        <span class='backtick'>`</span><span class='tstring_content'>echo $HOME</span><span class='tstring_end'>`</span></span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>ObjectState</span>
+      <span class='comment'># class StateExample
+</span>      <span class='comment'>#   attr_reader :a, :b
+</span>      <span class='comment'>#   def initialize(a,b)
+</span>      <span class='comment'>#     @a, @b = a, b
+</span>      <span class='comment'>#   end
+</span>      <span class='comment'># end
+</span>
+      <span class='comment'># obj = StateExample.new(1,2)
+</span>      <span class='comment'># obj.a  #=&gt; 1
+</span>      <span class='comment'># obj.b  #=&gt; 2
+</span>
+      <span class='comment'># obj.object_state  #=&gt; {:a=&gt;1, :b=&gt;2}
+</span>
+      <span class='comment'># obj.object_state(:a=&gt;3, :b=&gt;4)
+</span>      <span class='comment'># obj.a  #=&gt; 3
+</span>      <span class='comment'># obj.b  #=&gt; 4
+</span>      <span class='kw'>def</span> <span class='id identifier rubyid_object_state'>object_state</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span>
+          <span class='id identifier rubyid_instance_variables'>instance_variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_iv'>iv</span><span class='op'>|</span>
+            <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_iv'>iv</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[@]</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+            <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='id identifier rubyid_iv'>iv</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+          <span class='id identifier rubyid_instance_variables'>instance_variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_iv'>iv</span><span class='op'>|</span>
+            <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_iv'>iv</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[@]</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+            <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='id identifier rubyid_iv'>iv</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_data'>data</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>module</span> <span class='const'>Itself</span>
       <span class='comment'># facets
 </span>      <span class='kw'>def</span> <span class='id identifier rubyid_itself'>itself</span>
         <span class='kw'>def</span> <span class='id identifier rubyid_itself'>itself</span>
@@ -343,7 +384,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Mon Dec 12 22:53:26 2016 by
+  Generated on Sun Dec 18 19:43:02 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

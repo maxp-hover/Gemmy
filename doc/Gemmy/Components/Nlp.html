@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Gemmy::Components::Nlp
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Gemmy::Components::Nlp";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (N)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Gemmy.html" title="Gemmy (class)">Gemmy</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Components.html" title="Gemmy::Components (module)">Components</a></span></span>
+     &raquo; 
+    <span class="title">Nlp</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
+
+      <div id="content"><h1>Module: Gemmy::Components::Nlp
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/gemmy/components/nlp.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_noun_proc_string-instance_method" title="#default_noun_proc_string (instance method)">#<strong>default_noun_proc_string</strong>(word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_verb_proc_string-instance_method" title="#default_verb_proc_string (instance method)">#<strong>default_verb_proc_string</strong>(word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#engtagger_lookup-instance_method" title="#engtagger_lookup (instance method)">#<strong>engtagger_lookup</strong>(sentence)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This uses EngTagger to analyze a sentence The results will not be
+ambiguous; in this method&#39;s results, a given word with either be
+&#39;verb&#39;, &#39;noun&#39;, or &#39;unknown&#39;.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finalize_engtagger_pos-instance_method" title="#finalize_engtagger_pos (instance method)">#<strong>finalize_engtagger_pos</strong>(pos)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finalize_pos-instance_method" title="#finalize_pos (instance method)">#<strong>finalize_pos</strong>(word, pos)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Compare WordPos and Engtagger results and save to proc if found only
+prioritize Engtagger if WordPos is missing.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finalize_wordpos_pos-instance_method" title="#finalize_wordpos_pos (instance method)">#<strong>finalize_wordpos_pos</strong>(pos)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#log_sentence-instance_method" title="#log_sentence (instance method)">#<strong>log_sentence</strong>(sentence)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adds words in sentence to application database The part of speech is
+identified by the DB Name Each entry is a word =&gt; proc mapping.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_sentence-instance_method" title="#parse_sentence (instance method)">#<strong>parse_sentence</strong>(sentence)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_noun_proc-instance_method" title="#save_noun_proc (instance method)">#<strong>save_noun_proc</strong>(word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_proc-instance_method" title="#save_proc (instance method)">#<strong>save_proc</strong>(final_pos, word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_verb_proc-instance_method" title="#save_verb_proc (instance method)">#<strong>save_verb_proc</strong>(word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sentence_cache-instance_method" title="#sentence_cache (instance method)">#<strong>sentence_cache</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Engtagger evaluates POS in the context of a sentence So from that
+perspective, only entire sentences can be cached.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setup_lexicons-instance_method" title="#setup_lexicons (instance method)">#<strong>setup_lexicons</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tag_sentence-instance_method" title="#tag_sentence (instance method)">#<strong>tag_sentence</strong>(sentence)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Uses the Ruby EngTagger tool to find parts of speech of a sentence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#word_pos_cache-instance_method" title="#word_pos_cache (instance method)">#<strong>word_pos_cache</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This cache reduces the call rate of the WordPos shell util by caching the
+POS for individual words.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#wordpos_lookup-instance_method" title="#wordpos_lookup (instance method)">#<strong>wordpos_lookup</strong>(word)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="default_noun_proc_string-instance_method">
+  
+    #<strong>default_noun_proc_string</strong>(word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_noun_proc_string'>default_noun_proc_string</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='heredoc_beg'>&lt;&lt;-Ruby</span><span class='period'>.</span><span class='id identifier rubyid_strip_heredoc'>strip_heredoc</span>
+<span class='tstring_content'>    -&gt;(vn_phrases){ &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_word'>word</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; }
+</span><span class='heredoc_end'>  Ruby
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_verb_proc_string-instance_method">
+  
+    #<strong>default_verb_proc_string</strong>(word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_verb_proc_string'>default_verb_proc_string</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='heredoc_beg'>&lt;&lt;-Ruby</span><span class='period'>.</span><span class='id identifier rubyid_strip_heredoc'>strip_heredoc</span>
+<span class='tstring_content'>    -&gt;(*nouns){ &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_word'>word</span><span class='embexpr_end'>}</span><span class='tstring_content'> \#{nouns.join &quot; &quot;}&quot; }
+</span><span class='heredoc_end'>  Ruby
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="engtagger_lookup-instance_method">
+  
+    #<strong>engtagger_lookup</strong>(sentence)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This uses EngTagger to analyze a sentence The results will not be
+ambiguous; in this method&#39;s results, a given word with either be
+&#39;verb&#39;, &#39;noun&#39;, or &#39;unknown&#39;.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_engtagger_lookup'>engtagger_lookup</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='id identifier rubyid_nouns'>nouns</span><span class='comma'>,</span> <span class='id identifier rubyid_verbs'>verbs</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_sentence'>tag_sentence</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_sentence'>sentence</span><span class='period'>.</span><span class='id identifier rubyid_words'>words</span><span class='period'>.</span><span class='id identifier rubyid_graph'>graph</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_word'>word</span><span class='op'>|</span>
+    <span class='id identifier rubyid_pos'>pos</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_word'>word</span>
+    <span class='kw'>when</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_verbs'>verbs</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_w'>w</span> <span class='rbrace'>}</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>when</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_nouns'>nouns</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_w'>w</span> <span class='rbrace'>}</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_word'>word</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pos'>pos</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finalize_engtagger_pos-instance_method">
+  
+    #<strong>finalize_engtagger_pos</strong>(pos)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finalize_engtagger_pos'>finalize_engtagger_pos</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+  <span class='comment'># If the WordPos definition isn&#39;t found, then there&#39;s no ambiguity
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finalize_pos-instance_method">
+  
+    #<strong>finalize_pos</strong>(word, pos)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Compare WordPos and Engtagger results and save to proc if found only
+prioritize Engtagger if WordPos is missing</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finalize_pos'>finalize_pos</span> <span class='id identifier rubyid_word'>word</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span>
+  <span class='id identifier rubyid_final_pos'>final_pos</span> <span class='op'>=</span> <span class='id identifier rubyid_word_pos_cache'>word_pos_cache</span><span class='period'>.</span><span class='id identifier rubyid_get_or_set'>get_or_set</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_doublecheck'>doublecheck</span> <span class='op'>=</span> <span class='id identifier rubyid_wordpos_lookup'>wordpos_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='op'>&amp;</span><span class='id identifier rubyid_doublecheck'>doublecheck</span><span class='period'>.</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:include?</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_finalize_engtagger_pos'>finalize_engtagger_pos</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_finalize_wordpos_pos'>finalize_wordpos_pos</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_save_proc'>save_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_final_pos'>final_pos</span><span class='comma'>,</span> <span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='lbrace'>{</span> <span class='label'>word:</span> <span class='id identifier rubyid_word'>word</span><span class='comma'>,</span> <span class='label'>pos:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_final_pos'>final_pos</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finalize_wordpos_pos-instance_method">
+  
+    #<strong>finalize_wordpos_pos</strong>(pos)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 96</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finalize_wordpos_pos'>finalize_wordpos_pos</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+  <span class='comment'># WordPos returns ambiguous results.
+</span>  <span class='comment'># Only unambiguous words are selected.
+</span>  <span class='comment'># I.e. a noun|verb isn&#39;t saved.
+</span>  <span class='comment'># It must be solely noun or verb.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="log_sentence-instance_method">
+  
+    #<strong>log_sentence</strong>(sentence)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds words in sentence to application database The part of speech is
+identified by the DB Name Each entry is a word =&gt; proc mapping.</p>
+
+<p>Noun procs are passed all vn_phrases for the sentence (these are
+constructed by parse_sentence)</p>
+
+<p>The Verb procs are passed the evaluated results of the Noun procs in its
+Verb-Noun phrase (as sequential arguments)</p>
+
+<p>For example, if the phrase is “live well and flourish” Then (assuming the</p>
+
+<p>Although EngTagger extracts POS for the words in a sentence, these
+classifications are context-dependent.</p>
+
+<p>For this reason, words are also looked up using WordPos. Only umambiguous
+words are added to the grammar.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67
+68</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_log_sentence'>log_sentence</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='id identifier rubyid_sentence_cache'>sentence_cache</span><span class='period'>.</span><span class='id identifier rubyid_get_or_set'>get_or_set</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_engtagger_lookup'>engtagger_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_word'>word</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='op'>|</span>
+      <span class='id identifier rubyid_finalize_pos'>finalize_pos</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_sentence-instance_method">
+  
+    #<strong>parse_sentence</strong>(sentence)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8
+9
+10
+11
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_sentence'>parse_sentence</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='id identifier rubyid_setup_lexicons'>setup_lexicons</span>
+  <span class='id identifier rubyid_log_sentence'>log_sentence</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='kw'>begin</span>
+    <span class='const'>SentenceInterpreter</span><span class='period'>.</span><span class='id identifier rubyid_interpret'>interpret</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='kw'>rescue</span> <span class='const'>NounBeforeVerbError</span>
+    <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save_noun_proc-instance_method">
+  
+    #<strong>save_noun_proc</strong>(word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_noun_proc'>save_noun_proc</span> <span class='id identifier rubyid_word'>word</span>
+  <span class='const'>NounLexicon</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span> <span class='id identifier rubyid_word'>word</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_default_noun_proc_string'>default_noun_proc_string</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save_proc-instance_method">
+  
+    #<strong>save_proc</strong>(final_pos, word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_proc'>save_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_final_pos'>final_pos</span><span class='comma'>,</span> <span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_final_pos'>final_pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_save_noun_proc'>save_noun_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_final_pos'>final_pos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_save_verb_proc'>save_verb_proc</span> <span class='id identifier rubyid_word'>word</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save_verb_proc-instance_method">
+  
+    #<strong>save_verb_proc</strong>(word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+122
+123
+124</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 122</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_verb_proc'>save_verb_proc</span> <span class='id identifier rubyid_word'>word</span>
+  <span class='const'>VerbLexicon</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span> <span class='id identifier rubyid_word'>word</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_default_verb_proc_string'>default_verb_proc_string</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sentence_cache-instance_method">
+  
+    #<strong>sentence_cache</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Engtagger evaluates POS in the context of a sentence So from that
+perspective, only entire sentences can be cached</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 158</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sentence_cache'>sentence_cache</span>
+  <span class='ivar'>@sentence_cache</span> <span class='op'>||=</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>Cache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sentence_pos</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setup_lexicons-instance_method">
+  
+    #<strong>setup_lexicons</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_setup_lexicons'>setup_lexicons</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@lexicon_set_up</span>
+  <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span> <span class='symbol'>:remove_const</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>VerbLexicon</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span> <span class='symbol'>:remove_const</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>NounLexicon</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:const_set</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>VerbLexicon</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>Cache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb_lexicon</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:const_set</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>NounLexicon</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>Cache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun_lexicon</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@lexicon_set_up</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tag_sentence-instance_method">
+  
+    #<strong>tag_sentence</strong>(sentence)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Uses the Ruby EngTagger tool to find parts of speech of a sentence</p>
+
+<p>Returns a hash with :verbs and :nouns keys (vals are arrays)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tag_sentence'>tag_sentence</span> <span class='id identifier rubyid_sentence'>sentence</span>
+  <span class='ivar'>@tagger</span> <span class='op'>||=</span> <span class='const'>EngTagger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='ivar'>@tagger</span><span class='period'>.</span><span class='id identifier rubyid_add_tags'>add_tags</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_ergo'>ergo</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tagged'>tagged</span><span class='op'>|</span>
+    <span class='id identifier rubyid_nouns'>nouns</span> <span class='op'>=</span> <span class='ivar'>@tagger</span><span class='period'>.</span><span class='id identifier rubyid_get_nouns'>get_nouns</span><span class='lparen'>(</span><span class='id identifier rubyid_tagged'>tagged</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_verbs'>verbs</span> <span class='op'>=</span> <span class='ivar'>@tagger</span><span class='period'>.</span><span class='id identifier rubyid_get_verbs'>get_verbs</span><span class='lparen'>(</span><span class='id identifier rubyid_tagged'>tagged</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_nouns'>nouns</span><span class='comma'>,</span> <span class='id identifier rubyid_verbs'>verbs</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="word_pos_cache-instance_method">
+  
+    #<strong>word_pos_cache</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This cache reduces the call rate of the WordPos shell util by caching the
+POS for individual words.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 164</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_word_pos_cache'>word_pos_cache</span>
+  <span class='ivar'>@pos_cache</span> <span class='op'>||=</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Components</span><span class='op'>::</span><span class='const'>Cache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>word_pos</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="wordpos_lookup-instance_method">
+  
+    #<strong>wordpos_lookup</strong>(word)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/nlp.rb', line 168</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_wordpos_lookup'>wordpos_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_word'>word</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_default_result'>default_result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>unknown</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_word'>word</span> <span class='op'>=</span> <span class='id identifier rubyid_word'>word</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[^a-zA-z]</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_default_result'>default_result</span> <span class='kw'>if</span> <span class='id identifier rubyid_word'>word</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_pos_response'>pos_response</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span> <span class='backtick'>`</span><span class='tstring_content'>coffee -e &quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Coffee</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; pos </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_word'>word</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verb</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_pos_response'>pos_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verbs</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noun</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_pos_response'>pos_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nouns</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='id identifier rubyid_default_result'>default_result</span> <span class='op'>:</span> <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Dec 18 19:43:03 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.3.0).
+</div>
+
+    </div>
+  </body>
+</html>

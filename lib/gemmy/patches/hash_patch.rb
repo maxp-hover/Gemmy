@@ -205,10 +205,9 @@ module Gemmy::Patches::HashPatch
     #
     module Bury
       def bury *args
-        Gemmy::Patches::HashPatch::InstanceMethods::Bury._bury(self, *args)
+        Gemmy.patch("hash/i/bury")._bury self, *args
       end
       # The bury method, taking the input hash as a parameter
-      # Used by the Hash#bury instance method
       def self._bury(caller_hash, *args)
         if args.count < 2
           raise ArgumentError.new("2 or more arguments required")
@@ -270,13 +269,17 @@ module Gemmy::Patches::HashPatch
                             .method(:_autovivified)
         autovivified.call(self).tap do |hash|
           hash.instance_exec do
-            @db = YAML::Store.new path
-            @db.transaction do
-              @db[:data] ||= autovivified.call({})
+            @store = YAML::Store.new path
+            @store.transaction do
+              @store[:data] ||= autovivified.call({})
+              @store[:data].each { |k,v| self[k] = v.deep_dup }
             end
           end
           hash.extend Gemmy::Patches::HashPatch::PersistedHash
         end
+      end
+      def db
+        @store
       end
     end
 
@@ -285,16 +288,24 @@ module Gemmy::Patches::HashPatch
   # Helper methods for the persistence patch
   #
   module PersistedHash
-    def get(*keys, disk: false)
-      disk ? @db.transaction { @db[:data].dig(*keys) } : dig(*keys)
+    def get(*keys, disk: true)
+      disk ? @store.transaction { @store[:data].dig(*keys) } : dig(*keys)
     end
     def set(*keys, val)
       bury = Gemmy::Patches::HashPatch::InstanceMethods::Bury.method(:_bury)
       bury.call(self, *keys, val)
-      @db.transaction do
-        bury.call(@db[:data], *(keys + [val]))
+      @store.transaction do
+        bury.call(@store[:data], *(keys + [val]))
       end
       val
+    end
+    def data
+      @store.transaction { @store[:data] }
+    end
+    def clear
+      autovivified = Gemmy.patch("hash/i/autovivified")\
+                          .method(:_autovivified)
+      @store.transaction { @store[:data] = autovivified.call({}) }
     end
   end
 

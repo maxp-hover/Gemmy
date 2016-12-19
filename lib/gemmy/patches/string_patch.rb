@@ -7,15 +7,52 @@ module Gemmy::Patches::StringPatch
 
   module InstanceMethods
 
+    module NlpSanitize
+      def nlp_sanitize
+        Gemmy.patch("string/i/alpha")
+          ._alpha(self)
+          .downcase
+          .strip
+          .chomp
+      end
+    end
+
+    module Alpha
+      def self._alpha(string, bang: false, strip_whitespace: false)
+        fn = bang ? :gsub! : :gsub
+        regex = /[^a-zA-Z#{'\s' unless strip_whitespace}]/
+        string.send fn, regex, ''
+      end
+      def alpha!(opts={})
+        Gemmy.patch("string/i/alpha")._alpha(
+          self,
+          opts.merge(bang: true)
+        )
+      end
+      # Gsub non-alphabetical characters
+      def alpha(opts={})
+        Gemmy.patch("string/i/alpha")._alpha(
+          self,
+          opts
+        )
+      end
+    end
+
+    module TempfilePath
+      # Creates a tempfile containing a string and returns its path
+      def tempfile_path
+        Tempfile.new.tap { |t| t.write(self); t.close }.path
+      end
+    end
+
     module EvalNoun
       def eval_noun(commands=[])
         Gemmy.patches("string/i/eval_noun")._eval_noun self, commands
       end
       def self._eval_noun(noun, commands=[])
-        eval(NounLexicon.fetch(noun.to_sym)).call(commands)
+        eval(NounLexicon.get(noun.to_sym)).call(commands)
       end
     end
-
 
     module Words
       # facets

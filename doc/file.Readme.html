@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Readme
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Readme";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Readme</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="file_list.html"></iframe>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Commander.js">Commander.js</h1>
+
+<p><a href="http://travis-ci.org/tj/commander.js"><img
+src="https://api.travis-ci.org/tj/commander.js.svg"></a> <a
+href="https://www.npmjs.org/package/commander"><img
+src="http://img.shields.io/npm/v/commander.svg?style=flat"></a> <a
+href="https://www.npmjs.org/package/commander"><img
+src="https://img.shields.io/npm/dm/commander.svg?style=flat"></a> <a
+href="https://gitter.im/tj/commander.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
+src="https://badges.gitter.im/Join%20Chat.svg"></a></p>
+
+<p>The complete solution for <a href="http://nodejs.org">node.js</a>
+command-line interfaces, inspired by Ruby&#39;s
+commander[https://github.com/tj/commander].<br>  <a
+href="http://tj.github.com/commander.js/">API documentation</a></p>
+
+<h2 id="label-Installation">Installation</h2>
+
+<pre class="code ruby"><code class="ruby">$ npm install commander</code></pre>
+
+<h2 id="label-Option+parsing">Option parsing</h2>
+
+<p>Options with commander are defined with the <code>.option()</code> method,
+also serving as documentation for the options. The example below parses
+args and options from <code>process.argv</code>, leaving remaining args as
+the <code>program.args</code> array which were not consumed by options.</p>
+
+<pre class="code ruby"><code class="ruby">#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var program = require(&#39;commander&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .option(&#39;-p, --peppers&#39;, &#39;Add peppers&#39;)
+  .option(&#39;-P, --pineapple&#39;, &#39;Add pineapple&#39;)
+  .option(&#39;-b, --bbq-sauce&#39;, &#39;Add bbq sauce&#39;)
+  .option(&#39;-c, --cheese [type]&#39;, &#39;Add the specified type of cheese [marble]&#39;, &#39;marble&#39;)
+  .parse(process.argv);
+
+console.log(&#39;you ordered a pizza with:&#39;);
+if (program.peppers) console.log(&#39;  - peppers&#39;);
+if (program.pineapple) console.log(&#39;  - pineapple&#39;);
+if (program.bbqSauce) console.log(&#39;  - bbq&#39;);
+console.log(&#39;  - %s cheese&#39;, program.cheese);</code></pre>
+
+<p>Short flags may be passed as a single arg, for example <code>-abc</code> is
+equivalent to <code>-a -b -c</code>. Multi-word options such as
+“–template-engine” are camel-cased, becoming
+<code>program.templateEngine</code> etc.</p>
+
+<h2 id="label-Coercion">Coercion</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_function'>function</span> <span class='id identifier rubyid_range'>range</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='lbrace'>{</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>..</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='const'>Number</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+
+<span class='id identifier rubyid_function'>function</span> <span class='id identifier rubyid_list'>list</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='lbrace'>{</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+
+<span class='id identifier rubyid_function'>function</span> <span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='rparen'>)</span> <span class='lbrace'>{</span>
+  <span class='id identifier rubyid_memo'>memo</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_memo'>memo</span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+
+<span class='id identifier rubyid_function'>function</span> <span class='id identifier rubyid_increaseVerbosity'>increaseVerbosity</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span> <span class='lbrace'>{</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_total'>total</span> <span class='op'>+</span> <span class='int'>1</span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+
+<span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.1</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_usage'>usage</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[options] &lt;file ...&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-i, --integer &lt;n&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>An integer argument</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_parseInt'>parseInt</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-f, --float &lt;n&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A float argument</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_parseFloat'>parseFloat</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-r, --range &lt;a&gt;..&lt;b&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_range'>range</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-l, --list &lt;items&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A list</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_list'>list</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-o, --optional [value]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>An optional value</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-c, --collect [value]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A repeatable value</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_collect'>collect</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-v, --verbose</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A value that can be increased</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_increaseVerbosity'>increaseVerbosity</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_process'>process</span><span class='period'>.</span><span class='id identifier rubyid_argv'>argv</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> int: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> float: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_float'>float</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> optional: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_optional'>optional</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_range'>range</span> <span class='op'>=</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_range'>range</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> range: %j..%j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_range'>range</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_range'>range</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> list: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_list'>list</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> collect: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> verbosity: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_verbose'>verbose</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> args: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+</code></pre>
+
+<h2 id="label-Regular+Expression">Regular Expression</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.1</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-s --size &lt;size&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Pizza size</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(large|medium|small)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>medium</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-d --drink [drink]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Drink</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(coke|pepsi|izze)$</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_process'>process</span><span class='period'>.</span><span class='id identifier rubyid_argv'>argv</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> size: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> drink: %j</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_drink'>drink</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+</code></pre>
+
+<h2 id="label-Variadic+arguments">Variadic arguments</h2>
+
+<p>The last argument of a command can be variadic, and only the last argument.
+To make an argument variadic you have to  append <code>...</code> to the
+argument name. Here is an example:</p>
+
+<pre class="code ruby"><code class="ruby">#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var program = require(&#39;commander&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .command(&#39;rmdir &lt;dir&gt; [otherDirs...]&#39;)
+  .action(function (dir, otherDirs) {
+    console.log(&#39;rmdir %s&#39;, dir);
+    if (otherDirs) {
+      otherDirs.forEach(function (oDir) {
+        console.log(&#39;rmdir %s&#39;, oDir);
+      });
+    }
+  });
+
+program.parse(process.argv);</code></pre>
+
+<p>An <code>Array</code> is used for the value of a variadic argument. This
+applies to <code>program.args</code> as well as the argument passed  to
+your action as demonstrated above.</p>
+
+<h2 id="label-Specify+the+argument+syntax">Specify the argument syntax</h2>
+
+<pre class="code ruby"><code class="ruby">#!/usr/bin/env node
+
+var program = require(&#39;../&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .arguments(&#39;&lt;cmd&gt; [env]&#39;)
+  .action(function (cmd, env) {
+     cmdValue = cmd;
+     envValue = env;
+  });
+
+program.parse(process.argv);
+
+if (typeof cmdValue === &#39;undefined&#39;) {
+   console.error(&#39;no command given!&#39;);
+   process.exit(1);
+}
+console.log(&#39;command:&#39;, cmdValue);
+console.log(&#39;environment:&#39;, envValue || &quot;no environment given&quot;);</code></pre>
+
+<h2 id="label-Git-style+sub-commands">Git-style sub-commands</h2>
+
+<pre class="code ruby"><code class="ruby">// file: ./examples/pm
+var program = require(&#39;..&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .command(&#39;install [name]&#39;, &#39;install one or more packages&#39;)
+  .command(&#39;search [query]&#39;, &#39;search with optional query&#39;)
+  .command(&#39;list&#39;, &#39;list packages installed&#39;, {isDefault: true})
+  .parse(process.argv);</code></pre>
+
+<p>When <code>.command()</code> is invoked with a description argument, no
+<code>.action(callback)</code> should be called to handle sub-commands,
+otherwise there will be an error. This tells commander that you&#39;re
+going to use separate executables for sub-commands, much like
+<code>git(1)</code> and other popular tools.<br> The commander will try to
+search the executables in the directory of the entry script (like
+<code>./examples/pm</code>) with the name <code>program-command</code>,
+like <code>pm-install</code>, <code>pm-search</code>.</p>
+
+<p>Options can be passed with the call to <code>.command()</code>. Specifying
+<code>true</code> for <code>opts.noHelp</code> will remove the option from
+the generated help output. Specifying <code>true</code> for
+<code>opts.isDefault</code> will run the subcommand if no other subcommand
+is specified.</p>
+
+<p>If the program is designed to be installed globally, make sure the
+executables have proper modes, like <code>755</code>.</p>
+
+<h3 id="label--harmony"><code>--harmony</code></h3>
+
+<p>You can enable <code>--harmony</code> option in two ways: * Use <code>#!
+/usr/bin/env node --harmony</code> in the sub-commands scripts. Note some
+os version don’t support this pattern. * Use the <code>--harmony</code>
+option when call the command, like <code>node --harmony examples/pm
+publish</code>. The <code>--harmony</code> option will be preserved when
+spawning sub-command process.</p>
+
+<h2 id="label-Automated+--help">Automated –help</h2>
+
+<p>The help information is auto-generated based on the information commander
+already knows about your program, so the following <code>--help</code> info
+is for free:</p>
+
+<pre class="code ruby"><code class="ruby">$ ./examples/pizza --help
+
+   Usage: pizza [options]
+
+   An application for pizzas ordering
+
+   Options:
+
+     -h, --help           output usage information
+     -V, --version        output the version number
+     -p, --peppers        Add peppers
+     -P, --pineapple      Add pineapple
+     -b, --bbq            Add bbq sauce
+     -c, --cheese &lt;type&gt;  Add the specified type of cheese [marble]
+     -C, --no-cheese      You do not want any cheese</code></pre>
+
+<h2 id="label-Custom+help">Custom help</h2>
+
+<p>You can display arbitrary <code>-h, --help</code> information  by listening
+for “–help”. Commander will automatically  exit once you are done so that
+the remainder of your program  does not execute causing undesired
+behaviours, for example  in the following executable “stuff” will not
+output when  <code>--help</code> is used.</p>
+
+<pre class="code ruby"><code class="ruby">#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var program = require(&#39;commander&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .option(&#39;-f, --foo&#39;, &#39;enable some foo&#39;)
+  .option(&#39;-b, --bar&#39;, &#39;enable some bar&#39;)
+  .option(&#39;-B, --baz&#39;, &#39;enable some baz&#39;);
+
+// must be before .parse() since
+// node&#39;s emit() is immediate
+
+program.on(&#39;--help&#39;, function(){
+  console.log(&#39;  Examples:&#39;);
+  console.log(&#39;&#39;);
+  console.log(&#39;    $ custom-help --help&#39;);
+  console.log(&#39;    $ custom-help -h&#39;);
+  console.log(&#39;&#39;);
+});
+
+program.parse(process.argv);
+
+console.log(&#39;stuff&#39;);</code></pre>
+
+<p>Yields the following help output when <code>node script-name.js -h</code>
+or <code>node script-name.js --help</code> are run:</p>
+
+<pre class="code ruby"><code class="ruby">
+Usage: custom-help [options]
+
+Options:
+
+  -h, --help     output usage information
+  -V, --version  output the version number
+  -f, --foo      enable some foo
+  -b, --bar      enable some bar
+  -B, --baz      enable some baz
+
+Examples:
+
+  $ custom-help --help
+  $ custom-help -h</code></pre>
+
+<h2 id="label-.outputHelp-28cb-29">.outputHelp(cb)</h2>
+
+<p>Output help information without exiting. Optional callback cb allows
+post-processing of help text before it is displayed.</p>
+
+<p>If you want to display help by default (e.g. if no command was provided),
+you can use something like:</p>
+
+<pre class="code ruby"><code class="ruby">var program = require(&#39;commander&#39;);
+var colors = require(&#39;colors&#39;);
+
+program
+  .version(&#39;0.0.1&#39;)
+  .command(&#39;getstream [url]&#39;, &#39;get stream URL&#39;)
+  .parse(process.argv);
+
+  if (!process.argv.slice(2).length) {
+    program.outputHelp(make_red);
+  }
+
+function make_red(txt) {
+  return colors.red(txt); //display the help text in red on the console
+}</code></pre>
+
+<h2 id="label-.help-28cb-29">.help(cb)</h2>
+
+<p>Output help information and exit immediately.  Optional callback cb allows
+post-processing of help text before it is displayed.</p>
+
+<h2 id="label-Examples">Examples</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_var'>var</span> <span class='id identifier rubyid_program'>program</span> <span class='op'>=</span> <span class='id identifier rubyid_require'>require</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>commander</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+<span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.1</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-C, --chdir &lt;path&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>change the working directory</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-c, --config &lt;path&gt;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>set config path. defaults to ./deploy.conf</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-T, --no-tests</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ignore test hook</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_command'>command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>setup [env]</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>run setup commands for all envs</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-s, --setup_mode [mode]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Which setup mode to use</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_function'>function</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='lbrace'>{</span>
+    <span class='id identifier rubyid_var'>var</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_setup_mode'>setup_mode</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>normal</span><span class='tstring_end'>&quot;</span></span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_env'>env</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>all</span><span class='tstring_end'>&#39;</span></span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>setup for %s env(s) with %s mode</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+<span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_command'>command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exec &lt;cmd&gt;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_alias'>alias</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ex</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>execute the given remote cmd</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_option'>option</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-e, --exec_mode &lt;mode&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Which exec mode to use</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_function'>function</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='lbrace'>{</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exec &quot;%s&quot; using %s mode</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_exec_mode'>exec_mode</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--help</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_function'>function</span><span class='lparen'>(</span><span class='rparen'>)</span> <span class='lbrace'>{</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  Examples:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>    $ deploy exec sequential</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>    $ deploy exec async</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='semicolon'>;</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+<span class='id identifier rubyid_program'>program</span>
+  <span class='period'>.</span><span class='id identifier rubyid_command'>command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>*</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_function'>function</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span><span class='lbrace'>{</span>
+    <span class='id identifier rubyid_console'>console</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deploying &quot;%s&quot;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+<span class='id identifier rubyid_program'>program</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_process'>process</span><span class='period'>.</span><span class='id identifier rubyid_argv'>argv</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+</code></pre>
+
+<p>More Demos can be found in the <a
+href="https://github.com/tj/commander.js/tree/master/examples">examples</a>
+directory.</p>
+
+<h2 id="label-License">License</h2>
+
+<p>MIT</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Sun Dec 18 19:42:59 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.3.0).
+</div>
+
+    </div>
+  </body>
+</html>

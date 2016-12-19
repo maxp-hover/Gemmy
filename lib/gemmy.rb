@@ -6,6 +6,8 @@ require 'pry'
 require 'colored'
 require 'corefines'
 require 'sentence_interpreter'
+require 'engtagger'
+require 'odyssey'
 
 # Container class for all the functionality.
 #
@@ -78,9 +80,6 @@ class Gemmy
   end
 end
 
-# Load files in order of their "/" count
-# to preserve constant hierarchies
-#
 Gem.find_files("gemmy/**/*.rb").sort_by do |x|
   x.split("/").length
 end.each &method(:require)

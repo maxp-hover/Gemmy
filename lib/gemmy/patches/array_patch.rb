@@ -28,14 +28,54 @@ module Gemmy::Patches::ArrayPatch
 
   module InstanceMethods
 
+    module Reject
+      # make it an alias for reject(&:blank?) if no block given
+      def reject(&blk)
+        blk ? super : reject(&:blank?)
+      end
+    end
+
+    module Cut
+      # another alias for compact
+      def cut
+        compact
+      end
+    end
+
+
+    module MethodMissing
+      # Tries to forward methods to enumerator
+      def method_missing(fn, &blk)
+        enum = to_enum
+        if enum.respond_to?(fn)
+          blk ? enum.send(fn, &blk) : enum.send(fn)
+        else
+          super
+        end
+      end
+    end
+
     module RunCommands
+      # Part of the Nlp API
+      # Example:
+      #    include Gemmy::Components::Nlp
+      #    parse_sentence("A sentence").run_commands
+      #
+      # Under the hood, parse_sentence is creating procs in the db
+      # These are evaluated here
+      #
       def run_commands
-        _eval_noun = Gemmy.patch("string/i/eval_noun").method(:_eval_noun)
-        return self.map do |cmd|
-          eval(VerbLexicon[cmd[:verb].to_sym]).call(*(
-            cmd[:nouns].map { |noun| _eval_noun.call(noun, self) }
-          ))
-        end.join("\n")
+        _eval_noun = Gemmy.patch("string/i/eval_noun")
+                          .method(:_eval_noun)
+        return self.flat_map do |cmds|
+          cmds&.map do |cmd|
+            eval(VerbLexicon.get cmd[:verb].to_sym).call(*(
+              cmd[:nouns]&.map do |noun|
+                _eval_noun.call(noun, self)
+              end
+            ).to_a.compact)
+          end
+        end.compact
       end
     end
 

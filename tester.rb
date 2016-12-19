@@ -55,13 +55,12 @@ require 'byebug'
 
 # Verb-Noun phrases can be detected using a separate gem I made called
 # sentence_interpreter.
+#
 # The entire lexicon needs to be added, which is where
-# the Node lib 'wordpos' comes in.
-
+# the Node lib 'wordpos' and the Ruby lib 'engtagger' come in.
 
     # sentence = "the cat went in the hat, sat, and was fat"
     # tagged = EngTagger.new.add_tags(sentence)
-    # byebug
     # words = {}.persisted("dictionary.yml")
     # words.set(:nouns, {}.autovivified)
     # words.set(:verbs, {}.autovivified)
@@ -72,29 +71,21 @@ require 'byebug'
     # SentenceInterpreter.interpret("print hello potato").run_commands
 
 # Part of speech tagger
-# This is an external system dependency.
-# The command line executable 'wordpos' must be in the PATH.
-# Note that the package's installation was a little buggy for me and I had to
-# add ~/local/lib/node_modules/wordpos/bin to the PATH manually
-
+#
 include Gemmy::Components::Nlp
+include Gemmy::Components::WordSpeaker
 
-sentences = [
-    "eat google and sit on the phone with a candied apple",
-    "eat a parent and noodle a pillow"
-]
+# Gemmy::Components::Cache.new("sentence_pos").clear
+# Gemmy::Components::Cache.new("word_pos").clear
+# Gemmy::Components::Cache.new("verb_lexicon").clear
+# Gemmy::Components::Cache.new("noun_lexicon").clear
 
-res = sentences.map &m(:parse_sentence)
-
-byebug
-false
-
-
-
-
-
-
-
-
-
+# File.readlines("/home/max/Documents/max-jabber.txt")
+File.readlines("./sample.txt")
+    .map(&:nlp_sanitize)
+    .each do |sentence|
+        puts sentence.green
+        speak_sentence(sentence)
+        puts [parse_sentence(sentence)].run_commands
+    end
 

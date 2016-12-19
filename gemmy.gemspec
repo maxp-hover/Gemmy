@@ -26,4 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'corefines', '~> 1.9.0'
   s.add_dependency 'sentence_interpreter', '~> 0.0.7'
   s.add_dependency 'awesome_print', '~> 1.7.0'
+  s.add_dependency 'engtagger', '~> 0.2.1'
+  s.add_dependency 'minitest', '~> 5.10.1'
+  s.add_dependency 'odyssey', '~> 0.2.0'
 end

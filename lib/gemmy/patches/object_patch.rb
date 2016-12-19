@@ -14,7 +14,48 @@ module Gemmy::Patches::ObjectPatch
 
   module InstanceMethods
 
-    module Iteself
+    module Home
+      # the $HOME dir, aka ~
+      def home
+        `echo $HOME`.chomp
+      end
+    end
+
+    module ObjectState
+      # class StateExample
+      #   attr_reader :a, :b
+      #   def initialize(a,b)
+      #     @a, @b = a, b
+      #   end
+      # end
+
+      # obj = StateExample.new(1,2)
+      # obj.a  #=> 1
+      # obj.b  #=> 2
+
+      # obj.object_state  #=> {:a=>1, :b=>2}
+
+      # obj.object_state(:a=>3, :b=>4)
+      # obj.a  #=> 3
+      # obj.b  #=> 4
+      def object_state(data=nil)
+        if data
+          instance_variables.each do |iv|
+            name = iv.to_s.sub(/^[@]/, '').to_sym
+            instance_variable_set(iv, data[name])
+          end
+        else
+          data = {}
+          instance_variables.each do |iv|
+            name = iv.to_s.sub(/^[@]/, '').to_sym
+            data[name] = instance_variable_get(iv)
+          end
+          data
+        end
+      end
+    end
+
+    module Itself
       # facets
       def itself
         def itself

@@ -60,54 +60,44 @@
       <iframe id="search_frame" src="file_list.html"></iframe>
 
       <div id="content"><div id='filecontents'>
-<h3 id="label-Gemmy+gem">Gemmy gem</h3>
+<h1 id="label-wrappy">wrappy</h1>
 
-<p>This is a general purpose gem which adds functionality to the ruby language
-and defines some system tasks, such as generating a gem.</p>
+<p>Callback wrapping utility</p>
 
-<p>It is on RubyGems. Because there is an existing gem named
-<code>gemmy</code>, the name passed to <code>gem install</code> is
-<code>gemmyrb</code>. But <code>require &#39;gemmy&#39;</code> is still
-used.</p>
+<h2 id="label-USAGE">USAGE</h2>
 
-<p>RubyGems hosts the YARD documentation at <a
-href="http://www.rubydoc.info/gems/gemmyrb">www.rubydoc.info/gems/gemmyrb</a>,
-but it&#39;s only updated when I push a new gem version. So the version on
-Github&#39;s master branch might contain undocumented functionality.
-I&#39;ll try to keep the RubyGems version up-to-date though.</p>
+<pre class="code ruby"><code class="ruby">var wrappy = require(&quot;wrappy&quot;)
 
-<p>YARD is not the best for a birds-eye overview. For that, see the following
-documents:</p>
+// var wrapper = wrappy(wrapperFunction)
 
-<p><strong>Note! The following links won&#39;t work if you&#39;re reading this
-on rubydoc.info</strong></p>
+// make sure a cb is called only once
+// See also: http://npm.im/once for this specific use case
+var once = wrappy(function (cb) {
+  var called = false
+  return function () {
+    if (called) return
+    called = true
+    return cb.apply(this, arguments)
+  }
+})
 
-<p><strong>Follow the links from <a
-href="http://github.com/maxpleaner/gemmy">github.com/maxpleaner/gemmy</a>
-instead</strong></p>
-<ul><li>
-<p><em>Loading the gem&#39;s code in different scopes</em></p>
-</li><li>
-<p><a
-href="./examples/01_using_as_refinement.rb">examples/01_using_as_refinement.rb</a></p>
-</li><li>
-<p><a href="./examples/02_using_globally.rb">examples/02_using_globally.rb</a></p>
-</li><li>
-<p><em>Shell commands and other one-off processes</em></p>
-</li><li>
-<p><a href="./examples/03_shell_commands.rb">examples/03_shell_commands.rb</a></p>
-</li></ul>
+function printBoo () {
+  console.log(&#39;boo&#39;)
+}
+// has some rando property
+printBoo.iAmBooPrinter = true
 
-<p><strong>To see a full list of the patched methods, see the <a
-href="http://www.rubydoc.info/gems/gemmyrb">rubydoc</a></strong></p>
+var onlyPrintOnce = once(printBoo)
 
-<p>Specifically, look at the constants defined on Gemmy::Patches. There is one
-module for each of the core classes being patched. Each individual method
-is also contained in its own module (for the sake of, well, modularity)</p>
+onlyPrintOnce() // prints &#39;boo&#39;
+onlyPrintOnce() // does nothing
+
+// random property is retained!
+assert.equal(onlyPrintOnce.iAmBooPrinter, true)</code></pre>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Dec 12 22:53:26 2016 by
+  Generated on Sun Dec 18 19:43:02 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>
