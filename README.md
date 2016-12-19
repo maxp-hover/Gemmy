@@ -21,6 +21,9 @@ documents:
   - [examples/02_using_globally.rb](./examples/02_using_globally.rb)
 - _Shell commands and other one-off processes_
   - [examples/03_shell_commands.rb](./examples/03_shell_commands.rb)
+- _Natural language utilities_
+  - [examples/04_language_stuff.rb](./examples/04_language_stuff.rb)
+
 
 **To see a full list of the patched methods, see the [rubydoc](http://www.rubydoc.info/gems/gemmyrb)**
 
