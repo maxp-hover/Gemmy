@@ -80,12 +80,21 @@ include Gemmy::Components::WordSpeaker
 # Gemmy::Components::Cache.new("verb_lexicon").clear
 # Gemmy::Components::Cache.new("noun_lexicon").clear
 
-# File.readlines("/home/max/Documents/max-jabber.txt")
-File.readlines("./sample.txt")
-    .map(&:nlp_sanitize)
-    .each do |sentence|
-        puts sentence.green
-        speak_sentence(sentence)
-        puts [parse_sentence(sentence)].run_commands
-    end
+arr = File.readlines("/home/max/Documents/max-jabber.txt")
+# arr = File.readlines("./sample.txt")
+# arr = [
+#     "this has four words",
+#     "two words"
+# ] 
 
+idxs = []
+arr.map(&:nlp_sanitize).each_with_index do |sentence, idx|
+    idxs << idx
+    # puts sentence.green
+#     puts sentence.syllable_count
+    # speak_sentence(sentence)
+    speak_sentence(sentence, path: "#{idx}.wav")
+#     # puts [parse_sentence(sentence)].run_commands
+end
+
+idxs.each { |idx| `aplay #{idx}.wav` }

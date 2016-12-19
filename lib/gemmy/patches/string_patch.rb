@@ -7,20 +7,39 @@ module Gemmy::Patches::StringPatch
 
   module InstanceMethods
 
+    module SyllableCount
+      def syllable_count
+        Odyssey.flesch_kincaid_re(self, true)["syllable_count"]
+      end
+    end
+
     module NlpSanitize
+      # Removes non-alphanumerics and newline
+      # Converts numbers to english
       def nlp_sanitize
         Gemmy.patch("string/i/alpha")
           ._alpha(self)
           .downcase
           .strip
+          .numbers_to_english
           .chomp
+      end
+    end
+
+    module NumbersToEnglish
+      # Converts a string's numbers to english words
+      def numbers_to_english
+        Gemmy.patch("string/i/numbers_to_english").numbers_to_english(self)
+      end
+      def self.numbers_to_english(string)
+        string.gsub(/(\d+)/) { |num| num.humanize }
       end
     end
 
     module Alpha
       def self._alpha(string, bang: false, strip_whitespace: false)
         fn = bang ? :gsub! : :gsub
-        regex = /[^a-zA-Z#{'\s' unless strip_whitespace}]/
+        regex = /[^a-zA-Z0-9#{'\s' unless strip_whitespace}]/
         string.send fn, regex, ''
       end
       def alpha!(opts={})

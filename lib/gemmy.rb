@@ -8,6 +8,7 @@ require 'corefines'
 require 'sentence_interpreter'
 require 'engtagger'
 require 'odyssey'
+require 'espeak'
 
 # Container class for all the functionality.
 #
