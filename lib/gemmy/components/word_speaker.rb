@@ -1,13 +1,10 @@
 module Gemmy::Components::WordSpeaker
-  include ESpeak
 
   Gemmy.patches.each { |x| using x }
 
-  def speak_sentence(sentence, container_length=8, path: nil)
-    Gemmy::Components::WordSpeaker::Sentence.new(
-      sentence,
-      container_length,
-    ).speak(path: path)
+  def speak_sentence(*args)
+    sentence = Gemmy.component("word_speaker/sentence").new(*args)
+    sentence.save_to_file.speak_file
   end
 
   class Sentence
@@ -19,32 +16,47 @@ module Gemmy::Components::WordSpeaker
     %i{
       sentence
       sentence_syllables
-      container_length
-    }.each &m(:attr_reader)
+      syllables
+      syllable_length
+      path
+      word_paths
+      total_len
+      cached
+      silent
+      idx
+    }.each &m(:attr_accessor)
 
-    def initialize(sentence, container_length)
+    def initialize(
+      sentence:, syllables: 8, syllable_length: 0.2, path: nil, cached: false,
+      silent: false
+    )
       @sentence = sentence
       @sentence_syllables = @sentence.syllable_count.to_f
-      @container_length = container_length.to_f
+      @syllables = syllables.to_f
+      @path = path
+      @syllable_length = syllable_length.to_f
+      @total_len = syllable_length * @syllables
+      @cached = cached
+      @silent = silent
+      @idx = 0
     end
 
-    def speak(path: nil)
-      pitch = DefaultPitch * diff_multiplier
-      speed = DefaultSpeed * diff_factor
-      gap = DefaultGap * diff_multiplier
-      espeak_opts = "-v english-us -p #{pitch} -s #{speed}"
-      if path
-        espeak_opts += " -w #{path}"
-      end
-      `espeak #{espeak_opts} "#{sentence}"`
+    def save_to_file
+      return self if @sentence.empty? || cached
+      `espeak -v english-us -w #{path} "#{sentence}"`
+      sentence_len = `soxi -D #{path}`.to_f
+      diff = 1 / (total_len / sentence_len)
+      tmp_path = "wav/tmp.wav"
+      `sox #{path} #{tmp_path} tempo #{diff.round(2)}`
+      `rm #{path}`
+      `mv #{tmp_path} #{path}`
+      self
     end
 
-    def diff_factor
-      sentence_syllables / container_length
-    end
-
-    def diff_multiplier
-      1.0 / diff_factor
+    def speak_file
+      return self if @sentence.empty? || silent
+      `aplay #{path}`
+      self
     end
 
   end

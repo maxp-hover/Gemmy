@@ -8,11 +8,18 @@ require 'corefines'
 require 'sentence_interpreter'
 require 'engtagger'
 require 'odyssey'
-require 'espeak'
 
 # Container class for all the functionality.
 #
 class Gemmy
+
+  # Slightly friendlier way to reference component classes
+  # Gemmy.component("word_speaker/sentence")
+  def self.component(path)
+    Gemmy::Components.const_get(
+      path.split("/").map { |part| part.camelcase }.join("::")
+    )
+  end
 
   # Used by patches to get a reference to static patch classes
   # Without this there would be long, unqualified constant names such as

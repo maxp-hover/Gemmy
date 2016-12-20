@@ -29,5 +29,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'engtagger', '~> 0.2.1'
   s.add_dependency 'minitest', '~> 5.10.1'
   s.add_dependency 'odyssey', '~> 0.2.0'
-  s.add_dependency 'espeak-ruby', '~> 1.0.3'
 end

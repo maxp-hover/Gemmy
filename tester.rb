@@ -87,15 +87,33 @@ arr = File.readlines("/home/max/Documents/max-jabber.txt")
 #     "two words"
 # ]
 
+`rm wav/*.wav`
 idxs = []
-arr.map(&:nlp_sanitize).each_with_index do |sentence, idx|
+arr.map(&:nlp_sanitize)
+.reject(&:blank?)
+.first(5).each_with_index do |sentence, idx|
     idxs << idx
     # puts sentence.green
 #     puts sentence.syllable_count
     # speak_sentence(sentence)
-    # speak_sentence(sentence, path: "#{idx}.wav")
+    speak_sentence(
+        sentence: sentence,
+        syllables: 1,
+        syllable_length: 0.3,
+        path: "wav/#{idx}.wav",
+        # cached: true,
+        silent: true
+    )
 #     # puts [parse_sentence(sentence)].run_commands
 end
 
-# idxs.each { |i| sleep 0.1; Thread.new { `aplay #{i}.wav` } }
-# idxs.each { |idx| `aplay #{idx}.wav` }
+idxs.each do |i|
+    if File.exists? "wav/#{i}.wav"
+        sleep 0.6
+        Thread.new do
+            `aplay wav/#{i}.wav`
+        end
+    end
+end
+
+
