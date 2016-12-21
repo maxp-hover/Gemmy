@@ -34,7 +34,7 @@ class Gemmy::Tasks::MakeGem
   #
   def make_gem(name)
     @name = name
-    @class_name = name.capitalize
+    @class_name = name.camelcase
 
     usage_io
     create_root_dir
@@ -136,7 +136,7 @@ class Gemmy::Tasks::MakeGem
     gemspec_text = <<-TXT.unindent
       require_relative './lib/version.rb'
       Gem::Specification.new do |s|
-        s.name        = name
+        s.name        = "#{name}"
         s.version     = #{class_name}::VERSION
         s.date        = "#{Time.now.strftime("%Y-%m-%d")}"
         s.summary     = "#{summary}"

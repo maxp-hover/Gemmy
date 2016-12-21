@@ -18,15 +18,15 @@ Gem::Specification.new do |s|
 
   # For a ruby gem, dependencies are listed here, not in the Gemfile
   # But the Gemfile loads this list
-  s.add_dependency "colored", '~> 1.2'
-  s.add_dependency 'activesupport', '~> 4.2', '>= 4.2.7'
-  s.add_dependency 'pry', '~> 0.10.4'
-  s.add_dependency 'byebug', '~> 9.0.6'
-  s.add_dependency 'thor', '~> 0.19.4'
-  s.add_dependency 'corefines', '~> 1.9.0'
+  s.add_dependency "colored"
+  s.add_dependency 'activesupport'
+  s.add_dependency 'pry'
+  s.add_dependency 'byebug'
+  s.add_dependency 'thor'
+  s.add_dependency 'corefines'
   s.add_dependency 'sentence_interpreter', '~> 0.0.7'
-  s.add_dependency 'awesome_print', '~> 1.7.0'
-  s.add_dependency 'engtagger', '~> 0.2.1'
-  s.add_dependency 'minitest', '~> 5.10.1'
-  s.add_dependency 'odyssey', '~> 0.2.0'
+  s.add_dependency 'awesome_print'
+  s.add_dependency 'engtagger'
+  s.add_dependency 'minitest'
+  s.add_dependency 'odyssey'
 end
