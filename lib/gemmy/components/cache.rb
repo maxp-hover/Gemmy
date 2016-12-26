@@ -5,14 +5,17 @@ class Gemmy::Components::Cache < Hash
   using Gemmy.patch("object/i/home")
   using Gemmy.patch("object/i/m")
 
-  CachePath = ENV["GEMMY_CACHE_PATH"] || "#{home}/gemmy/caches"
-
-  unless Dir.exists?(CachePath)
-    `mkdir -p #{CachePath}`
+  def self.setup_cache_folder
+    cache_path = ENV["GEMMY_CACHE_PATH"] || "#{home}/gemmy/caches"
+    unless Dir.exists?(cache_path)
+      `mkdir -p #{cache_path}`
+    end
+    cache_path
   end
 
   def initialize(db_name, hash={})
-    @db = hash.persisted "#{CachePath}/#{db_name}.yaml"
+    cache_path = self.class.setup_cache_folder
+    @db = hash.persisted "#{cache_path}/#{db_name}.yaml"
     @db.set_state hash
   end
 
