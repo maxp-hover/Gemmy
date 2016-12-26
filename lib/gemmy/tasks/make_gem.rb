@@ -51,7 +51,7 @@ class Gemmy::Tasks::MakeGem
 
   attr_reader :name, :root_dir, :lib, :version_file, :main_file, :summary,
               :author, :email, :gemspec_file, :class_name, :rubygems_version,
-              :gemfile
+              :gemfile, :url
 
   private
 
@@ -103,10 +103,7 @@ class Gemmy::Tasks::MakeGem
   def create_main_file
     @main_file = "#{lib}/#{name}.rb"
     main_text = <<-TXT.unindent
-      require 'colored'
-      require 'pry'
-      require 'active_support/all'
-      require 'thor'
+      require 'gemmy'
       module #{class_name}
       end
       Gem.find_files("#{name}/**/*.rb").each &method(:require)
@@ -123,6 +120,7 @@ class Gemmy::Tasks::MakeGem
     @summary = _prompt "add a one-line summary."
     @author = _prompt "enter the author's name"
     @email = _prompt "enter the author's email"
+    @url = _prompt "enter the homepage url"
     @rubygems_version = `gem -v`.chomp
     self
   end
@@ -144,15 +142,13 @@ class Gemmy::Tasks::MakeGem
         s.platform    = Gem::Platform::RUBY
         s.authors     = ["#{author}"]
         s.email       = '#{email}'
-        s.homepage    = "http://github.com/maxpleaner/gemmy"
+        s.required_ruby_version = '~> 2.3'
+        s.homepage    = "#{url}"
         s.files       = Dir["lib/**/*.rb", "bin/*", "**/*.md", "LICENSE"]
         s.require_path = 'lib'
         s.required_rubygems_version = ">= #{rubygems_version}"
         s.executables = Dir["bin/*"].map &File.method(:basename)
-        s.add_dependency "colored", '~> 1.2'
-        s.add_dependency 'activesupport', '~> 4.2', '>= 4.2.7'
-        s.add_dependency 'pry', '~> 0.10.4'
-        s.add_dependency 'thor', '~> 0.19.4'
+        s.add_dependency 'gemmyrb'
         s.license     = 'MIT'
       end
     TXT

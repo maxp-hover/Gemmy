@@ -3,6 +3,7 @@ class Gemmy::Components::Cache < Hash
   using Gemmy.patch("hash/i/persisted")
   using Gemmy.patch("hash/i/bury")
   using Gemmy.patch("object/i/home")
+  using Gemmy.patch("object/i/m")
 
   CachePath = ENV["GEMMY_CACHE_PATH"] || "#{home}/gemmy/caches"
 
@@ -10,9 +11,9 @@ class Gemmy::Components::Cache < Hash
     `mkdir -p #{CachePath}`
   end
 
-  def initialize(db_name)
-    @db = {}.persisted "#{CachePath}/#{db_name}.yaml"
-    @memory = @db.get(:data)
+  def initialize(db_name, hash={})
+    @db = hash.persisted "#{CachePath}/#{db_name}.yaml"
+    @db.set_state hash
   end
 
   def get_or_set(*keys, &blk)
@@ -24,26 +25,32 @@ class Gemmy::Components::Cache < Hash
     result
   end
 
+  def data
+    @db.data
+  end
+
   def keys
     @db.data.keys
   end
 
-  def get(*keys, source: :db)
-    if source == :memory
-      @memory.dig *keys
-    elsif source == :db
-      @db.dig *keys
-    else
-      raise ArgumentError
-    end
+  def get(*keys)
+    @db.dig *keys
+  end
+
+  def set_state(hash)
+    @db.set_state hash
+    each_key &m(:delete)
+    deep_merge! hash
   end
 
   def set(*keys, val)
+    Gemmy.patch("hash/i/bury").bury(self, *keys, val)
     @db.set(*keys, val)
   end
 
   def clear
-    # forwards it to PersistedHash
+    each_key &m(:delete)
     @db.clear
   end
+
 end

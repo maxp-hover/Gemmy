@@ -80,42 +80,94 @@ include Gemmy::Components::WordSpeaker
 # Gemmy::Components::Cache.new("verb_lexicon").clear
 # Gemmy::Components::Cache.new("noun_lexicon").clear
 
-arr = File.readlines("/home/max/Documents/max-jabber.txt")
+# arr = File.readlines("/home/max/Documents/max-jabber.txt")
+
 # arr = File.readlines("./sample.txt")
+
 # arr = [
 #     "this has four words",
 #     "two words"
 # ]
 
 # `rm wav/*.wav`
-idxs = []
-arr.map(&:nlp_sanitize)
-.reject(&:blank?)
-.first(2).each_with_index do |sentence, idx|
-    idxs << idx
+
+# idxs = []
+
+# arr = arr.map(&:nlp_sanitize)
+# .reject(&:blank?)
+# .first(2)
+
+# arr = [
+# "free",
+# "the cat in the hat"
+# ]
+
+# arr.each_with_index do |sentence, idx|
+    # idxs << idx
     # puts sentence.green
 #     puts sentence.syllable_count
     # speak_sentence(sentence)
-    speak_sentence(
-        sentence: sentence,
-        syllables: 4,
-        syllable_length: 1,
-        path: "wav/#{idx}.wav",
-        # cached: true,
-        silent: true
-    )
 #     # puts [parse_sentence(sentence)].run_commands
-end
+# end
 
-2.times do
-    idxs.each do |i|
-        if File.exists? "wav/#{i}.wav"
-            sleep 8
-            Thread.new do
-                `aplay wav/#{i}.wav`
-            end
-        end
-    end
-end
+# 8.times do
+#     idxs.each do |i|
+#         Thread.new do
+#             if File.exists? "wav/#{i}.wav"
+#                 `aplay wav/#{i}.wav`
+#             end
+#         end
+#         sleep 0.6
+#     end
+# end
+
+# tracks = {
+#     free: "wav/free.wav",
+#     cat_in_hat: "wav/cat_in_hat.wav",
+#     amen: "wav/amen.wav"
+# }.to_ostruct
+
+# speak_sentence(
+#     sentence: "free",
+#     syllables: 1,
+#     syllable_length: 6.4,
+#     path: tracks.free,
+#     cached: true,
+#     silent: true
+# )
+
+# speak_sentence(
+#     sentence: "the cat in the hat",
+#     syllables: 1,
+#     syllable_length: 1.75,
+#     path: tracks.cat_in_hat,
+#     cached: true,
+#     silent: true
+# )
+
+# Thread.new do
+#     loop do
+#         `play wav/drone.wav`
+#     end
+# end
+
+# Thread.new do
+#     16.times do
+#         Thread.new do
+#             2.times { Thread.new { `aplay #{tracks.free}` } }
+#             `aplay #{tracks.cat_in_hat}`
+#             `aplay #{tracks.cat_in_hat}`
+#             `aplay #{tracks.cat_in_hat}`
+#             `aplay #{tracks.cat_in_hat}`
+#         end
+#         2.times do
+#             Thread.new do
+#                 `aplay #{tracks.amen}`
+#             end
+#         end
+#         sleep 7.0
+#     end
+# end.join
+
 
 

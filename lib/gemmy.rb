@@ -45,10 +45,13 @@ class Gemmy
                   .const_get(context_classname)
                   .const_get method_name.camelcase
   end
+  singleton_class.send(:alias_method, :refinement, :patch)
+
 
   def self.patches(*args)
     Gemmy::Patches.class_refinements *args
   end
+  singleton_class.send(:alias_method, :refinements, :patches)
 
   # Get a constant,
   # lookup on Gemmy::Constants
@@ -86,12 +89,16 @@ class Gemmy
     end
     [components, core_patches].flatten
   end
+  singleton_class.send(:alias_method, :load, :load_globally)
 end
+
 
 Gem.find_files("gemmy/**/*.rb").sort_by do |x|
   x.split("/").length
 end.each &method(:require)
 
-# Alias for less typing
-class Gmy < Gemmy
+unless ENV["NO_G_MODE"]
+  # Alias for less typing
+  class G < Gemmy
+  end
 end

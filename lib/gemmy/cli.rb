@@ -38,4 +38,11 @@ class Gemmy::CLI < Thor
     Gemmy::Tests.run
   end
 
+  # show version
+  #
+  desc "v", "version"
+  def v
+    puts Gemmy::VERSION
+  end
+
 end

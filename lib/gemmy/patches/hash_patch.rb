@@ -57,6 +57,40 @@ module Gemmy::Patches::HashPatch
       end
     end
 
+    module RecursiveMap
+      def recursive_map(&blk)
+        Gemmy.patch("hash/i/recursive_map").recursive_map(self, &blk)
+      end
+      def self.recursive_map(hash, &blk)
+        hash.reduce({}) do |result, (key, val)|
+          if val.is_a?(Hash)
+            result[key] = recursive_map(val, &blk)
+          else
+            result[key] = blk.call(bal)
+          end
+          result
+        end
+      end
+    end
+
+    module RecursiveKeys
+      # returns an array of arrays. Each sub-array is a list of keys.
+      # This list can be passed to Hash#dig with a splat operator.
+      def recursive_keys
+        Gemmy.patch("hash/i/recursive_keys").recursive_keys self
+      end
+      def self.recursive_keys hash
+        toplevel_keys = hash.keys.map &Array.method(:wrap)
+        toplevel_keys.map do |key_array|
+          if hash[key].is_a? Hash
+            key_array.concat recursive_keys hash[key]
+          else
+            key_array
+          end
+        end
+      end
+    end
+
     module Rekey
       # facets
       # rekey according to a block, i.e. {a: 1}.rekey &:to_s
@@ -205,10 +239,10 @@ module Gemmy::Patches::HashPatch
     #
     module Bury
       def bury *args
-        Gemmy.patch("hash/i/bury")._bury self, *args
+        Gemmy.patch("hash/i/bury").bury self, *args
       end
       # The bury method, taking the input hash as a parameter
-      def self._bury(caller_hash, *args)
+      def self.bury(caller_hash, *args)
         if args.count < 2
           raise ArgumentError.new("2 or more arguments required")
         elsif args.count == 2
@@ -216,7 +250,7 @@ module Gemmy::Patches::HashPatch
         else
           arg = args.shift
           caller_hash[arg] = {} unless caller_hash[arg]
-          _bury(caller_hash[arg], *args) unless args.empty?
+          bury(caller_hash[arg], *args) unless args.empty?
         end
         caller_hash
       end
@@ -292,7 +326,7 @@ module Gemmy::Patches::HashPatch
       disk ? @store.transaction { @store[:data].dig(*keys) } : dig(*keys)
     end
     def set(*keys, val)
-      bury = Gemmy::Patches::HashPatch::InstanceMethods::Bury.method(:_bury)
+      bury = Gemmy::Patches::HashPatch::InstanceMethods::Bury.method(:bury)
       bury.call(self, *keys, val)
       @store.transaction do
         bury.call(@store[:data], *(keys + [val]))
@@ -302,6 +336,12 @@ module Gemmy::Patches::HashPatch
     def data
       @store.transaction { @store[:data] }
     end
+
+    # This won't autovivify the hash automatically
+    def set_state(hash)
+      @store.transaction { @store[:data] = hash }
+    end
+
     def clear
       autovivified = Gemmy.patch("hash/i/autovivified")\
                           .method(:_autovivified)

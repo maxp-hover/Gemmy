@@ -10,7 +10,13 @@ Gem::Specification.new do |s|
   s.authors     = ["max pleaner"]
   s.email       = 'maxpleaner@gmail.com'
   s.homepage    = "http://github.com/maxpleaner/gemmy"
-  s.files       = Dir["lib/**/*.rb", "bin/*", "**/*.md", "LICENSE"]
+  s.files       = Dir[
+                    "lib/**/*.rb",
+                    "bin/*",
+                    "**/*.md",
+                    "LICENSE",
+                    "licenses/*",
+                  ]
   s.require_path = 'lib'
   s.required_rubygems_version = ">= 1.3.6"
   s.executables = Dir["bin/*"].map &File.method(:basename)
@@ -24,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'byebug'
   s.add_dependency 'thor'
   s.add_dependency 'corefines'
-  s.add_dependency 'sentence_interpreter', '~> 0.0.7'
+  s.add_dependency 'sentence_interpreter'
   s.add_dependency 'awesome_print'
   s.add_dependency 'engtagger'
   s.add_dependency 'minitest'
