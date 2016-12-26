@@ -102,3 +102,5 @@ unless ENV["NO_G_MODE"]
   class G < Gemmy
   end
 end
+
+Gemmy::Tests::PatchTests::BuildPatchedClass.call
