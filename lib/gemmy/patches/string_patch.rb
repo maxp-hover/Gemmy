@@ -7,6 +7,12 @@ module Gemmy::Patches::StringPatch
 
   module InstanceMethods
 
+    module Unchomp
+      def unchomp
+        self.ends_with?("\n") ? self : "#{self}\n"
+      end
+    end
+
     module SyllableCount
       def syllable_count
         Odyssey.flesch_kincaid_re(self, true)["syllable_count"]

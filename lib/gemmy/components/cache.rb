@@ -16,7 +16,8 @@ class Gemmy::Components::Cache < Hash
   def initialize(db_name, hash={})
     cache_path = self.class.setup_cache_folder
     @db = hash.persisted "#{cache_path}/#{db_name}.yaml"
-    @db.set_state hash
+    # copy db state into memory
+    @db.data.each { |k,v| self[k] = v.deep_dup }
   end
 
   def get_or_set(*keys, &blk)
@@ -38,6 +39,19 @@ class Gemmy::Components::Cache < Hash
 
   def get(*keys)
     @db.dig *keys
+  end
+
+  # Delete functions like "dig_delete"
+  # I.e. if given a few keys as arguments, it will treat only the last as
+  # a delete key and all the rest as dig keys.
+  def dig_delete(*keys)
+    @db.dig_delete *keys
+    key_to_delete = keys.pop
+    if keys.empty?
+      self.delete key_to_delete
+    else
+      self.dig(*keys).delete key_to_delete
+    end
   end
 
   def set_state(hash)

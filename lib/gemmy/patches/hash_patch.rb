@@ -17,6 +17,18 @@ module Gemmy::Patches::HashPatch
 
   module InstanceMethods
 
+    module Indifferent
+      def indifferent
+        self.with_indifferent_access
+      end
+    end
+
+    module Easy
+      def easy
+        self.with_indifferent_access
+      end
+    end
+
     module UpdateKeys
       # facets
       # in place
@@ -297,11 +309,13 @@ module Gemmy::Patches::HashPatch
     #
 
     module Persisted
+
       def persisted(path)
         require 'yaml/store'
         autovivified = Gemmy.patch("hash/i/autovivified")\
                             .method(:_autovivified)
         autovivified.call(self).tap do |hash|
+          # load data from YAML into memory
           hash.instance_exec do
             @store = YAML::Store.new path
             @store.transaction do
@@ -312,9 +326,11 @@ module Gemmy::Patches::HashPatch
           hash.extend Gemmy::Patches::HashPatch::PersistedHash
         end
       end
+
       def db
         @store
       end
+
     end
 
   end # end instance methods
@@ -322,9 +338,11 @@ module Gemmy::Patches::HashPatch
   # Helper methods for the persistence patch
   #
   module PersistedHash
+
     def get(*keys, disk: true)
       disk ? @store.transaction { @store[:data].dig(*keys) } : dig(*keys)
     end
+
     def set(*keys, val)
       bury = Gemmy::Patches::HashPatch::InstanceMethods::Bury.method(:bury)
       bury.call(self, *keys, val)
@@ -333,8 +351,27 @@ module Gemmy::Patches::HashPatch
       end
       val
     end
+
     def data
       @store.transaction { @store[:data] }
+    end
+
+    # Delete functions like "dig_delete"
+    # I.e. if given a few keys as arguments, it will treat only the last as
+    # a delete key and all the rest as dig keys.
+    def dig_delete(*keys)
+      key_to_delete = keys.pop
+      if keys.empty?
+        delete key_to_delete
+        @store.transaction do
+          @store[:data].delete key_to_delete
+        end
+      else
+        dig(*keys).delete key_to_delete
+        @store.transaction do
+          @store[:data].dig(*keys).delete key_to_delete
+        end
+      end
     end
 
     # This won't autovivify the hash automatically
