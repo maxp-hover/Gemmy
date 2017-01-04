@@ -139,51 +139,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#diff_factor-instance_method" title="#diff_factor (instance method)">#<strong>diff_factor</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#diff_multiplier-instance_method" title="#diff_multiplier (instance method)">#<strong>diff_multiplier</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(sentence, container_length)  &#x21d2; Sentence </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(sentence:, syllables: 8, syllable_length: 0.2, path: nil, cached: false, silent: false)  &#x21d2; Sentence </a>
     
 
     
@@ -209,7 +165,29 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#speak-instance_method" title="#speak (instance method)">#<strong>speak</strong>(path: nil)  &#x21d2; Object </a>
+      <a href="#save_to_file-instance_method" title="#save_to_file (instance method)">#<strong>save_to_file</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#speak_file-instance_method" title="#speak_file (instance method)">#<strong>speak_file</strong>  &#x21d2; Object </a>
     
 
     
@@ -237,7 +215,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(sentence, container_length)  &#x21d2; <tt><span class='object_link'><a href="" title="Gemmy::Components::WordSpeaker::Sentence (class)">Sentence</a></span></tt> 
+    #<strong>initialize</strong>(sentence:, syllables: 8, syllable_length: 0.2, path: nil, cached: false, silent: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Gemmy::Components::WordSpeaker::Sentence (class)">Sentence</a></span></tt> 
   
 
   
@@ -260,19 +238,37 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29</pre>
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_sentence'>sentence</span><span class='comma'>,</span> <span class='id identifier rubyid_container_length'>container_length</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
+  <span class='label'>sentence:</span><span class='comma'>,</span> <span class='label'>syllables:</span> <span class='int'>8</span><span class='comma'>,</span> <span class='label'>syllable_length:</span> <span class='float'>0.2</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>cached:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>silent:</span> <span class='kw'>false</span>
+<span class='rparen'>)</span>
   <span class='ivar'>@sentence</span> <span class='op'>=</span> <span class='id identifier rubyid_sentence'>sentence</span>
   <span class='ivar'>@sentence_syllables</span> <span class='op'>=</span> <span class='ivar'>@sentence</span><span class='period'>.</span><span class='id identifier rubyid_syllable_count'>syllable_count</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
-  <span class='ivar'>@container_length</span> <span class='op'>=</span> <span class='id identifier rubyid_container_length'>container_length</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='ivar'>@syllables</span> <span class='op'>=</span> <span class='id identifier rubyid_syllables'>syllables</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@syllable_length</span> <span class='op'>=</span> <span class='id identifier rubyid_syllable_length'>syllable_length</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='ivar'>@total_len</span> <span class='op'>=</span> <span class='id identifier rubyid_syllable_length'>syllable_length</span> <span class='op'>*</span> <span class='ivar'>@syllables</span>
+  <span class='ivar'>@cached</span> <span class='op'>=</span> <span class='id identifier rubyid_cached'>cached</span>
+  <span class='ivar'>@silent</span> <span class='op'>=</span> <span class='id identifier rubyid_silent'>silent</span>
+  <span class='ivar'>@idx</span> <span class='op'>=</span> <span class='int'>0</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -287,39 +283,9 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="diff_factor-instance_method">
+  <h3 class="signature first" id="save_to_file-instance_method">
   
-    #<strong>diff_factor</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42
-43
-44</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 42</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
-  <span class='id identifier rubyid_sentence_syllables'>sentence_syllables</span> <span class='op'>/</span> <span class='id identifier rubyid_container_length'>container_length</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="diff_multiplier-instance_method">
-  
-    #<strong>diff_multiplier</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>save_to_file</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -331,15 +297,31 @@
       <pre class="lines">
 
 
+44
+45
 46
 47
-48</pre>
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 44</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
-  <span class='float'>1.0</span> <span class='op'>/</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_save_to_file'>save_to_file</span>
+  <span class='kw'>return</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='ivar'>@sentence</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_cached'>cached</span>
+  <span class='backtick'>`</span><span class='tstring_content'>espeak -v english-us -w </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'> &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sentence'>sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>`</span></span>
+  <span class='id identifier rubyid_sentence_len'>sentence_len</span> <span class='op'>=</span> <span class='backtick'>`</span><span class='tstring_content'>soxi -D </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_diff'>diff</span> <span class='op'>=</span> <span class='int'>1</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='id identifier rubyid_total_len'>total_len</span> <span class='op'>/</span> <span class='id identifier rubyid_sentence_len'>sentence_len</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tmp_path'>tmp_path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wav/tmp.wav</span><span class='tstring_end'>&quot;</span></span>
+  <span class='backtick'>`</span><span class='tstring_content'>sox </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tmp_path'>tmp_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> tempo </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_diff'>diff</span><span class='period'>.</span><span class='id identifier rubyid_round'>round</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='backtick'>`</span><span class='tstring_content'>rm </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='backtick'>`</span><span class='tstring_content'>mv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tmp_path'>tmp_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -347,9 +329,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="speak-instance_method">
+  <h3 class="signature " id="speak_file-instance_method">
   
-    #<strong>speak</strong>(path: nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>speak_file</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -361,29 +343,19 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40</pre>
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/components/word_speaker.rb', line 56</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_speak'>speak</span><span class='lparen'>(</span><span class='label'>path:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_pitch'>pitch</span> <span class='op'>=</span> <span class='const'>DefaultPitch</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
-  <span class='id identifier rubyid_speed'>speed</span> <span class='op'>=</span> <span class='const'>DefaultSpeed</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_factor'>diff_factor</span>
-  <span class='id identifier rubyid_gap'>gap</span> <span class='op'>=</span> <span class='const'>DefaultGap</span> <span class='op'>*</span> <span class='id identifier rubyid_diff_multiplier'>diff_multiplier</span>
-  <span class='id identifier rubyid_espeak_opts'>espeak_opts</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-v english-us -p </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pitch'>pitch</span><span class='embexpr_end'>}</span><span class='tstring_content'> -s </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_speed'>speed</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span>
-    <span class='id identifier rubyid_espeak_opts'>espeak_opts</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> -w </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-  <span class='backtick'>`</span><span class='tstring_content'>espeak </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_espeak_opts'>espeak_opts</span><span class='embexpr_end'>}</span><span class='tstring_content'> &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sentence'>sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>`</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_speak_file'>speak_file</span>
+  <span class='kw'>return</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='ivar'>@sentence</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_silent'>silent</span>
+  <span class='backtick'>`</span><span class='tstring_content'>aplay </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -395,7 +367,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:54 2016 by
+  Generated on Tue Jan  3 23:42:59 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

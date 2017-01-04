@@ -64,16 +64,21 @@
   <span class='id identifier rubyid_using'>using</span> <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash/i/persisted</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_using'>using</span> <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash/i/bury</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_using'>using</span> <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>object/i/home</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_using'>using</span> <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>object/i/m</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-  <span class='const'>CachePath</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GEMMY_CACHE_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_home'>home</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gemmy/caches</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='kw'>unless</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='const'>CachePath</span><span class='rparen'>)</span>
-    <span class='backtick'>`</span><span class='tstring_content'>mkdir -p </span><span class='embexpr_beg'>#{</span><span class='const'>CachePath</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_cache_folder'>setup_cache_folder</span>
+    <span class='id identifier rubyid_cache_path'>cache_path</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GEMMY_CACHE_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_home'>home</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gemmy/caches</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>unless</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_cache_path'>cache_path</span><span class='rparen'>)</span>
+      <span class='backtick'>`</span><span class='tstring_content'>mkdir -p </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cache_path'>cache_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>`</span></span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_cache_path'>cache_path</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_db_name'>db_name</span><span class='rparen'>)</span>
-    <span class='ivar'>@db</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_persisted'>persisted</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>CachePath</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_db_name'>db_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.yaml</span><span class='tstring_end'>&quot;</span></span>
-    <span class='ivar'>@memory</span> <span class='op'>=</span> <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='symbol'>:data</span><span class='rparen'>)</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_db_name'>db_name</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_cache_path'>cache_path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_setup_cache_folder'>setup_cache_folder</span>
+    <span class='ivar'>@db</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_persisted'>persisted</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cache_path'>cache_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_db_name'>db_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.yaml</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># copy db state into memory
+</span>    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_deep_dup'>deep_dup</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
   <span class='kw'>def</span> <span class='id identifier rubyid_get_or_set'>get_or_set</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
@@ -85,32 +90,51 @@
     <span class='id identifier rubyid_result'>result</span>
   <span class='kw'>end</span>
 
+  <span class='kw'>def</span> <span class='id identifier rubyid_data'>data</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>def</span> <span class='id identifier rubyid_keys'>keys</span>
     <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:db</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_source'>source</span> <span class='op'>==</span> <span class='symbol'>:memory</span>
-      <span class='ivar'>@memory</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span> <span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_source'>source</span> <span class='op'>==</span> <span class='symbol'>:db</span>
-      <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span> <span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span> <span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Delete functions like &quot;dig_delete&quot;
+</span>  <span class='comment'># I.e. if given a few keys as arguments, it will treat only the last as
+</span>  <span class='comment'># a delete key and all the rest as dig keys.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_dig_delete'>dig_delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_dig_delete'>dig_delete</span> <span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span>
+    <span class='id identifier rubyid_key_to_delete'>key_to_delete</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_key_to_delete'>key_to_delete</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_key_to_delete'>key_to_delete</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
+  <span class='kw'>def</span> <span class='id identifier rubyid_set_state'>set_state</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_set_state'>set_state</span> <span class='id identifier rubyid_hash'>hash</span>
+    <span class='id identifier rubyid_each_key'>each_key</span> <span class='op'>&amp;</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_deep_merge!'>deep_merge!</span> <span class='id identifier rubyid_hash'>hash</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>def</span> <span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
+    <span class='const'>Gemmy</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash/i/bury</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bury'>bury</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
     <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='kw'>def</span> <span class='id identifier rubyid_clear'>clear</span>
-    <span class='comment'># forwards it to PersistedHash
-</span>    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+    <span class='id identifier rubyid_each_key'>each_key</span> <span class='op'>&amp;</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
   <span class='kw'>end</span>
+
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:51 2016 by
+  Generated on Tue Jan  3 23:42:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

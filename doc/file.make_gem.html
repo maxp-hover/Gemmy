@@ -95,7 +95,7 @@
 </span>  <span class='comment'>#
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_make_gem'>make_gem</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
-    <span class='ivar'>@class_name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+    <span class='ivar'>@class_name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_camelcase'>camelcase</span>
 
     <span class='id identifier rubyid_usage_io'>usage_io</span>
     <span class='id identifier rubyid_create_root_dir'>create_root_dir</span>
@@ -112,7 +112,7 @@
 
   <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:root_dir</span><span class='comma'>,</span> <span class='symbol'>:lib</span><span class='comma'>,</span> <span class='symbol'>:version_file</span><span class='comma'>,</span> <span class='symbol'>:main_file</span><span class='comma'>,</span> <span class='symbol'>:summary</span><span class='comma'>,</span>
               <span class='symbol'>:author</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:gemspec_file</span><span class='comma'>,</span> <span class='symbol'>:class_name</span><span class='comma'>,</span> <span class='symbol'>:rubygems_version</span><span class='comma'>,</span>
-              <span class='symbol'>:gemfile</span>
+              <span class='symbol'>:gemfile</span><span class='comma'>,</span> <span class='symbol'>:url</span>
 
   <span class='id identifier rubyid_private'>private</span>
 
@@ -164,10 +164,7 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_create_main_file'>create_main_file</span>
     <span class='ivar'>@main_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_lib'>lib</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_main_text'>main_text</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;-TXT</span><span class='period'>.</span><span class='id identifier rubyid_unindent'>unindent</span>
-<span class='tstring_content'>      require &#39;colored&#39;
-      require &#39;pry&#39;
-      require &#39;active_support/all&#39;
-      require &#39;thor&#39;
+<span class='tstring_content'>      require &#39;gemmy&#39;
       module </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
       end
       Gem.find_files(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/**/*.rb&quot;).each &amp;method(:require)
@@ -184,6 +181,7 @@
     <span class='ivar'>@summary</span> <span class='op'>=</span> <span class='id identifier rubyid__prompt'>_prompt</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add a one-line summary.</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@author</span> <span class='op'>=</span> <span class='id identifier rubyid__prompt'>_prompt</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>enter the author&#39;s name</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='id identifier rubyid__prompt'>_prompt</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>enter the author&#39;s email</span><span class='tstring_end'>&quot;</span></span>
+    <span class='ivar'>@url</span> <span class='op'>=</span> <span class='id identifier rubyid__prompt'>_prompt</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>enter the homepage url</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@rubygems_version</span> <span class='op'>=</span> <span class='backtick'>`</span><span class='tstring_content'>gem -v</span><span class='tstring_end'>`</span></span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
@@ -197,7 +195,7 @@
     <span class='id identifier rubyid_gemspec_text'>gemspec_text</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;-TXT</span><span class='period'>.</span><span class='id identifier rubyid_unindent'>unindent</span>
 <span class='tstring_content'>      require_relative &#39;./lib/version.rb&#39;
       Gem::Specification.new do |s|
-        s.name        = name
+        s.name        = &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
         s.version     = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>::VERSION
         s.date        = &quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%Y-%m-%d</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
         s.summary     = &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_summary'>summary</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
@@ -205,15 +203,13 @@
         s.platform    = Gem::Platform::RUBY
         s.authors     = [&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_author'>author</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;]
         s.email       = &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_email'>email</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;
-        s.homepage    = &quot;http://github.com/maxpleaner/gemmy&quot;
+        s.required_ruby_version = &#39;~&gt; 2.3&#39;
+        s.homepage    = &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
         s.files       = Dir[&quot;lib/**/*.rb&quot;, &quot;bin/*&quot;, &quot;**/*.md&quot;, &quot;LICENSE&quot;]
         s.require_path = &#39;lib&#39;
         s.required_rubygems_version = &quot;&gt;= </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rubygems_version'>rubygems_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
         s.executables = Dir[&quot;bin/*&quot;].map &amp;File.method(:basename)
-        s.add_dependency &quot;colored&quot;, &#39;~&gt; 1.2&#39;
-        s.add_dependency &#39;activesupport&#39;, &#39;~&gt; 4.2&#39;, &#39;&gt;= 4.2.7&#39;
-        s.add_dependency &#39;pry&#39;, &#39;~&gt; 0.10.4&#39;
-        s.add_dependency &#39;thor&#39;, &#39;~&gt; 0.19.4&#39;
+        s.add_dependency &#39;gemmyrb&#39;
         s.license     = &#39;MIT&#39;
       end
 </span><span class='heredoc_end'>    TXT
@@ -279,7 +275,7 @@
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:51 2016 by
+  Generated on Tue Jan  3 23:42:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

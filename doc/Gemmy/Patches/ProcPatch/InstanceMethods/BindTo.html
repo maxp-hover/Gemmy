@@ -161,12 +161,12 @@ p2.call  #=&gt; &#39;1 2 3&#39;</p>
       <pre class="lines">
 
 
-77
-78
-79</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/proc_patch.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/proc_patch.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_to'>bind_to</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lbrace'>{</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='kw'>self</span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -181,7 +181,7 @@ p2.call  #=&gt; &#39;1 2 3&#39;</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:52 2016 by
+  Generated on Tue Jan  3 23:42:57 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

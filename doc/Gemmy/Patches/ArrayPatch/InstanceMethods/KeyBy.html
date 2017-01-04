@@ -179,12 +179,12 @@
       <pre class="lines">
 
 
-103
-104
-105</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/array_patch.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/array_patch.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_autotest'>autotest</span>
   <span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span><span class='int'>2</span><span class='comma'>,</span><span class='int'>3</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key_by'>key_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>%</span> <span class='int'>2</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='lbrace'>{</span> <span class='int'>1</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>3</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='int'>0</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -226,17 +226,17 @@
       <pre class="lines">
 
 
-95
-96
-97
-98
-99
-100
-101
-102</pre>
+82
+83
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/array_patch.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/array_patch.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_key_by'>key_by</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_to_enum'>to_enum</span><span class='lparen'>(</span><span class='symbol'>:key_by</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -256,7 +256,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:52 2016 by
+  Generated on Tue Jan  3 23:42:57 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -64,131 +64,125 @@
   <span class='kw'>module</span> <span class='const'>PatchTests</span>
 
     <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
-      <span class='comment'># call each of the patch_class methods
-</span>      <span class='qsymbols_beg'>%i{
+      <span class='qsymbols_beg'>%i{
 </span><span class='tstring_content'>        array_test</span><span class='words_sep'> </span><span class='tstring_content'>symbol_test</span><span class='words_sep'> </span><span class='tstring_content'>method_test</span><span class='words_sep'> </span><span class='tstring_content'>thread_test</span><span class='words_sep'>
 </span><span class='tstring_content'>        global_test</span><span class='words_sep'> </span><span class='tstring_content'>string_test</span><span class='words_sep'> </span><span class='tstring_content'>hash_test</span><span class='words_sep'>
 </span><span class='tstring_end'>      }</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_method_name'>method_name</span><span class='op'>|</span> <span class='const'>PatchedClass</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span> <span class='id identifier rubyid_method_name'>method_name</span> <span class='rbrace'>}</span>
     <span class='kw'>end</span>
 
     <span class='kw'>module</span> <span class='const'>Error</span>
-      <span class='comment'># Allow using raise with one argument only
-</span>      <span class='comment'># raises RuntimeError
-</span>      <span class='comment'>#
-</span>      <span class='comment'># this is included in the global patches,
-</span>      <span class='comment'># but the test suite doesn&#39;t depend on it.
-</span>      <span class='comment'>#
-</span>      <span class='comment'># @param msg [String]
-</span>      <span class='comment'>#
-</span>      <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+      <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
 
-    <span class='kw'>class</span> <span class='const'>PatchedClass</span>
+    <span class='const'>BuildPatchedClass</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span>
+      <span class='kw'>class</span> <span class='const'>PatchedClass</span>
 
-      <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
+        <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Patches</span><span class='period'>.</span><span class='id identifier rubyid_class_refinements'>class_refinements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_using'>using</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span>
 
-      <span class='id identifier rubyid_extend'>extend</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Tests</span><span class='op'>::</span><span class='const'>PatchTests</span><span class='op'>::</span><span class='const'>Error</span>
+        <span class='id identifier rubyid_extend'>extend</span> <span class='const'>Gemmy</span><span class='op'>::</span><span class='const'>Tests</span><span class='op'>::</span><span class='const'>PatchTests</span><span class='op'>::</span><span class='const'>Error</span>
 
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_thread_test'>thread_test</span>
-        <span class='comment'># Threads abort on exception
-</span>        <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fail'>fail</span> <span class='rbrace'>}</span>
-        <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.25</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>thread didn&#39;t bubble up error</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>rescue</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Threads abort on exception</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_hash_test'>hash_test</span>
-        <span class='comment'># Hash#autovivified
-</span>        <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_autovivified'>autovivified</span>
-        <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#autovivified</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-
-        <span class='comment'># Hash#bury
-</span>        <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>a:</span> <span class='lbrace'>{</span> <span class='label'>b:</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
-        <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_bury'>bury</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='symbol'>:c</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:c</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#bury</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-
-        <span class='comment'># Hash#persisted
-</span>        <span class='id identifier rubyid_db'>db</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test_db.yaml</span><span class='tstring_end'>&quot;</span></span>
-        <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_persisted'>persisted</span> <span class='id identifier rubyid_db'>db</span>
-        <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>disk:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#persisted</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_array_test'>array_test</span>
-        <span class='comment'># Array#any_not?
-</span>        <span class='id identifier rubyid_false_case'>false_case</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='op'>&amp;</span><span class='symbol'>:empty?</span>
-        <span class='id identifier rubyid_true_case'>true_case</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='op'>&amp;</span><span class='symbol'>:empty?</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_true_case'>true_case</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_false_case'>false_case</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Array#any_not?</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_symbol_test'>symbol_test</span>
-        <span class='comment'># Symbol#with
-</span>        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='symbol'>:concat</span><span class='period'>.</span><span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Symbol#with</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method_test'>method_test</span>
-        <span class='comment'># Method#bind
-</span>        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span><span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_a'>a</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_thread_test'>thread_test</span>
+          <span class='comment'># Threads abort on exception
+</span>          <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fail'>fail</span> <span class='rbrace'>}</span>
+          <span class='id identifier rubyid_sleep'>sleep</span> <span class='float'>0.25</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>thread didn&#39;t bubble up error</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>rescue</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Threads abort on exception</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
         <span class='kw'>end</span>
-        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:add</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Method#bind</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
 
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_global_test'>global_test</span>
-        <span class='comment'># m is an alias for method
-</span>        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sample_method'>sample_method</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_x'>x</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_hash_test'>hash_test</span>
+          <span class='comment'># Hash#autovivified
+</span>          <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_autovivified'>autovivified</span>
+          <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#autovivified</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+
+          <span class='comment'># Hash#bury
+</span>          <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>a:</span> <span class='lbrace'>{</span> <span class='label'>b:</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+          <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_bury'>bury</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='symbol'>:c</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:c</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#bury</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+
+          <span class='comment'># Hash#persisted
+</span>          <span class='id identifier rubyid_db'>db</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test_db.yaml</span><span class='tstring_end'>&quot;</span></span>
+          <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_persisted'>persisted</span> <span class='id identifier rubyid_db'>db</span>
+          <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_set'>set</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='symbol'>:a</span><span class='comma'>,</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>disk:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:a</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Hash#persisted</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
         <span class='kw'>end</span>
-        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:sample_method</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Object#m</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
 
-        <span class='comment'># error_if_blank
-</span>        <span class='comment'># error an error if an object is blank
-</span>        <span class='id identifier rubyid_blank'>blank</span> <span class='op'>=</span> <span class='kw'>nil</span>
-        <span class='id identifier rubyid_not_blank'>not_blank</span> <span class='op'>=</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_error_if_blank'>error_if_blank</span> <span class='id identifier rubyid_not_blank'>not_blank</span>
-        <span class='kw'>begin</span>
-          <span class='id identifier rubyid_error_if_blank'>error_if_blank</span> <span class='id identifier rubyid_blank'>blank</span>
-          <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>this won&#39;t be raised</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-        <span class='kw'>rescue</span> <span class='const'>RuntimeError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-          <span class='id identifier rubyid_error'>error</span> <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>this won&#39;t be raised</span><span class='tstring_end'>&quot;</span></span>
-          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Object#error_if_blank</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_array_test'>array_test</span>
+          <span class='comment'># Array#any_not?
+</span>          <span class='id identifier rubyid_false_case'>false_case</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='op'>&amp;</span><span class='symbol'>:empty?</span>
+          <span class='id identifier rubyid_true_case'>true_case</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_not?'>any_not?</span> <span class='op'>&amp;</span><span class='symbol'>:empty?</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_true_case'>true_case</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_false_case'>false_case</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Array#any_not?</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
         <span class='kw'>end</span>
-      <span class='kw'>end</span>
 
-      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_string_test'>string_test</span>
-        <span class='comment'># String#unindent
-</span>        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  0</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_unindent'>unindent</span>
-        <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  String#unindent</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
-      <span class='kw'>end</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_symbol_test'>symbol_test</span>
+          <span class='comment'># Symbol#with
+</span>          <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='symbol'>:concat</span><span class='period'>.</span><span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Symbol#with</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+        <span class='kw'>end</span>
 
-    <span class='kw'>end</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method_test'>method_test</span>
+          <span class='comment'># Method#bind
+</span>          <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span><span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_a'>a</span> <span class='op'>+</span> <span class='id identifier rubyid_b'>b</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:add</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Method#bind</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+        <span class='kw'>end</span>
 
-  <span class='kw'>end</span>
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_global_test'>global_test</span>
+          <span class='comment'># m is an alias for method
+</span>          <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sample_method'>sample_method</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_x'>x</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='id identifier rubyid_m'>m</span><span class='lparen'>(</span><span class='symbol'>:sample_method</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Object#m</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
 
+          <span class='comment'># error_if_blank
+</span>          <span class='comment'># error an error if an object is blank
+</span>          <span class='id identifier rubyid_blank'>blank</span> <span class='op'>=</span> <span class='kw'>nil</span>
+          <span class='id identifier rubyid_not_blank'>not_blank</span> <span class='op'>=</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_error_if_blank'>error_if_blank</span> <span class='id identifier rubyid_not_blank'>not_blank</span>
+          <span class='kw'>begin</span>
+            <span class='id identifier rubyid_error_if_blank'>error_if_blank</span> <span class='id identifier rubyid_blank'>blank</span>
+            <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>this won&#39;t be raised</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+          <span class='kw'>rescue</span> <span class='const'>RuntimeError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+            <span class='id identifier rubyid_error'>error</span> <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>this won&#39;t be raised</span><span class='tstring_end'>&quot;</span></span>
+            <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  Object#error_if_blank</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_string_test'>string_test</span>
+          <span class='comment'># String#unindent
+</span>          <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  0</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_unindent'>unindent</span>
+          <span class='id identifier rubyid_error'>error</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  String#unindent</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span>
+        <span class='kw'>end</span>
+
+      <span class='kw'>end</span> <span class='comment'># PatchedClass
+</span>
+    <span class='rbrace'>}</span> <span class='comment'># BuildPatchedClass
+</span>
+  <span class='kw'>end</span> <span class='comment'># PatchedTests
+</span>
   <span class='const'>TestSets</span> <span class='op'>&lt;&lt;</span> <span class='const'>PatchTests</span>
 
 <span class='kw'>end</span></pre></div></div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:51 2016 by
+  Generated on Tue Jan  3 23:42:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

@@ -170,18 +170,18 @@
       <pre class="lines">
 
 
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/hash_patch.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/hash_patch.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_to_ostruct'>recursive_to_ostruct</span><span class='lparen'>(</span><span class='id identifier rubyid_exclude'>exclude</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span> <span class='kw'>self</span> <span class='rparen'>)</span>
@@ -223,12 +223,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/hash_patch.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/patches/hash_patch.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_ostruct'>to_ostruct</span>
   <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -243,7 +243,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:51 2016 by
+  Generated on Tue Jan  3 23:42:57 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>

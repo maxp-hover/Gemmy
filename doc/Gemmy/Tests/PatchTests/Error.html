@@ -76,11 +76,6 @@
   
 
   
-  <dl>
-    <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="PatchedClass.html" title="Gemmy::Tests::PatchTests::PatchedClass (class)">PatchedClass</a></span></dd>
-  </dl>
-  
 
   
   <dl>
@@ -122,9 +117,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Allow using raise with one argument only raises RuntimeError.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -150,33 +143,11 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Allow using raise with one argument only raises RuntimeError</p>
-
-<p>this is included in the global patches, but the test suite doesn&#39;t
-depend on it.</p>
-
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>msg</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
-      
-      
-    </li>
-  
-</ul>
-
 <p class="tag_title">Raises:</p>
 <ul class="raise">
   
@@ -197,12 +168,12 @@ depend on it.</p>
       <pre class="lines">
 
 
-22
-23
-24</pre>
+13
+14
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gemmy/tests/patch_test.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/gemmy/tests/patch_test.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
@@ -217,7 +188,7 @@ depend on it.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 08:00:51 2016 by
+  Generated on Tue Jan  3 23:42:57 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>
