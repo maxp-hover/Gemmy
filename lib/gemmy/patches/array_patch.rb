@@ -42,19 +42,6 @@ module Gemmy::Patches::ArrayPatch
       end
     end
 
-
-    module MethodMissing
-      # Tries to forward methods to enumerator
-      def method_missing(fn, &blk)
-        enum = to_enum
-        if enum.respond_to?(fn)
-          blk ? enum.send(fn, &blk) : enum.send(fn)
-        else
-          super
-        end
-      end
-    end
-
     module RunCommands
       # Part of the Nlp API
       # Example:

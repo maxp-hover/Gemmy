@@ -12,17 +12,8 @@
 # (this is used internally by the gem)
 #
 tagger = EngTagger.new
-tagged = tagger.tag "the cat went in the hat and sat"
+tagged = tagger.add_tags "the cat went in the hat and sat"
 tagger.get_nouns(tagged) == { "cat" => 1, "hat" => 2 }
-
-# Example of sentence_interpreter usage
-# (also used internally by the gem)
-#
-NounLexicon[:hello] = ->(vn_phrases) { "hello" }
-NounLexicon[:world] = ->(vn_phrases) { "world" }
-VerbLexicon[:print] = ->(*nouns) { "printing #{nouns.join(" ")}" }
-res = SentenceInterpreter.interpret("print hello world").run_commands
-res == "printing hello world"
 
 # The functionality for working with language is found in these modules:
 #
@@ -95,10 +86,10 @@ arr.map(&:nlp_sanitize).each_with_index do |sentence, idx|
     puts sentence.syllable_count
 
     # Speak sentence
-    speak_sentence(sentence)
+    speak_sentence(sentence: sentence)
 
     # Save spoken sentence as WAV file
-    speak_sentence(sentence, path: "#{idx}.wav")
+    speak_sentence(sentence: sentence, path: "#{idx}.wav")
 
     # Run through a sentence, adding words to the lexicon and pos cache
     # Then send it to sentence_interprer to find verb=>noun phrases

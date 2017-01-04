@@ -2,8 +2,8 @@ module Gemmy::Components::WordSpeaker
 
   Gemmy.patches.each { |x| using x }
 
-  def speak_sentence(*args)
-    sentence = Gemmy.component("word_speaker/sentence").new(*args)
+  def speak_sentence(**args)
+    sentence = Gemmy.component("word_speaker/sentence").new(args)
     sentence.save_to_file.speak_file
   end
 
