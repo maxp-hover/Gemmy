@@ -3,6 +3,18 @@ module Gemmy::Patches::ProcPatch
   end
   module InstanceMethods
 
+    module Call
+      def call(*args, &blk)
+        this = self
+        if (opts=args.last).is_a?(Hash) && (proc=opts[:threaded_if])
+          if proc.is_a?(Proc) && proc.call
+            return Thread.new { self.call(*args, &blk) }
+          end
+        end
+        self.call(*args, &blk)
+      end
+    end
+
     module ToMethod
       # facets
       # converts a proc to a method on an object

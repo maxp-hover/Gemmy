@@ -109,14 +109,14 @@ end
 # There's also a shortcut to cherrypicking a few modules:
 
 Gemmy.patch("symbol/i/call") ==\
-Gemmy::Patches::SymbolPatches::InstanceMethods::Call
+Gemmy::Patches::SymbolPatch::InstanceMethods::Call
 
 Gemmy.patch("array/c/wrap") == \
-Gemmy::Patches::ArrayPatches::ClassMethods::Wrap
+Gemmy::Patches::ArrayPatch::ClassMethods::Wrap
 
 # You can do something like:
 
-module test
+module Test
   using Gemmy.patch("symbol/i/call")
   [[]].map(&:push.(1)) == [[1]]
 end
