@@ -92,10 +92,11 @@ class Gemmy
   singleton_class.send(:alias_method, :load, :load_globally)
 end
 
-
 Gem.find_files("gemmy/**/*.rb").sort_by do |x|
   x.split("/").length
 end.each &method(:require)
+
+
 
 unless ENV["NO_G_MODE"]
   # Alias for less typing
